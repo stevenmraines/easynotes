@@ -1,11 +1,11 @@
 package easynotes;
 
 public class Main {
-	private static StartMenu start;
+	private static ProjectWindow window;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		start = new StartMenu();
+		window = new ProjectWindow();
 	}
 
 }
