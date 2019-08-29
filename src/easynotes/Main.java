@@ -1,11 +1,12 @@
 package easynotes;
 
+import easynotes.controllers.ProjectWindowController;
+import easynotes.views.ProjectWindowTemplate;
+
 public class Main {
-	private static ProjectWindow window;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		window = new ProjectWindow();
+		new ProjectWindowController(new ProjectWindowTemplate());
 	}
 
 }
