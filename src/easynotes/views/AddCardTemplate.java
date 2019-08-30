@@ -1,36 +1,43 @@
 package easynotes.views;
 
-import java.awt.GridLayout;
+import java.awt.event.WindowEvent;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JDialog;
 
-public class AddCardTemplate {
-	private JFrame frame;
-	private JPanel panel;
-	private JTextArea cardFrontTextArea;
-	private JTextArea cardBackTextArea;
-	private JButton createButton;
-	
+public class AddCardTemplate extends CardTextTemplate {
 	public AddCardTemplate() {
-		// Initialize components
-		frame = new JFrame("Add a card");
-		panel = new JPanel(new GridLayout(3, 1));
-		cardFrontTextArea = new JTextArea();
-		cardBackTextArea = new JTextArea();
-		createButton = new JButton("Create");
-		
-		// Add components
-		frame.add(panel);
-		panel.add(cardFrontTextArea);
-		panel.add(cardBackTextArea);
-		panel.add(createButton);
-		
-		// Prepare and display the frame
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
+		super();
+		dialog = new JDialog(frame, true);
+		frame.setTitle("Add a card");
+		actionButton.setText("Create");
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		hideModal();
 	}
 }
