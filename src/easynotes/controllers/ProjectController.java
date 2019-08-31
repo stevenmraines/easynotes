@@ -10,11 +10,6 @@ import javax.swing.SwingUtilities;
 import easynotes.models.Project;
 import easynotes.views.ProjectTemplate;
 
-/*
- * This class seems to be only controlling the context menu of the
- * project window. Perhaps this functionality should be handled by
- * the maincontroller class?
- */
 public class ProjectController implements ActionListener, MouseListener {
 	// Register models
 	private Project project;

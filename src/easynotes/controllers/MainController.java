@@ -2,6 +2,7 @@ package easynotes.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -10,10 +11,16 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/*
+ * This class mainly acts as a hook for the child
+ * controllers to communicate with each other.
+ * 
+ * It also creates the main JFrame of the application.
+ */
 public class MainController implements ActionListener {
 	// Register controllers
 	private ProjectController projectController;
-	private CardController cardController;
+	private ArrayList<CardController> cardControllers;
 	private AddCardController addCardController;
 	private EditCardController editCardController;
 	
@@ -31,7 +38,7 @@ public class MainController implements ActionListener {
 	public MainController() {
 		// Initialize properties
 		projectController = new ProjectController(this);
-		cardController = new CardController(this);
+		cardControllers = new ArrayList<CardController>();
 		addCardController = new AddCardController(this);
 		editCardController = new EditCardController(this);
 		frame = new JFrame("New Project");
@@ -46,6 +53,7 @@ public class MainController implements ActionListener {
 		
 		// Add components
 		frame.add(panel);
+		panel.add(projectController.getProjectTemplate());
 		frame.setJMenuBar(menuBar);
 		frame.add(projectController.getProjectTemplate());
 		menuBar.add(fileMenu);
@@ -102,12 +110,12 @@ public class MainController implements ActionListener {
 		this.addCardController = addCardController;
 	}
 
-	public CardController getCardController() {
-		return cardController;
+	public ArrayList<CardController> getCardControllers() {
+		return cardControllers;
 	}
 
-	public void setCardController(CardController cardController) {
-		this.cardController = cardController;
+	public void setCardControllers(ArrayList<CardController> cardControllers) {
+		this.cardControllers = cardControllers;
 	}
 
 	public EditCardController getEditCardController() {

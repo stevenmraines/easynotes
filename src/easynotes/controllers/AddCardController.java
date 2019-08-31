@@ -29,8 +29,12 @@ public class AddCardController implements ActionListener {
 			String frontText = addCardTemplate.getFrontText().getText();
 			String backText = addCardTemplate.getBackText().getText();
 			Card newCard = new Card(frontText, backText);
-			mainController.getProjectController().getProject().addCard(newCard);
+//			mainController.getProjectController().getProject().addCard(newCard);
 			// Need to hook into mainController to get projectController and add a new CardTemplate to it? Somehow?
+			CardController cc = new CardController(mainController);
+			cc.setCard(newCard);
+			mainController.getCardControllers().add(cc);
+			mainController.getProjectController().getProjectTemplate().add(cc.getCardTemplate());
 			addCardTemplate.hideModal();
 		}
 	}

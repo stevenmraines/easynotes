@@ -5,19 +5,8 @@ import easynotes.views.CardTemplate;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-
 import javax.swing.SwingUtilities;
 
-/*
- * If this needs to keep an arraylist of cardtemplates,
- * then this functionality seems to be duplicated from
- * projectcontroller. Perhaps that class should be
- * updated to take an arraylist of cardtemplates instead
- * of an arraylist of cards?
- * 
- * This class may be redundant.
- */
 public class CardController implements MouseListener {
 	// Register parent controller
 	private MainController mainController;
@@ -26,18 +15,11 @@ public class CardController implements MouseListener {
 	private Card card;
 	
 	// Register views
-	private ArrayList<CardTemplate> cardTemplates;
+	private CardTemplate cardTemplate;
 	
 	public CardController(MainController mainController) {
 		this.mainController = mainController;
-		cardTemplates = new ArrayList<CardTemplate>();
-		setMouseHandlers();
-	}
-	
-	private void setMouseHandlers() {
-		for(int i = 0; i < cardTemplates.size(); i++) {
-			cardTemplates.get(i).addMouseListener(this);
-		}
+		cardTemplate = new CardTemplate();
 	}
 
 	@Override
@@ -51,11 +33,8 @@ public class CardController implements MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if(SwingUtilities.isRightMouseButton(e)) {
-			try {
-				int index = cardTemplates.indexOf(e.getSource());
-				cardTemplates.get(index).getContextMenu().setLocation(e.getX(), e.getY());
-				cardTemplates.get(index).getContextMenu().setVisible(true);
-			} catch(ArrayIndexOutOfBoundsException ev) {}
+			cardTemplate.getContextMenu().setLocation(e.getX(), e.getY());
+			cardTemplate.getContextMenu().setVisible(true);
 		}
 	}
 
@@ -65,6 +44,22 @@ public class CardController implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+	}
+
+	public Card getCard() {
+		return card;
+	}
+
+	public void setCard(Card card) {
+		this.card = card;
+	}
+
+	public CardTemplate getCardTemplate() {
+		return cardTemplate;
+	}
+
+	public void setCardTemplate(CardTemplate cardTemplate) {
+		this.cardTemplate = cardTemplate;
 	}
 
 }
