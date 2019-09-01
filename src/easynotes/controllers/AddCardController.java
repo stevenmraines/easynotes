@@ -28,14 +28,7 @@ public class AddCardController implements ActionListener {
 		if(e.getSource() == addCardTemplate.getActionButton()) {
 			String frontText = addCardTemplate.getFrontText().getText();
 			String backText = addCardTemplate.getBackText().getText();
-			Card newCard = new Card(frontText, backText);
-//			mainController.getProjectController().getProject().addCard(newCard);
-			// Need to hook into mainController to get projectController and add a new CardTemplate to it? Somehow?
-			CardController cc = new CardController(mainController);
-			cc.setCard(newCard);
-			mainController.getCardControllers().add(cc);
-			mainController.getProjectController().getProjectTemplate().add(cc.getCardTemplate());
-			addCardTemplate.hideModal();
+			addNewCard(frontText, backText);
 		}
 	}
 
@@ -45,6 +38,17 @@ public class AddCardController implements ActionListener {
 
 	public void setAddCardTemplate(AddCardTemplate addCardTemplate) {
 		this.addCardTemplate = addCardTemplate;
+	}
+	
+	private void addNewCard(String frontText, String backText) {
+		Card newCard = new Card(frontText, backText);
+		CardController cc = new CardController(mainController);
+		cc.setCard(newCard);
+		cc.getCardTemplate().getLabel().setText(newCard.getFront());
+		cc.getCardTemplate().addMouseListener(cc);
+		mainController.getCardControllers().add(cc);
+		mainController.getProjectController().getProjectTemplate().add(cc.getCardTemplate());
+		addCardTemplate.hideModal();
 	}
 
 }

@@ -1,24 +1,38 @@
 package easynotes.views;
 
+import java.awt.Color;
+
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 public class CardTemplate extends JPanel {
+	private JLabel label;
 	private JPopupMenu contextMenu;
 	private JMenuItem deleteCardMenuItem;
 	private JMenuItem editCardMenuItem;
 	
 	public CardTemplate() {
 		// Initialize properties
+		label = new JLabel();
 		contextMenu = new JPopupMenu();
 		editCardMenuItem = new JMenuItem("Edit this card");
 		deleteCardMenuItem = new JMenuItem("Delete this card");
 		
 		// Add components
+		this.add(label);
 		this.add(contextMenu);
 		contextMenu.add(editCardMenuItem);
 		contextMenu.add(deleteCardMenuItem);
+		
+		// Add border
+		LineBorder line = new LineBorder(Color.black);
+		EmptyBorder empty = new EmptyBorder(5,5,5,5);
+		this.setBorder(new CompoundBorder(line, empty));
 	}
 
 	public JPopupMenu getContextMenu() {
@@ -43,5 +57,13 @@ public class CardTemplate extends JPanel {
 
 	public void setEditCardMenuItem(JMenuItem editCardMenuItem) {
 		this.editCardMenuItem = editCardMenuItem;
+	}
+
+	public JLabel getLabel() {
+		return label;
+	}
+
+	public void setLabel(JLabel Label) {
+		this.label = Label;
 	}
 }
