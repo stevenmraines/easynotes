@@ -28,7 +28,8 @@ public class AddCardController implements ActionListener {
 		if(e.getSource() == addCardTemplate.getActionButton()) {
 			String frontText = addCardTemplate.getFrontText().getText();
 			String backText = addCardTemplate.getBackText().getText();
-			addNewCard(frontText, backText);
+			mainController.addNewCardController(new CardController(mainController, new Card(frontText, backText)));
+			addCardTemplate.hideModal();
 		}
 	}
 
@@ -38,17 +39,6 @@ public class AddCardController implements ActionListener {
 
 	public void setAddCardTemplate(AddCardTemplate addCardTemplate) {
 		this.addCardTemplate = addCardTemplate;
-	}
-	
-	private void addNewCard(String frontText, String backText) {
-		Card newCard = new Card(frontText, backText);
-		CardController cc = new CardController(mainController);
-		cc.setCard(newCard);
-		cc.getCardTemplate().getLabel().setText(newCard.getFront());
-		cc.getCardTemplate().addMouseListener(cc);
-		mainController.getCardControllers().add(cc);
-		mainController.getProjectController().getProjectTemplate().add(cc.getCardTemplate());
-		addCardTemplate.hideModal();
 	}
 
 }

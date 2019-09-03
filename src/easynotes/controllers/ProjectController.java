@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
@@ -65,6 +66,8 @@ public class ProjectController implements ActionListener, MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		mainController.hideAllContextMenus();
+		
 		if(SwingUtilities.isRightMouseButton(e)) {
 			projectTemplate.getContextMenu().setLocation(e.getX(), e.getY());
 			projectTemplate.getContextMenu().setVisible(true);

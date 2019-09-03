@@ -74,6 +74,26 @@ public class MainController implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
+	
+	public void hideAllContextMenus() {
+		projectController.getProjectTemplate().getContextMenu().setVisible(false);
+		
+		for(int i = 0; i < cardControllers.size(); i++) {
+			cardControllers.get(i).getCardTemplate().getContextMenu().setVisible(false);
+		}
+	}
+	
+	public void addNewCardController(CardController cardController) {
+		// Add the new CardController to the list
+		cardControllers.add(cardController);
+		
+		// Add the template of the new CardController to the project template
+		projectController.getProjectTemplate().add(cardController.getCardTemplate());
+	}
+	
+	public void deleteCardController(CardController cardController) {
+		
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

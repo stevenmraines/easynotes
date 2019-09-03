@@ -10,6 +10,7 @@ public class EditCardTemplate extends CardTextTemplate {
 		dialog = new JDialog(frame, true);
 		frame.setTitle("Edit a card");
 		actionButton.setText("Save");
+		frame.pack();
 	}
 
 	@Override
