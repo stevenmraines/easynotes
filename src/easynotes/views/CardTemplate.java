@@ -1,6 +1,8 @@
 package easynotes.views;
 
 import java.awt.Color;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -10,7 +12,10 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-public class CardTemplate extends JPanel {
+import easynotes.models.Card;
+
+public class CardTemplate extends JPanel implements PropertyChangeListener {
+	private static final long serialVersionUID = -7500615444440173683L;
 	private JLabel label;
 	private JPopupMenu contextMenu;
 	private JMenuItem deleteCardMenuItem;
@@ -65,5 +70,20 @@ public class CardTemplate extends JPanel {
 
 	public void setLabel(JLabel Label) {
 		this.label = Label;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent e) {
+		if(e.getSource() instanceof Card) {
+			Card card = (Card) e.getSource();
+			
+			if(e.getPropertyName() == "front") {
+				label.setText(card.getFront());
+			}
+			
+//			if(e.getPropertyName() == "back") {
+//				label.setText(card.getBack());
+//			}
+		}
 	}
 }

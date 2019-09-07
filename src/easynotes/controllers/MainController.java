@@ -22,7 +22,6 @@ public class MainController implements ActionListener {
 	private ProjectController projectController;
 	private ArrayList<CardController> cardControllers;
 	private AddCardController addCardController;
-	private EditCardController editCardController;
 	
 	// Register GUI components
 	private JFrame frame;
@@ -40,7 +39,6 @@ public class MainController implements ActionListener {
 		projectController = new ProjectController(this);
 		cardControllers = new ArrayList<CardController>();
 		addCardController = new AddCardController(this);
-		editCardController = new EditCardController(this);
 		frame = new JFrame("New Project");
 		panel = new JPanel();
 		menuBar = new JMenuBar();
@@ -136,13 +134,5 @@ public class MainController implements ActionListener {
 
 	public void setCardControllers(ArrayList<CardController> cardControllers) {
 		this.cardControllers = cardControllers;
-	}
-
-	public EditCardController getEditCardController() {
-		return editCardController;
-	}
-
-	public void setEditCardController(EditCardController editCardController) {
-		this.editCardController = editCardController;
 	}
 }

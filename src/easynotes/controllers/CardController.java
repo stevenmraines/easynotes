@@ -9,10 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.SwingUtilities;
 
-/*
- * Is there a reason I can't have one CardController, and give it
- * an ArrayList of CardTemplates?
- */
 public class CardController implements MouseListener, ActionListener {
 	// Register parent controller
 	private MainController mainController;
@@ -27,11 +23,13 @@ public class CardController implements MouseListener, ActionListener {
 		// Initialize properties
 		this.mainController = mainController;
 		cardTemplate = new CardTemplate();
+		card = new Card();
 		
 		// Add action listeners
 		cardTemplate.addMouseListener(this);
 		cardTemplate.getEditCardMenuItem().addActionListener(this);
 		cardTemplate.getDeleteCardMenuItem().addActionListener(this);
+		card.addPropertyChangeListener(cardTemplate);
 	}
 
 	public CardController(MainController mainController, Card card) {
@@ -96,21 +94,19 @@ public class CardController implements MouseListener, ActionListener {
 		mainController.hideAllContextMenus();
 		
 		if(e.getSource() == cardTemplate.getEditCardMenuItem()) {
-			mainController
-				.getEditCardController()
+			EditCardController editCardController = new EditCardController(this);
+			
+			editCardController
 				.getEditCardTemplate()
 				.getFrontText()
 				.setText(card.getFront());
 			
-			mainController
-				.getEditCardController()
+			editCardController
 				.getEditCardTemplate()
 				.getBackText()
 				.setText(card.getBack());
 			
-			mainController.getEditCardController().setCard(card);
-			
-			mainController.getEditCardController().getEditCardTemplate().showModal();
+			editCardController.getEditCardTemplate().showModal();
 		}
 		
 		if(e.getSource() == cardTemplate.getDeleteCardMenuItem()) {
