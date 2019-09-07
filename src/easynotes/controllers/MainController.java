@@ -73,6 +73,12 @@ public class MainController implements ActionListener {
 		frame.setVisible(true);
 	}
 	
+	public void flipAllCards() {
+		for(int i = 0; i < cardControllers.size(); i++) {
+			cardControllers.get(i).getCardTemplate().flip();
+		}
+	}
+	
 	public void hideAllContextMenus() {
 		projectController.getProjectTemplate().getContextMenu().setVisible(false);
 		

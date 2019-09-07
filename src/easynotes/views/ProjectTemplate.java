@@ -7,15 +7,18 @@ import javax.swing.JPopupMenu;
 public class ProjectTemplate extends JPanel {
 	private JPopupMenu contextMenu;
 	private JMenuItem addCardMenuItem;
+	private JMenuItem flipAllCardsMenuItem;
 	
 	public ProjectTemplate() {
 		// Initialize components
 		contextMenu = new JPopupMenu();
 		addCardMenuItem = new JMenuItem("Add a card");
+		flipAllCardsMenuItem = new JMenuItem("Flip all cards");
 		
 		// Add components
 		this.add(contextMenu);
 		contextMenu.add(addCardMenuItem);
+		contextMenu.add(flipAllCardsMenuItem);
 	}
 
 	public JPopupMenu getContextMenu() {
@@ -32,5 +35,13 @@ public class ProjectTemplate extends JPanel {
 
 	public void setAddCardMenuItem(JMenuItem addCardMenuItem) {
 		this.addCardMenuItem = addCardMenuItem;
+	}
+
+	public JMenuItem getFlipAllCardsMenuItem() {
+		return flipAllCardsMenuItem;
+	}
+
+	public void setFlipAllCardsMenuItem(JMenuItem flipAllCardsMenuItem) {
+		this.flipAllCardsMenuItem = flipAllCardsMenuItem;
 	}
 }

@@ -30,13 +30,19 @@ public class ProjectController implements ActionListener, MouseListener {
 		// Add action listeners
 		projectTemplate.addMouseListener(this);
 		projectTemplate.getAddCardMenuItem().addActionListener(this);
+		projectTemplate.getFlipAllCardsMenuItem().addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		mainController.hideAllContextMenus();
+		
 		if(e.getSource() == projectTemplate.getAddCardMenuItem()) {
-			projectTemplate.getContextMenu().setVisible(false);
 			mainController.getAddCardController().getAddCardTemplate().showModal();
+		}
+		
+		if(e.getSource() == projectTemplate.getFlipAllCardsMenuItem()) {
+			mainController.flipAllCards();
 		}
 	}
 
