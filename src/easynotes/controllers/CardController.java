@@ -44,7 +44,8 @@ public class CardController implements MouseListener, ActionListener {
 		cardTemplate.getDeleteCardMenuItem().addActionListener(this);
 		
 		// Prepare the card template
-		cardTemplate.getLabel().setText(card.getFront());
+		cardTemplate.getFrontLabel().setText(card.getFront());
+		cardTemplate.getBackLabel().setText(card.getBack());
 	}
 
 	@Override
@@ -58,6 +59,10 @@ public class CardController implements MouseListener, ActionListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		mainController.hideAllContextMenus();
+		
+		if(SwingUtilities.isLeftMouseButton(e) && e.getModifiersEx() == MouseEvent.CTRL_DOWN_MASK) {
+			cardTemplate.flip();
+		}
 		
 		if(SwingUtilities.isRightMouseButton(e)) {
 			cardTemplate.getContextMenu().setLocation(e.getX(), e.getY());

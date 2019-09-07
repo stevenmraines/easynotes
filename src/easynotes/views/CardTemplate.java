@@ -16,28 +16,37 @@ import easynotes.models.Card;
 
 public class CardTemplate extends JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = -7500615444440173683L;
-	private JLabel label;
+	private JLabel frontLabel;
+	private JLabel backLabel;
 	private JPopupMenu contextMenu;
 	private JMenuItem deleteCardMenuItem;
 	private JMenuItem editCardMenuItem;
 	
 	public CardTemplate() {
 		// Initialize properties
-		label = new JLabel();
+		frontLabel = new JLabel();
+		backLabel = new JLabel();
 		contextMenu = new JPopupMenu();
 		editCardMenuItem = new JMenuItem("Edit this card");
 		deleteCardMenuItem = new JMenuItem("Delete this card");
 		
 		// Add components
-		this.add(label);
+		this.add(frontLabel);
+		this.add(backLabel);
 		this.add(contextMenu);
 		contextMenu.add(editCardMenuItem);
 		contextMenu.add(deleteCardMenuItem);
 		
-		// Add border
+		// Prepare for display
 		LineBorder line = new LineBorder(Color.black);
 		EmptyBorder empty = new EmptyBorder(5,5,5,5);
 		this.setBorder(new CompoundBorder(line, empty));
+		backLabel.setVisible(false);
+	}
+	
+	public void flip() {
+		frontLabel.setVisible(!frontLabel.isVisible());
+		backLabel.setVisible(!backLabel.isVisible());
 	}
 
 	public JPopupMenu getContextMenu() {
@@ -64,12 +73,20 @@ public class CardTemplate extends JPanel implements PropertyChangeListener {
 		this.editCardMenuItem = editCardMenuItem;
 	}
 
-	public JLabel getLabel() {
-		return label;
+	public JLabel getFrontLabel() {
+		return frontLabel;
 	}
 
-	public void setLabel(JLabel Label) {
-		this.label = Label;
+	public void setFrontLabel(JLabel frontLabel) {
+		this.frontLabel = frontLabel;
+	}
+	
+	public JLabel getBackLabel() {
+		return backLabel;
+	}
+
+	public void setBackLabel(JLabel backLabel) {
+		this.backLabel = backLabel;
 	}
 
 	@Override
@@ -78,7 +95,7 @@ public class CardTemplate extends JPanel implements PropertyChangeListener {
 			Card card = (Card) e.getSource();
 			
 			if(e.getPropertyName() == "front") {
-				label.setText(card.getFront());
+				frontLabel.setText(card.getFront());
 			}
 			
 //			if(e.getPropertyName() == "back") {
