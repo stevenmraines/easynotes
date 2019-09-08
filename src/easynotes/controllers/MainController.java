@@ -75,7 +75,7 @@ public class MainController implements ActionListener {
 	
 	public void flipAllCards() {
 		for(int i = 0; i < cardControllers.size(); i++) {
-			cardControllers.get(i).getCardTemplate().flip();
+			cardControllers.get(i).flip();
 		}
 	}
 	

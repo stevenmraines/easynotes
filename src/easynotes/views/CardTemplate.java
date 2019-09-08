@@ -14,6 +14,10 @@ import javax.swing.border.LineBorder;
 
 import easynotes.models.Card;
 
+/*
+ * This should not be implementing propertychangelistener,
+ * that should be done on the cardcontroller.
+ */
 public class CardTemplate extends JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = -7500615444440173683L;
 	private JLabel frontLabel;
@@ -42,11 +46,6 @@ public class CardTemplate extends JPanel implements PropertyChangeListener {
 		EmptyBorder empty = new EmptyBorder(5,5,5,5);
 		this.setBorder(new CompoundBorder(line, empty));
 		backLabel.setVisible(false);
-	}
-	
-	public void flip() {
-		frontLabel.setVisible(!frontLabel.isVisible());
-		backLabel.setVisible(!backLabel.isVisible());
 	}
 
 	public JPopupMenu getContextMenu() {

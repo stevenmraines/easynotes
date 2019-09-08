@@ -47,6 +47,11 @@ public class CardController implements MouseListener, ActionListener {
 		cardTemplate.getFrontLabel().setText(card.getFront());
 		cardTemplate.getBackLabel().setText(card.getBack());
 	}
+	
+	public void flip() {
+		cardTemplate.getFrontLabel().setVisible(!cardTemplate.getFrontLabel().isVisible());
+		cardTemplate.getBackLabel().setVisible(!cardTemplate.getBackLabel().isVisible());
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -61,7 +66,7 @@ public class CardController implements MouseListener, ActionListener {
 		mainController.hideAllContextMenus();
 		
 		if(SwingUtilities.isLeftMouseButton(e) && e.getModifiersEx() == MouseEvent.CTRL_DOWN_MASK) {
-			cardTemplate.flip();
+			flip();
 		}
 		
 		if(SwingUtilities.isRightMouseButton(e)) {
