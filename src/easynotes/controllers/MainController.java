@@ -2,6 +2,12 @@ package easynotes.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -11,6 +17,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import easynotes.models.Card;
 
 /*
  * This class mainly acts as a hook for the child
@@ -113,11 +121,48 @@ public class MainController implements ActionListener {
 		}
 		
 		if(e.getSource() == saveProjectMenuItem) {
+			Card[] cards = new Card[cardControllers.size()];
 			
+			for(int i = 0; i < cards.length; i++) {
+				cards[i] = cardControllers.get(i).getCard();
+			}
+			
+			try {
+				FileOutputStream fileOutput = new FileOutputStream("test.txt");
+				ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput);
+				
+				objectOutput.writeObject(cards);
+				
+				objectOutput.close();
+				fileOutput.close();
+				
+				JOptionPane.showMessageDialog(null, "Saved!");
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 		if(e.getSource() == loadProjectMenuItem) {
-			
+			try {
+				FileInputStream fileInput = new FileInputStream("test.txt");
+				ObjectInputStream objectInput = new ObjectInputStream(fileInput);
+				Card[] inputCards = (Card[]) objectInput.readObject();
+				
+				if(inputCards != null && inputCards.length > 0) {
+					for(int i = 0; i < inputCards.length; i++) {
+						addNewCardController(new CardController(this, inputCards[i]));
+					}
+				}
+				
+				objectInput.close();
+				fileInput.close();
+				
+				JOptionPane.showMessageDialog(null, "Loaded!");
+			} catch (ClassNotFoundException | IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 		if(e.getSource() == aboutMenuItem) {

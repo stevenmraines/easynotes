@@ -1,6 +1,9 @@
 package easynotes.models;
 
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable {
+	private static final long serialVersionUID = -6450209576226923325L;
 	private String front;
 	private String back;
 	
