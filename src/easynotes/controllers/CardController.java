@@ -29,7 +29,6 @@ public class CardController implements MouseListener, ActionListener {
 		cardTemplate.addMouseListener(this);
 		cardTemplate.getEditCardMenuItem().addActionListener(this);
 		cardTemplate.getDeleteCardMenuItem().addActionListener(this);
-		card.addPropertyChangeListener(cardTemplate);
 	}
 
 	public CardController(MainController mainController, Card card) {
@@ -120,7 +119,7 @@ public class CardController implements MouseListener, ActionListener {
 		}
 		
 		if(e.getSource() == cardTemplate.getDeleteCardMenuItem()) {
-			
+			mainController.deleteCardController(this);
 		}
 	}
 

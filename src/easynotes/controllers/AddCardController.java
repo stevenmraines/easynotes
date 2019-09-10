@@ -30,6 +30,7 @@ public class AddCardController implements ActionListener {
 			String backText = addCardTemplate.getBackText().getText();
 			mainController.addNewCardController(new CardController(mainController, new Card(frontText, backText)));
 			addCardTemplate.hideModal();
+			mainController.getProjectController().getProjectTemplate().revalidate();
 		}
 	}
 

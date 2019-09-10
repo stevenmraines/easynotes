@@ -10,6 +10,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /*
  * This class mainly acts as a hook for the child
@@ -26,6 +27,7 @@ public class MainController implements ActionListener {
 	// Register GUI components
 	private JFrame frame;
 	private JPanel panel;
+	private JScrollPane scrollPane;
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
 	private JMenu infoMenu;
@@ -41,6 +43,7 @@ public class MainController implements ActionListener {
 		addCardController = new AddCardController(this);
 		frame = new JFrame("New Project");
 		panel = new JPanel();
+		scrollPane = new JScrollPane();
 		menuBar = new JMenuBar();
 		fileMenu = new JMenu("File");
 		infoMenu = new JMenu("Info");
@@ -50,7 +53,8 @@ public class MainController implements ActionListener {
 		aboutMenuItem = new JMenuItem("About");
 		
 		// Add components
-		frame.add(panel);
+		frame.add(scrollPane);
+		scrollPane.add(panel);
 		panel.add(projectController.getProjectTemplate());
 		frame.setJMenuBar(menuBar);
 		frame.add(projectController.getProjectTemplate());
@@ -96,7 +100,10 @@ public class MainController implements ActionListener {
 	}
 	
 	public void deleteCardController(CardController cardController) {
-		
+		cardControllers.remove(cardControllers.indexOf(cardController));
+		projectController.getProjectTemplate().remove(cardController.getCardTemplate());
+		projectController.getProjectTemplate().revalidate();
+		frame.repaint();
 	}
 
 	@Override

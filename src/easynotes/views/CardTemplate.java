@@ -1,9 +1,6 @@
 package easynotes.views;
 
 import java.awt.Color;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -12,14 +9,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import easynotes.models.Card;
-
-/*
- * This should not be implementing propertychangelistener,
- * that should be done on the cardcontroller.
- */
-public class CardTemplate extends JPanel implements PropertyChangeListener {
-	private static final long serialVersionUID = -7500615444440173683L;
+public class CardTemplate extends JPanel {
 	private JLabel frontLabel;
 	private JLabel backLabel;
 	private JPopupMenu contextMenu;
@@ -45,6 +35,7 @@ public class CardTemplate extends JPanel implements PropertyChangeListener {
 		LineBorder line = new LineBorder(Color.black);
 		EmptyBorder empty = new EmptyBorder(5,5,5,5);
 		this.setBorder(new CompoundBorder(line, empty));
+		this.setBackground(Color.white);
 		backLabel.setVisible(false);
 	}
 
@@ -87,19 +78,5 @@ public class CardTemplate extends JPanel implements PropertyChangeListener {
 	public void setBackLabel(JLabel backLabel) {
 		this.backLabel = backLabel;
 	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent e) {
-		if(e.getSource() instanceof Card) {
-			Card card = (Card) e.getSource();
-			
-			if(e.getPropertyName() == "front") {
-				frontLabel.setText(card.getFront());
-			}
-			
-//			if(e.getPropertyName() == "back") {
-//				label.setText(card.getBack());
-//			}
-		}
-	}
+	
 }

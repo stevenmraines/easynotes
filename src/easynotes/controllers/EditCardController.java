@@ -39,7 +39,7 @@ public class EditCardController implements ActionListener {
 		if(e.getSource() == editCardTemplate.getActionButton()) {
 			cardController.getCard().setFront(editCardTemplate.getFrontText().getText());
 			cardController.getCard().setBack(editCardTemplate.getBackText().getText());
-			// do this bit manually for now
+			// Do this manually until I can figure out the propertyChangeListener thing
 			cardController.getCardTemplate().getFrontLabel().setText(editCardTemplate.getFrontText().getText());
 			cardController.getCardTemplate().getBackLabel().setText(editCardTemplate.getBackText().getText());
 			editCardTemplate.hideModal();

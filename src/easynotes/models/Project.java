@@ -2,6 +2,9 @@ package easynotes.models;
 
 import java.util.ArrayList;
 
+/*
+ * Is this model even needed? Probably not...
+ */
 public class Project {
 	private ArrayList<Card> cards;
 	
