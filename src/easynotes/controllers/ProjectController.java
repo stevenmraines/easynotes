@@ -4,17 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-
 import javax.swing.SwingUtilities;
 
-import easynotes.models.Project;
 import easynotes.views.ProjectTemplate;
 
+/*
+ * Mainly controls the context menu of the project view panel.
+ */
 public class ProjectController implements ActionListener, MouseListener {
-	// Register models
-	private Project project;
-	
 	// Register views
 	private ProjectTemplate projectTemplate;
 	
@@ -24,7 +21,6 @@ public class ProjectController implements ActionListener, MouseListener {
 	public ProjectController(MainController mainController) {
 		// Initialize properties
 		this.mainController = mainController;
-		project = new Project();
 		projectTemplate = new ProjectTemplate();
 		
 		// Add action listeners
@@ -44,14 +40,6 @@ public class ProjectController implements ActionListener, MouseListener {
 		if(e.getSource() == projectTemplate.getFlipAllCardsMenuItem()) {
 			mainController.flipAllCards();
 		}
-	}
-
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
 	}
 
 	public ProjectTemplate getProjectTemplate() {

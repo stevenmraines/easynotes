@@ -2,6 +2,10 @@ package easynotes.models;
 
 import java.io.Serializable;
 
+/*
+ * This is the main model used by the application.
+ * It simply contains the card front and back text.
+ */
 public class Card implements Serializable {
 	private static final long serialVersionUID = -6450209576226923325L;
 	private String front;
@@ -22,6 +26,9 @@ public class Card implements Serializable {
 		this.back = back;
 	}
 
+	/*
+	 * Setters and getters.
+	 */
 	public String getFront() {
 		return front;
 	}
