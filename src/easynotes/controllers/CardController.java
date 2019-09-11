@@ -34,6 +34,7 @@ public class CardController implements MouseListener, ActionListener {
 		cardTemplate.addMouseListener(this);
 		cardTemplate.getEditCardMenuItem().addActionListener(this);
 		cardTemplate.getDeleteCardMenuItem().addActionListener(this);
+		cardTemplate.getDuplicateCardMenuItem().addActionListener(this);
 	}
 
 	public CardController(MainController mainController, Card card) {
@@ -46,6 +47,7 @@ public class CardController implements MouseListener, ActionListener {
 		cardTemplate.addMouseListener(this);
 		cardTemplate.getEditCardMenuItem().addActionListener(this);
 		cardTemplate.getDeleteCardMenuItem().addActionListener(this);
+		cardTemplate.getDuplicateCardMenuItem().addActionListener(this);
 		
 		// Prepare the card template
 		cardTemplate.getFrontLabel().setText(card.getFront());
@@ -85,7 +87,7 @@ public class CardController implements MouseListener, ActionListener {
 		
 		// Show context menu on card
 		if(SwingUtilities.isRightMouseButton(e)) {
-			Point menuLocation = cardTemplate.getLocation();
+			Point menuLocation = mainController.getFrame().getLocation();
 			menuLocation.translate(e.getX(), e.getY());
 			cardTemplate.getContextMenu().setLocation(menuLocation);
 			cardTemplate.getContextMenu().setVisible(true);
@@ -107,6 +109,11 @@ public class CardController implements MouseListener, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// Hide any other visible context menus
 		mainController.hideAllContextMenus();
+		
+		// Duplicate a card menu item clicked
+		if(e.getSource() == cardTemplate.getDuplicateCardMenuItem()) {
+			mainController.duplicateCardController(this);
+		}
 		
 		// Edit a card menu item clicked
 		if(e.getSource() == cardTemplate.getEditCardMenuItem()) {

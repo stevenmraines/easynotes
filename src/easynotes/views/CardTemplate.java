@@ -9,18 +9,24 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+/*
+ * This class is the template for the card view.
+ * It contains a context menu for several card actions.
+ */
 public class CardTemplate extends JPanel {
 	private JLabel frontLabel;
 	private JLabel backLabel;
 	private JPopupMenu contextMenu;
 	private JMenuItem deleteCardMenuItem;
 	private JMenuItem editCardMenuItem;
+	private JMenuItem duplicateCardMenuItem;
 	
 	public CardTemplate() {
 		// Initialize properties
 		frontLabel = new JLabel();
 		backLabel = new JLabel();
 		contextMenu = new JPopupMenu();
+		duplicateCardMenuItem = new JMenuItem("Duplicate this card");
 		editCardMenuItem = new JMenuItem("Edit this card");
 		deleteCardMenuItem = new JMenuItem("Delete this card");
 		
@@ -28,6 +34,7 @@ public class CardTemplate extends JPanel {
 		this.add(frontLabel);
 		this.add(backLabel);
 		this.add(contextMenu);
+		contextMenu.add(duplicateCardMenuItem);
 		contextMenu.add(editCardMenuItem);
 		contextMenu.add(deleteCardMenuItem);
 		
@@ -39,6 +46,9 @@ public class CardTemplate extends JPanel {
 		backLabel.setVisible(false);
 	}
 
+	/*
+	 * Setters and getters
+	 */
 	public JPopupMenu getContextMenu() {
 		return contextMenu;
 	}
@@ -53,6 +63,14 @@ public class CardTemplate extends JPanel {
 
 	public void setDeleteCardMenuItem(JMenuItem deleteCardMenuItem) {
 		this.deleteCardMenuItem = deleteCardMenuItem;
+	}
+	
+	public JMenuItem getDuplicateCardMenuItem() {
+		return duplicateCardMenuItem;
+	}
+
+	public void setDuplicateCardMenuItem(JMenuItem duplicateCardMenuItem) {
+		this.duplicateCardMenuItem = duplicateCardMenuItem;
 	}
 
 	public JMenuItem getEditCardMenuItem() {

@@ -1,5 +1,6 @@
 package easynotes.controllers;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -60,10 +61,13 @@ public class ProjectController implements ActionListener, MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		// Hide all visible context menus
 		mainController.hideAllContextMenus();
 		
 		if(SwingUtilities.isRightMouseButton(e)) {
-			projectTemplate.getContextMenu().setLocation(e.getX(), e.getY());
+			Point menuLocation = mainController.getFrame().getLocation();
+			menuLocation.translate(e.getX(), e.getY());
+			projectTemplate.getContextMenu().setLocation(menuLocation);
 			projectTemplate.getContextMenu().setVisible(true);
 		}
 	}

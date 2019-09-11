@@ -99,6 +99,24 @@ public class MainController implements ActionListener {
 	}
 	
 	/*
+	 * Duplicates a card and adds it in place of the original.
+	 */
+	public void duplicateCardController(CardController cardController) {
+		// Add the duplicated CardController
+		Card duplicate = new Card(cardController.getCard().getFront(), cardController.getCard().getBack());
+		CardController duplicateController = new CardController(this, duplicate);
+		// TODO this is shifting the indices of the arraylist, but it doesn't shift the
+		// positions of the components on the panel.
+		cardControllers.add(cardControllers.indexOf(cardController), duplicateController);
+		
+		// Add the new card to the project view
+		projectController.getProjectTemplate().add(duplicateController.getCardTemplate());
+		
+		// Force the project view to show the changes
+		projectController.getProjectTemplate().revalidate();
+	}
+	
+	/*
 	 * Toggles all cards in the current project.
 	 */
 	public void flipAllCards() {
@@ -273,5 +291,13 @@ public class MainController implements ActionListener {
 
 	public void setCardControllers(ArrayList<CardController> cardControllers) {
 		this.cardControllers = cardControllers;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 }
