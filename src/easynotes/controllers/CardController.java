@@ -3,6 +3,7 @@ package easynotes.controllers;
 import easynotes.models.Card;
 import easynotes.views.CardTemplate;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -84,7 +85,9 @@ public class CardController implements MouseListener, ActionListener {
 		
 		// Show context menu on card
 		if(SwingUtilities.isRightMouseButton(e)) {
-			cardTemplate.getContextMenu().setLocation(e.getX(), e.getY());
+			Point menuLocation = cardTemplate.getLocation();
+			menuLocation.translate(e.getX(), e.getY());
+			cardTemplate.getContextMenu().setLocation(menuLocation);
 			cardTemplate.getContextMenu().setVisible(true);
 		}
 	}

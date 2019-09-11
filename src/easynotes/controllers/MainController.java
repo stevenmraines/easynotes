@@ -2,6 +2,7 @@ package easynotes.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -221,10 +222,14 @@ public class MainController implements ActionListener {
 					FileInputStream fileInput = new FileInputStream(file.getAbsolutePath());
 					ObjectInputStream objectInput = new ObjectInputStream(fileInput);
 					
-					while(objectInput.available() > 0) {
-						Card inputCard = (Card) objectInput.readObject();
-						addNewCardController(new CardController(this, inputCard));
-					}
+					try {
+						Object inputCard = objectInput.readObject();
+						
+						while(inputCard instanceof Card) {
+							addNewCardController(new CardController(this, (Card) inputCard));
+							inputCard = objectInput.readObject();
+						}
+					} catch(EOFException e2) {}
 					
 					objectInput.close();
 					fileInput.close();
