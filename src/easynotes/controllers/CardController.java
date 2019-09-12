@@ -8,13 +8,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
 import javax.swing.SwingUtilities;
 
 /*
  * This class acts as the controller facilitating communication
  * between the card view and the card model.
  */
-public class CardController implements MouseListener, ActionListener {
+public class CardController implements MouseListener, MouseMotionListener, ActionListener {
 	// Register parent controller
 	private MainController mainController;
 	
@@ -32,6 +34,7 @@ public class CardController implements MouseListener, ActionListener {
 		
 		// Add action listeners
 		cardTemplate.addMouseListener(this);
+		cardTemplate.addMouseMotionListener(this);
 		cardTemplate.getEditCardMenuItem().addActionListener(this);
 		cardTemplate.getDeleteCardMenuItem().addActionListener(this);
 		cardTemplate.getDuplicateCardMenuItem().addActionListener(this);
@@ -45,6 +48,7 @@ public class CardController implements MouseListener, ActionListener {
 		
 		// Add action listeners
 		cardTemplate.addMouseListener(this);
+		cardTemplate.addMouseMotionListener(this);
 		cardTemplate.getEditCardMenuItem().addActionListener(this);
 		cardTemplate.getDeleteCardMenuItem().addActionListener(this);
 		cardTemplate.getDuplicateCardMenuItem().addActionListener(this);
@@ -67,12 +71,10 @@ public class CardController implements MouseListener, ActionListener {
 	 * and flipping specific cards.
 	 */
 	@Override
-	public void mouseClicked(MouseEvent e) {
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -87,20 +89,39 @@ public class CardController implements MouseListener, ActionListener {
 		
 		// Show context menu on card
 		if(SwingUtilities.isRightMouseButton(e)) {
-			Point menuLocation = mainController.getFrame().getLocation();
+			// Get locations of main JFrame of application and this cardTemplate
+			Point frameLocation = mainController.getFrame().getLocation();
+			Point cardTemplateLocation = cardTemplate.getLocation();
+			Point menuLocation = new Point();
+			
+			// Get location for context menu relative to JFrame, cardTemplate, and click location
+			menuLocation.translate((int)frameLocation.getX(), (int)frameLocation.getY());
+			menuLocation.translate((int)cardTemplateLocation.getX(), (int)cardTemplateLocation.getY());
 			menuLocation.translate(e.getX(), e.getY());
+			
+			// Set X and Y for context menu and display it
 			cardTemplate.getContextMenu().setLocation(menuLocation);
 			cardTemplate.getContextMenu().setVisible(true);
 		}
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
+	
+	/*
+	 * MouseMotionListener methods for handling click and drag events
+	 * for reordering cards.
+	 */
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		
 	}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-	}
+	public void mouseMoved(MouseEvent e) {}
 	
 	/*
 	 * ActionListener methods for handling context menu option clicks.

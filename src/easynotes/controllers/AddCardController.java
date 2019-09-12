@@ -28,7 +28,7 @@ public class AddCardController implements ActionListener {
 		if(e.getSource() == addCardTemplate.getActionButton()) {
 			String frontText = addCardTemplate.getFrontText().getText();
 			String backText = addCardTemplate.getBackText().getText();
-			mainController.addNewCardController(new CardController(mainController, new Card(frontText, backText)));
+			mainController.addCardController(new CardController(mainController, new Card(frontText, backText)));
 			addCardTemplate.hideModal();
 		}
 	}

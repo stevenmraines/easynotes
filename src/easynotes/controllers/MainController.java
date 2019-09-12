@@ -2,6 +2,8 @@ package easynotes.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +32,7 @@ import easynotes.models.Card;
  * It also creates the main JFrame of the application
  * and handles events for the main menu bar.
  */
-public class MainController implements ActionListener {
+public class MainController implements ActionListener, KeyListener {
 	// Register controllers
 	private ProjectController projectController;
 	private ArrayList<CardController> cardControllers;
@@ -87,6 +89,7 @@ public class MainController implements ActionListener {
 		loadProjectMenuItem.addActionListener(this);
 		aboutMenuItem.addActionListener(this);
 		fileChooser.addActionListener(this);
+		frame.addKeyListener(this);
 		
 		// Prepare the fileChooser
 		fileChooser.addChoosableFileFilter(esnFilter);
@@ -96,24 +99,6 @@ public class MainController implements ActionListener {
 		frame.setSize(500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-	}
-	
-	/*
-	 * Duplicates a card and adds it in place of the original.
-	 */
-	public void duplicateCardController(CardController cardController) {
-		// Add the duplicated CardController
-		Card duplicate = new Card(cardController.getCard().getFront(), cardController.getCard().getBack());
-		CardController duplicateController = new CardController(this, duplicate);
-		// TODO this is shifting the indices of the arraylist, but it doesn't shift the
-		// positions of the components on the panel.
-		cardControllers.add(cardControllers.indexOf(cardController), duplicateController);
-		
-		// Add the new card to the project view
-		projectController.getProjectTemplate().add(duplicateController.getCardTemplate());
-		
-		// Force the project view to show the changes
-		projectController.getProjectTemplate().revalidate();
 	}
 	
 	/*
@@ -141,7 +126,7 @@ public class MainController implements ActionListener {
 	/*
 	 * Adds a new card to the project.
 	 */
-	public void addNewCardController(CardController cardController) {
+	public void addCardController(CardController cardController) {
 		// Add the new CardController to the list
 		cardControllers.add(cardController);
 		
@@ -150,6 +135,15 @@ public class MainController implements ActionListener {
 		
 		// Force the project panel to show the changes
 		projectController.getProjectTemplate().revalidate();
+	}
+	
+	/*
+	 * Adds all cards from an array list of cards to a project.
+	 */
+	public void addAllCardControllers(ArrayList<CardController> cardControllers) {
+		for(int i = 0; i < cardControllers.size(); i++) {
+			addCardController(cardControllers.get(i));
+		}
 	}
 	
 	/*
@@ -183,6 +177,118 @@ public class MainController implements ActionListener {
 		projectController.getProjectTemplate().revalidate();
 		frame.repaint();
 	}
+	
+	/*
+	 * Deletes all the cards, and adds all the cards from the array list passed to the method.
+	 */
+	public void replaceAllCardControllers(ArrayList<CardController> cardControllers) {
+		// Delete everything
+		deleteAllCardControllers();
+		
+		// Now add the new cards
+		addAllCardControllers(cardControllers);
+	}
+	
+	/*
+	 * Duplicates a card and adds it in place of the original.
+	 */
+	public void duplicateCardController(CardController cardController) {
+		// Add the duplicated CardController
+		Card duplicate = new Card(cardController.getCard().getFront(), cardController.getCard().getBack());
+		CardController duplicateController = new CardController(this, duplicate);
+		cardControllers.add(cardControllers.indexOf(cardController), duplicateController);
+		
+		// Replace and redraw everything
+		replaceAllCardControllers(cardControllers);
+	}
+	
+	/*
+	 * Displays a filechooser window to allow the user to save the current project.
+	 */
+	private void saveProject() {
+		int fileChooserReturnValue = fileChooser.showSaveDialog(frame);
+		
+		if(fileChooserReturnValue == JFileChooser.APPROVE_OPTION) {
+			// Get the file that the user selected
+			File file = fileChooser.getSelectedFile();
+			
+			try {
+				
+				// Open the output streams
+				FileOutputStream fileOutput = new FileOutputStream(file.getAbsolutePath());
+				ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput);
+			
+				// Write the objects
+				for(int i = 0; i < cardControllers.size(); i++) {
+					objectOutput.writeObject(cardControllers.get(i).getCard());
+				}
+				
+				// Close the output streams
+				objectOutput.close();
+				fileOutput.close();
+				
+				// Update the title of the frame to reflect the file name
+				frame.setTitle(file.getName());
+				
+			} catch (IOException e1) {
+				JOptionPane.showMessageDialog(frame, "Could not save the file.");
+			}
+		}
+	}
+	
+	/*
+	 * Displays a filechooser window to allow the user to load a project from a file.
+	 */
+	private void loadProject() {
+		int fileChooserReturnValue = fileChooser.showOpenDialog(frame);
+		
+		if(fileChooserReturnValue == JFileChooser.APPROVE_OPTION) {
+			// Delete the current cards
+			deleteAllCardControllers();
+			
+			// Get the file that the user selected
+			File file = fileChooser.getSelectedFile();
+			
+			try {
+				
+				// Open the input streams
+				FileInputStream fileInput = new FileInputStream(file.getAbsolutePath());
+				ObjectInputStream objectInput = new ObjectInputStream(fileInput);
+				
+				// Get the objects
+				try {
+					Object inputCard = objectInput.readObject();
+					
+					while(inputCard instanceof Card) {
+						addCardController(new CardController(this, (Card) inputCard));
+						inputCard = objectInput.readObject();
+					}
+				} catch(EOFException e2) {}
+				
+				// Close the input streams
+				objectInput.close();
+				fileInput.close();
+				
+				// Update the title of the frame to reflect the current project
+				frame.setTitle(file.getName());
+				
+			} catch (ClassNotFoundException | IOException e1) {
+				JOptionPane.showMessageDialog(frame, "Could not open the file.");
+			}
+		}
+	}
+	
+	/*
+	 * Clears the current cards and makes a new project.
+	 */
+	private void newProject() {
+		int confirmNew = JOptionPane.showConfirmDialog(frame, "Are you sure you want to discard this project?");
+		
+		if(confirmNew == JOptionPane.OK_OPTION) {
+			deleteAllCardControllers();
+			frame.setTitle("New Project");
+		}
+	}
 
 	/*
 	 * ActionListener methods for handling menu bar clicks.
@@ -191,78 +297,49 @@ public class MainController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// New project clicked
 		if(e.getSource() == newProjectMenuItem) {
-			int confirmNew = JOptionPane.showConfirmDialog(frame, "Are you sure you want to discard this project?");
-			
-			if(confirmNew == JOptionPane.OK_OPTION) {
-				deleteAllCardControllers();
-			}
+			newProject();
 		}
 		
 		// Save project clicked
 		if(e.getSource() == saveProjectMenuItem) {
-			int fileChooserReturnValue = fileChooser.showSaveDialog(frame);
-			
-			if(fileChooserReturnValue == JFileChooser.APPROVE_OPTION) {
-				File file = fileChooser.getSelectedFile();
-				
-				try {
-					
-					FileOutputStream fileOutput = new FileOutputStream(file.getAbsolutePath());
-					ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput);
-				
-					for(int i = 0; i < cardControllers.size(); i++) {
-						objectOutput.writeObject(cardControllers.get(i).getCard());
-					}
-					
-					objectOutput.close();
-					fileOutput.close();
-					
-					frame.setTitle(file.getName());
-					
-				} catch (IOException e1) {
-					JOptionPane.showMessageDialog(frame, "Could not save the file.");
-				}
-			}
+			saveProject();
 		}
 		
 		// Load project clicked
 		if(e.getSource() == loadProjectMenuItem) {
-			int fileChooserReturnValue = fileChooser.showOpenDialog(frame);
-			
-			if(fileChooserReturnValue == JFileChooser.APPROVE_OPTION) {
-				// Delete the current cards
-				deleteAllCardControllers();
-				
-				File file = fileChooser.getSelectedFile();
-				
-				try {
-					
-					FileInputStream fileInput = new FileInputStream(file.getAbsolutePath());
-					ObjectInputStream objectInput = new ObjectInputStream(fileInput);
-					
-					try {
-						Object inputCard = objectInput.readObject();
-						
-						while(inputCard instanceof Card) {
-							addNewCardController(new CardController(this, (Card) inputCard));
-							inputCard = objectInput.readObject();
-						}
-					} catch(EOFException e2) {}
-					
-					objectInput.close();
-					fileInput.close();
-					
-					frame.setTitle(file.getName());
-					
-				} catch (ClassNotFoundException | IOException e1) {
-					JOptionPane.showMessageDialog(frame, "Could not open the file.");
-				}
-			}
+			loadProject();
 		}
 		
 		// About clicked
 		if(e.getSource() == aboutMenuItem) {
 			JOptionPane.showMessageDialog(frame, "Easynotes v1.0\nCreated by: Steven Raines\nCreated on: 8/28/2019");
+		}
+	}
+	
+	/*
+	 * KeyListener events for saving, loading, and new project.
+	 */
+	@Override
+	public void keyTyped(KeyEvent e) {}
+
+	@Override
+	public void keyPressed(KeyEvent e) {}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// Save project as
+		if(e.getKeyCode() == KeyEvent.VK_S && e.isControlDown() && e.isShiftDown()) {
+			saveProject();
+		}
+		
+		// Load project
+		if(e.getKeyCode() == KeyEvent.VK_O && e.isControlDown()) {
+			loadProject();
+		}
+		
+		// New project
+		if(e.getKeyCode() == KeyEvent.VK_N && e.isControlDown()) {
+			newProject();
 		}
 	}
 
