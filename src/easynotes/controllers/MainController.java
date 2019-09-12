@@ -1,5 +1,6 @@
 package easynotes.controllers;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -138,6 +139,17 @@ public class MainController implements ActionListener, KeyListener {
 	}
 	
 	/*
+	 * Add a card at a certain index.
+	 */
+	public void addCardController(int index, CardController cardController) {
+		// Add the new CardController to the list
+		cardControllers.add(index, cardController);
+		
+		// Add back all the cards in the new order
+		replaceAllCardControllers(cardControllers);
+	}
+	
+	/*
 	 * Adds all cards from an array list of cards to a project.
 	 */
 	public void addAllCardControllers(ArrayList<CardController> cardControllers) {
@@ -200,6 +212,44 @@ public class MainController implements ActionListener, KeyListener {
 		
 		// Replace and redraw everything
 		replaceAllCardControllers(cardControllers);
+	}
+	
+	/*
+	 * Find the index of the CardController which overlaps the given X and Y coordinates.
+	 */
+	public CardController getCardControllerInCoordinates(int x, int y) {
+		Point adjustedLocation = new Point(x, y);
+		Point frameLocation = frame.getLocation();
+		Point panelLocation = panel.getLocation();
+		Point projectLocation = projectController.getProjectTemplate().getLocation();
+		adjustedLocation.translate((int)frameLocation.getX(), (int)frameLocation.getY());
+		adjustedLocation.translate((int)panelLocation.getX(), (int)panelLocation.getY());
+		adjustedLocation.translate((int)projectLocation.getX(), (int)projectLocation.getY());
+		
+		for(int i = 0; i < cardControllers.size(); i++) {
+			CardController cc = cardControllers.get(i);
+			Point templateLocation = cc.getCardTemplate().getLocation();
+			templateLocation.translate((int)frameLocation.getX(), (int)frameLocation.getY());
+			templateLocation.translate((int)panelLocation.getX(), (int)panelLocation.getY());
+			templateLocation.translate((int)projectLocation.getX(), (int)projectLocation.getY());
+			
+			int cardX = (int)templateLocation.getX();
+			int cardY = (int)templateLocation.getY();
+			int cardW = cc.getCardTemplate().getWidth();
+			int cardH = cc.getCardTemplate().getHeight();
+			
+			boolean overlapX = (int)adjustedLocation.getX() >= cardX
+					&& (int)adjustedLocation.getX() <= (cardX + cardW);
+			
+			boolean overlapY = (int)adjustedLocation.getY() >= cardY
+					&& (int)adjustedLocation.getY() <= (cardY + cardH);
+			
+			if(overlapX && overlapY) {
+				return cc; 
+			}
+		}
+		
+		return null;
 	}
 	
 	/*
