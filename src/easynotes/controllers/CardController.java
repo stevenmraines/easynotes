@@ -55,6 +55,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 		cardTemplate.getDuplicateCardMenuItem().addActionListener(this);
 		
 		// Prepare the card template
+		cardTemplate.setBackground(card.getColor());
 		cardTemplate.getFrontLabel().setText(card.getFront());
 		cardTemplate.getBackLabel().setText(card.getBack());
 	}

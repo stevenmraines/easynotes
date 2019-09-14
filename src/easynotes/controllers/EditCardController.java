@@ -1,5 +1,6 @@
 package easynotes.controllers;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,6 +25,11 @@ public class EditCardController implements ActionListener {
 		
 		// Add action listeners
 		editCardTemplate.getActionButton().addActionListener(this);
+		
+		// Prepare template
+		editCardTemplate.getRedText().setText(Integer.toString(this.cardController.getCard().getColor().getRed()));
+		editCardTemplate.getGreenText().setText(Integer.toString(this.cardController.getCard().getColor().getGreen()));
+		editCardTemplate.getBlueText().setText(Integer.toString(this.cardController.getCard().getColor().getBlue()));
 	}
 
 	public EditCardTemplate getEditCardTemplate() {
@@ -39,9 +45,15 @@ public class EditCardController implements ActionListener {
 		if(e.getSource() == editCardTemplate.getActionButton()) {
 			cardController.getCard().setFront(editCardTemplate.getFrontText().getText());
 			cardController.getCard().setBack(editCardTemplate.getBackText().getText());
+			cardController.getCard().setColor(new Color(
+				Integer.parseInt(editCardTemplate.getRedText().getText()),
+				Integer.parseInt(editCardTemplate.getGreenText().getText()),
+				Integer.parseInt(editCardTemplate.getBlueText().getText())
+			));
 			// Do this manually until I can figure out the propertyChangeListener thing
 			cardController.getCardTemplate().getFrontLabel().setText(editCardTemplate.getFrontText().getText());
 			cardController.getCardTemplate().getBackLabel().setText(editCardTemplate.getBackText().getText());
+			cardController.getCardTemplate().setBackground(cardController.getCard().getColor());
 			editCardTemplate.hideModal();
 		}
 	}
