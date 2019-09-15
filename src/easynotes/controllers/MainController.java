@@ -72,12 +72,8 @@ public class MainController implements ActionListener, KeyListener {
 		esnFilter = new FileNameExtensionFilter("Easynotes files", "esn");
 		
 		// Add components
-//		frame.add(scrollPane);
-//		scrollPane.add(panel);
 		frame.setJMenuBar(menuBar);
 		frame.add(projectController.getProjectTemplate());
-//		frame.add(panel);
-//		panel.add(projectController.getProjectTemplate());
 		menuBar.add(fileMenu);
 		menuBar.add(infoMenu);
 		fileMenu.add(newProjectMenuItem);
