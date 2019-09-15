@@ -1,5 +1,11 @@
 package easynotes.views;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -9,6 +15,7 @@ public class ProjectTemplate extends JPanel {
 	private JPopupMenu contextMenu;
 	private JMenuItem addCardMenuItem;
 	private JMenuItem flipAllCardsMenuItem;
+	private BufferedImage background;
 	
 	public ProjectTemplate() {
 		// Initialize components
@@ -20,8 +27,41 @@ public class ProjectTemplate extends JPanel {
 		this.add(contextMenu);
 		contextMenu.add(addCardMenuItem);
 		contextMenu.add(flipAllCardsMenuItem);
+		
+		// Prepare background image
+		try {
+			background = ImageIO.read(new File("img/cork.jpg"));
+		} catch(IOException e) {
+			// Do nothing?
+		}
+	}
+	
+	/*
+	 * Override paintComponent to draw corkboard image background.
+	 */
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
+//		if(background != null) {
+//			int w = this.getWidth();
+//			int h = this.getHeight();
+//			int bw = background.getWidth();
+//			int bh = background.getHeight();
+//			int rx = Math.round(w / bw);
+//			int ry = Math.round(h / bh);
+//			
+//			for(int i = 1; i <= rx; i++) {
+//				for(int j = 1; j <= ry; j++) {
+//					g.drawImage(background, i * bw, j * bh, null);
+//				}
+//			}
+//		}
 	}
 
+	/*
+	 * Setters and getters.
+	 */
 	public JPopupMenu getContextMenu() {
 		return contextMenu;
 	}
