@@ -11,7 +11,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import components.JLabelHtml;
+import easynotes.components.JLabelHtml;
 
 /*
  * This class is the template for the card view.
@@ -44,11 +44,18 @@ public class CardTemplate extends JPanel {
 		contextMenu.add(deleteCardMenuItem);
 		
 		// Prepare for display
-		this.setPreferredSize(new Dimension(200, 120));
-		LineBorder line = new LineBorder(Color.black);
-		EmptyBorder empty = new EmptyBorder(5,5,5,5);
+		LineBorder line = new LineBorder(Color.lightGray);
+		EmptyBorder empty = new EmptyBorder(5, 5, 5, 5);
 		this.setBorder(new CompoundBorder(line, empty));
 		this.setBackground(Color.white);
+		frontLabel.setBorder(empty);
+		backLabel.setBorder(empty);
+		frontLabel.setPreferredSize(new Dimension(250, 150));
+		backLabel.setPreferredSize(new Dimension(250, 150));
+		frontLabel.setForeground(Color.darkGray);
+		backLabel.setForeground(Color.darkGray);
+		frontLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		frontLabel.setAlignmentY(JLabel.CENTER_ALIGNMENT);
 		backLabel.setVisible(false);
 	}
 

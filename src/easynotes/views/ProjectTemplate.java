@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 public class ProjectTemplate extends JPanel {
+	private static final long serialVersionUID = -3447234042759312451L;
 	private JPopupMenu contextMenu;
 	private JMenuItem addCardMenuItem;
 	private JMenuItem flipAllCardsMenuItem;
@@ -44,4 +45,5 @@ public class ProjectTemplate extends JPanel {
 	public void setFlipAllCardsMenuItem(JMenuItem flipAllCardsMenuItem) {
 		this.flipAllCardsMenuItem = flipAllCardsMenuItem;
 	}
+	
 }

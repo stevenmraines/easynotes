@@ -1,5 +1,6 @@
 package easynotes.controllers;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -71,11 +72,12 @@ public class MainController implements ActionListener, KeyListener {
 		esnFilter = new FileNameExtensionFilter("Easynotes files", "esn");
 		
 		// Add components
-		frame.add(scrollPane);
-		scrollPane.add(panel);
-		panel.add(projectController.getProjectTemplate());
+//		frame.add(scrollPane);
+//		scrollPane.add(panel);
 		frame.setJMenuBar(menuBar);
 		frame.add(projectController.getProjectTemplate());
+//		frame.add(panel);
+//		panel.add(projectController.getProjectTemplate());
 		menuBar.add(fileMenu);
 		menuBar.add(infoMenu);
 		fileMenu.add(newProjectMenuItem);
@@ -91,7 +93,7 @@ public class MainController implements ActionListener, KeyListener {
 		fileChooser.addActionListener(this);
 		frame.addKeyListener(this);
 		
-		// Prepare the fileChooser
+		// Prepare the JFileChooser
 		fileChooser.addChoosableFileFilter(esnFilter);
 		fileChooser.setFileFilter(esnFilter);
 		
