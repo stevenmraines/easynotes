@@ -13,11 +13,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
-public abstract class CardTextTemplate implements WindowListener {
+public abstract class CardTextTemplate {
 	protected JDialog dialog;
 	protected JFrame frame;
 	protected JPanel panel;
@@ -29,9 +31,12 @@ public abstract class CardTextTemplate implements WindowListener {
 	protected JLabel blueTextLabel;
 	protected JTextArea frontText;
 	protected JTextArea backText;
-	protected JTextField redText;
-	protected JTextField greenText;
-	protected JTextField blueText;
+	protected SpinnerNumberModel redSpinnerModel;
+	protected SpinnerNumberModel greenSpinnerModel;
+	protected SpinnerNumberModel blueSpinnerModel;
+	protected JSpinner redSpinner;
+	protected JSpinner greenSpinner;
+	protected JSpinner blueSpinner;
 	protected JScrollPane frontScrollPane;
 	protected JScrollPane backScrollPane;
 	protected JButton actionButton;
@@ -49,9 +54,12 @@ public abstract class CardTextTemplate implements WindowListener {
 		blueTextLabel = new JLabel("Blue");
 		frontText = new JTextArea();
 		backText = new JTextArea();
-		redText = new JTextField();
-		greenText = new JTextField();
-		blueText = new JTextField();
+		redSpinnerModel = new SpinnerNumberModel(255, 0, 255, 1);
+		greenSpinnerModel = new SpinnerNumberModel(255, 0, 255, 1);
+		blueSpinnerModel = new SpinnerNumberModel(255, 0, 255, 1);
+		redSpinner = new JSpinner(redSpinnerModel);
+		greenSpinner = new JSpinner(greenSpinnerModel);
+		blueSpinner = new JSpinner(blueSpinnerModel);
 		frontScrollPane = new JScrollPane(frontText);
 		backScrollPane = new JScrollPane(backText);
 		actionButton = new JButton();
@@ -81,29 +89,26 @@ public abstract class CardTextTemplate implements WindowListener {
 		colorPanel.add(blueTextLabel, gbc);
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		colorPanel.add(redText, gbc);
+		colorPanel.add(redSpinner, gbc);
 		gbc.gridx = 1;
-		colorPanel.add(greenText, gbc);
+		colorPanel.add(greenSpinner, gbc);
 		gbc.gridx = 2;
-		colorPanel.add(blueText, gbc);
+		colorPanel.add(blueSpinner, gbc);
 		
 		// Prepare frame and JDialog
 		panel.setBorder(new EmptyBorder(5,5,5,5));
 		frame.setMinimumSize(new Dimension(250, 150));
-		frame.addWindowListener(this);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setVisible(false);
 	}
-	
-	public void showModal() {
-		frame.setVisible(true);
-		frontText.requestFocus();
-	}
-	
-	public void hideModal() {
-		frontText.setText("");
-		backText.setText("");
-		frame.setVisible(false);
+
+	public void setVisible(boolean visible) {
+		frame.setVisible(visible);
+
+		// If it's being made visible, make frontText field request focus
+		if(visible) {
+			frontText.requestFocus();
+		}
 	}
 
 	public JDialog getDialog() {
@@ -202,35 +207,35 @@ public abstract class CardTextTemplate implements WindowListener {
 		this.blueTextLabel = blueTextLabel;
 	}
 
-	public JTextField getRedText() {
-		return redText;
-	}
-
-	public void setRedText(JTextField redText) {
-		this.redText = redText;
-	}
-
-	public JTextField getGreenText() {
-		return greenText;
-	}
-
-	public void setGreenText(JTextField greenText) {
-		this.greenText = greenText;
-	}
-
-	public JTextField getBlueText() {
-		return blueText;
-	}
-
-	public void setBlueText(JTextField blueText) {
-		this.blueText = blueText;
-	}
-
 	public GridBagConstraints getGbc() {
 		return gbc;
 	}
 
 	public void setGbc(GridBagConstraints gbc) {
 		this.gbc = gbc;
+	}
+
+	public SpinnerNumberModel getRedSpinnerModel() {
+		return redSpinnerModel;
+	}
+
+	public void setRedSpinnerModel(SpinnerNumberModel redSpinnerModel) {
+		this.redSpinnerModel = redSpinnerModel;
+	}
+
+	public SpinnerNumberModel getGreenSpinnerModel() {
+		return greenSpinnerModel;
+	}
+
+	public void setGreenSpinnerModel(SpinnerNumberModel greenSpinnerModel) {
+		this.greenSpinnerModel = greenSpinnerModel;
+	}
+
+	public SpinnerNumberModel getBlueSpinnerModel() {
+		return blueSpinnerModel;
+	}
+
+	public void setBlueSpinnerModel(SpinnerNumberModel blueSpinnerModel) {
+		this.blueSpinnerModel = blueSpinnerModel;
 	}
 }

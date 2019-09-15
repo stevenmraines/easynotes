@@ -16,8 +16,7 @@ import javax.swing.SwingUtilities;
  * This class acts as the controller facilitating communication
  * between the card view and the card model.
  */
-// TODO extend mouselistener and mousemotionlistener so I don't have to implement unused methods?
-public class CardController implements MouseListener, MouseMotionListener, ActionListener {
+public class CardController implements ActionListener, MouseListener {
 	// Register parent controller
 	private MainController mainController;
 	
@@ -35,7 +34,6 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 		
 		// Add action listeners
 		cardTemplate.addMouseListener(this);
-		cardTemplate.addMouseMotionListener(this);
 		cardTemplate.getEditCardMenuItem().addActionListener(this);
 		cardTemplate.getDeleteCardMenuItem().addActionListener(this);
 		cardTemplate.getDuplicateCardMenuItem().addActionListener(this);
@@ -49,7 +47,6 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 		
 		// Add action listeners
 		cardTemplate.addMouseListener(this);
-		cardTemplate.addMouseMotionListener(this);
 		cardTemplate.getEditCardMenuItem().addActionListener(this);
 		cardTemplate.getDeleteCardMenuItem().addActionListener(this);
 		cardTemplate.getDuplicateCardMenuItem().addActionListener(this);
@@ -84,24 +81,6 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 		// TODO have an event fire to automatically do this when any context menu is shown?
 		mainController.hideAllContextMenus();
 		
-		// Click and drag
-		// TODO figure out how to make sure card being replaced isn't this card
-		if(SwingUtilities.isLeftMouseButton(e)) {
-			// Remove this card
-			mainController.getCardControllers().remove(mainController.getCardControllers().indexOf(this));
-			
-			// Get the card that the user is trying to swap with the current card
-			CardController swapCard = mainController.getCardControllerInCoordinates(e.getX(), e.getY());
-			
-			// Get index of swapCard
-			int index = mainController.getCardControllers().indexOf(swapCard);
-			
-			if(index >= 0) {
-				// Re-add it in new index
-				mainController.addCardController(index, this);				
-			}
-		}
-		
 		// CTRL + left click to flip a specific card
 		if(SwingUtilities.isLeftMouseButton(e) && e.getModifiersEx() == MouseEvent.CTRL_DOWN_MASK) {
 			flip();
@@ -132,18 +111,6 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 	public void mouseExited(MouseEvent e) {}
 	
 	/*
-	 * MouseMotionListener methods for handling click and drag events
-	 * for reordering cards.
-	 */
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {}
-	
-	/*
 	 * ActionListener methods for handling context menu option clicks.
 	 */
 	@Override
@@ -159,19 +126,11 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 		// Edit a card menu item clicked
 		if(e.getSource() == cardTemplate.getEditCardMenuItem()) {
 			// TODO make this an instance variable of the class?
+			// Create a new EditCardController tied to this card
 			EditCardController editCardController = new EditCardController(this);
 			
-			editCardController
-				.getEditCardTemplate()
-				.getFrontText()
-				.setText(card.getFront());
-			
-			editCardController
-				.getEditCardTemplate()
-				.getBackText()
-				.setText(card.getBack());
-			
-			editCardController.getEditCardTemplate().showModal();
+			// Show the edit card window
+			editCardController.getEditCardTemplate().setVisible(true);
 		}
 		
 		// Delete a card menu item clicked

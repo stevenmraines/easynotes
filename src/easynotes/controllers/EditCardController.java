@@ -26,10 +26,17 @@ public class EditCardController implements ActionListener {
 		// Add action listeners
 		editCardTemplate.getActionButton().addActionListener(this);
 		
-		// Prepare templates
-		editCardTemplate.getRedText().setText(Integer.toString(this.cardController.getCard().getColor().getRed()));
-		editCardTemplate.getGreenText().setText(Integer.toString(this.cardController.getCard().getColor().getGreen()));
-		editCardTemplate.getBlueText().setText(Integer.toString(this.cardController.getCard().getColor().getBlue()));
+		// Prepare template
+		editCardTemplate.getFrontText().setText(cardController.getCard().getFront());
+		editCardTemplate.getBackText().setText(cardController.getCard().getBack());
+		
+		int red = this.cardController.getCard().getColor().getRed();
+		int green = this.cardController.getCard().getColor().getGreen();
+		int blue = this.cardController.getCard().getColor().getBlue();
+		
+		editCardTemplate.getRedSpinnerModel().setValue(red);
+		editCardTemplate.getGreenSpinnerModel().setValue(green);
+		editCardTemplate.getBlueSpinnerModel().setValue(blue);
 	}
 
 	public EditCardTemplate getEditCardTemplate() {
@@ -42,21 +49,26 @@ public class EditCardController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// Save edits
 		if(e.getSource() == editCardTemplate.getActionButton()) {
 			String frontText = editCardTemplate.getFrontText().getText();
 			String backText = editCardTemplate.getBackText().getText();
+			
 			cardController.getCard().setFront(frontText);
 			cardController.getCard().setBack(backText);
 			cardController.getCard().setColor(new Color(
-				Integer.parseInt(editCardTemplate.getRedText().getText()),
-				Integer.parseInt(editCardTemplate.getGreenText().getText()),
-				Integer.parseInt(editCardTemplate.getBlueText().getText())
+				editCardTemplate.getRedSpinnerModel().getNumber().intValue(),
+				editCardTemplate.getGreenSpinnerModel().getNumber().intValue(),
+				editCardTemplate.getBlueSpinnerModel().getNumber().intValue()
 			));
-			// Do this manually until I can figure out the propertyChangeListener thing
+			
+			// TODO Do this manually until I can figure out the propertyChangeListener thing
 			cardController.getCardTemplate().getFrontLabel().setText(editCardTemplate.getFrontText().getText());
 			cardController.getCardTemplate().getBackLabel().setText(editCardTemplate.getBackText().getText());
 			cardController.getCardTemplate().setBackground(cardController.getCard().getColor());
-			editCardTemplate.hideModal();
+			
+			// Hide the edit card window
+			editCardTemplate.getFrame().setVisible(false);
 		}
 	}
 

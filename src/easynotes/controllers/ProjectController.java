@@ -40,7 +40,7 @@ public class ProjectController implements ActionListener, MouseListener {
 		
 		// Add a card
 		if(e.getSource() == projectTemplate.getAddCardMenuItem()) {
-			mainController.getAddCardController().getAddCardTemplate().showModal();
+			mainController.getAddCardController().getAddCardTemplate().setVisible(true);
 		}
 		
 		// Flip all cards

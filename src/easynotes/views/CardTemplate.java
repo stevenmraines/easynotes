@@ -18,6 +18,7 @@ import components.JLabelHtml;
  * It contains a context menu for several card actions.
  */
 public class CardTemplate extends JPanel {
+	private static final long serialVersionUID = -5481487587265558470L;
 	private JLabelHtml frontLabel;
 	private JLabelHtml backLabel;
 	private JPopupMenu contextMenu;

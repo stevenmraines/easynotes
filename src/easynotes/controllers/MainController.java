@@ -1,7 +1,5 @@
 package easynotes.controllers;
 
-import java.awt.Color;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -216,45 +214,7 @@ public class MainController implements ActionListener, KeyListener {
 	}
 	
 	/*
-	 * Find the index of the CardController which overlaps the given X and Y coordinates.
-	 */
-	public CardController getCardControllerInCoordinates(int x, int y) {
-		Point adjustedLocation = new Point(x, y);
-		Point frameLocation = frame.getLocation();
-		Point panelLocation = panel.getLocation();
-		Point projectLocation = projectController.getProjectTemplate().getLocation();
-		adjustedLocation.translate((int)frameLocation.getX(), (int)frameLocation.getY());
-		adjustedLocation.translate((int)panelLocation.getX(), (int)panelLocation.getY());
-		adjustedLocation.translate((int)projectLocation.getX(), (int)projectLocation.getY());
-		
-		for(int i = 0; i < cardControllers.size(); i++) {
-			CardController cc = cardControllers.get(i);
-			Point templateLocation = cc.getCardTemplate().getLocation();
-			templateLocation.translate((int)frameLocation.getX(), (int)frameLocation.getY());
-			templateLocation.translate((int)panelLocation.getX(), (int)panelLocation.getY());
-			templateLocation.translate((int)projectLocation.getX(), (int)projectLocation.getY());
-			
-			int cardX = (int)templateLocation.getX();
-			int cardY = (int)templateLocation.getY();
-			int cardW = cc.getCardTemplate().getWidth();
-			int cardH = cc.getCardTemplate().getHeight();
-			
-			boolean overlapX = (int)adjustedLocation.getX() >= cardX
-					&& (int)adjustedLocation.getX() <= (cardX + cardW);
-			
-			boolean overlapY = (int)adjustedLocation.getY() >= cardY
-					&& (int)adjustedLocation.getY() <= (cardY + cardH);
-			
-			if(overlapX && overlapY) {
-				return cc; 
-			}
-		}
-		
-		return null;
-	}
-	
-	/*
-	 * Displays a filechooser window to allow the user to save the current project.
+	 * Displays a JFileChooser window to allow the user to save the current project.
 	 */
 	private void saveProject() {
 		int fileChooserReturnValue = fileChooser.showSaveDialog(frame);
@@ -288,7 +248,7 @@ public class MainController implements ActionListener, KeyListener {
 	}
 	
 	/*
-	 * Displays a filechooser window to allow the user to load a project from a file.
+	 * Displays a JFileChooser window to allow the user to load a project from a file.
 	 */
 	private void loadProject() {
 		int fileChooserReturnValue = fileChooser.showOpenDialog(frame);
