@@ -13,6 +13,7 @@ public class JLabelHtml extends JLabel {
 
 	@Override
 	public void setText(String text) {
+		text = text.replaceAll("\n", "<br />");
 		super.setText("<html>" + text + "</html>");
 	}
 }

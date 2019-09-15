@@ -203,8 +203,14 @@ public class MainController implements ActionListener, KeyListener {
 	 */
 	public void duplicateCardController(CardController cardController) {
 		// Add the duplicated CardController
-		Card duplicate = new Card(cardController.getCard().getFront(), cardController.getCard().getBack());
+		Card duplicate = new Card(
+			cardController.getCard().getFront(),
+			cardController.getCard().getBack(),
+			cardController.getCard().getColor()
+		);
+		
 		CardController duplicateController = new CardController(this, duplicate);
+		
 		cardControllers.add(cardControllers.indexOf(cardController), duplicateController);
 		
 		// Replace and redraw everything
