@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -15,6 +16,7 @@ public class ProjectTemplate extends JPanel {
 	private JPopupMenu contextMenu;
 	private JMenuItem addCardMenuItem;
 	private JMenuItem flipAllCardsMenuItem;
+	private JCheckBoxMenuItem showBackgroundMenuItem;
 	private BufferedImage background;
 	
 	public ProjectTemplate() {
@@ -22,11 +24,14 @@ public class ProjectTemplate extends JPanel {
 		contextMenu = new JPopupMenu();
 		addCardMenuItem = new JMenuItem("Add a card");
 		flipAllCardsMenuItem = new JMenuItem("Flip all cards");
+		showBackgroundMenuItem = new JCheckBoxMenuItem("Show background image");
 		
 		// Add components
 		this.add(contextMenu);
 		contextMenu.add(addCardMenuItem);
 		contextMenu.add(flipAllCardsMenuItem);
+		contextMenu.addSeparator();
+		contextMenu.add(showBackgroundMenuItem);
 		
 		// Prepare background image
 		try {
@@ -34,6 +39,9 @@ public class ProjectTemplate extends JPanel {
 		} catch(IOException e) {
 			// Do nothing?
 		}
+		
+		// Prepare showBackgroundMenuItem
+		showBackgroundMenuItem.setSelected(true);
 	}
 	
 	/*
@@ -43,20 +51,24 @@ public class ProjectTemplate extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-//		if(background != null) {
-//			int w = this.getWidth();
-//			int h = this.getHeight();
-//			int bw = background.getWidth();
-//			int bh = background.getHeight();
-//			int rx = Math.round(w / bw);
-//			int ry = Math.round(h / bh);
-//			
-//			for(int i = 1; i <= rx; i++) {
-//				for(int j = 1; j <= ry; j++) {
-//					g.drawImage(background, i * bw, j * bh, null);
-//				}
-//			}
-//		}
+		if(showBackgroundMenuItem.isSelected() && background != null) {
+			int w = this.getWidth();
+			int h = this.getHeight();
+			int bw = background.getWidth();
+			int bh = background.getHeight();
+			
+			// Find out how many times the image needs to be repeated in each direction
+			int rx = (int) Math.ceil((double) w / bw);
+			int ry = (int) Math.ceil((double) h / bh);
+			
+			for(int i = 0; i < rx; i++) {
+				for(int j = 0; j < ry; j++) {
+					int x = this.getX() + i * bw;
+					int y = this.getY() + j * bh;
+					g.drawImage(background, x, y, null);
+				}
+			}
+		}
 	}
 
 	/*
@@ -84,6 +96,14 @@ public class ProjectTemplate extends JPanel {
 
 	public void setFlipAllCardsMenuItem(JMenuItem flipAllCardsMenuItem) {
 		this.flipAllCardsMenuItem = flipAllCardsMenuItem;
+	}
+
+	public JCheckBoxMenuItem getShowBackgroundMenuItem() {
+		return showBackgroundMenuItem;
+	}
+
+	public void setShowBackgroundMenuItem(JCheckBoxMenuItem showBackgroundMenuItem) {
+		this.showBackgroundMenuItem = showBackgroundMenuItem;
 	}
 	
 }

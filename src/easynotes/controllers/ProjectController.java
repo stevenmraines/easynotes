@@ -28,6 +28,7 @@ public class ProjectController implements ActionListener, MouseListener {
 		projectTemplate.addMouseListener(this);
 		projectTemplate.getAddCardMenuItem().addActionListener(this);
 		projectTemplate.getFlipAllCardsMenuItem().addActionListener(this);
+		projectTemplate.getShowBackgroundMenuItem().addActionListener(this);
 	}
 	
 	/*
@@ -46,6 +47,11 @@ public class ProjectController implements ActionListener, MouseListener {
 		// Flip all cards
 		if(e.getSource() == projectTemplate.getFlipAllCardsMenuItem()) {
 			mainController.flipAllCards();
+		}
+		
+		// Show background image
+		if(e.getSource() == projectTemplate.getShowBackgroundMenuItem()) {
+			projectTemplate.repaint();
 		}
 	}
 
