@@ -26,7 +26,7 @@ public class EditCardController implements ActionListener {
 		// Add action listeners
 		editCardTemplate.getActionButton().addActionListener(this);
 		
-		// Prepare template
+		// Prepare templates
 		editCardTemplate.getRedText().setText(Integer.toString(this.cardController.getCard().getColor().getRed()));
 		editCardTemplate.getGreenText().setText(Integer.toString(this.cardController.getCard().getColor().getGreen()));
 		editCardTemplate.getBlueText().setText(Integer.toString(this.cardController.getCard().getColor().getBlue()));
@@ -43,8 +43,10 @@ public class EditCardController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == editCardTemplate.getActionButton()) {
-			cardController.getCard().setFront(editCardTemplate.getFrontText().getText());
-			cardController.getCard().setBack(editCardTemplate.getBackText().getText());
+			String frontText = editCardTemplate.getFrontText().getText();
+			String backText = editCardTemplate.getBackText().getText();
+			cardController.getCard().setFront(frontText);
+			cardController.getCard().setBack(backText);
 			cardController.getCard().setColor(new Color(
 				Integer.parseInt(editCardTemplate.getRedText().getText()),
 				Integer.parseInt(editCardTemplate.getGreenText().getText()),

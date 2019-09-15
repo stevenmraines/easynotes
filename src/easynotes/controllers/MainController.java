@@ -1,5 +1,6 @@
 package easynotes.controllers;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -307,12 +308,14 @@ public class MainController implements ActionListener, KeyListener {
 				
 				// Get the objects
 				try {
-					Object inputCard = objectInput.readObject();
+					Object inputObject = objectInput.readObject();
 					
-					while(inputCard instanceof Card) {
-						addCardController(new CardController(this, (Card) inputCard));
-						inputCard = objectInput.readObject();
+					while(inputObject instanceof Card) {
+						Card inputCard = (Card) inputObject;
+						addCardController(new CardController(this, inputCard));
+						inputObject = objectInput.readObject();
 					}
+					
 				} catch(EOFException e2) {}
 				
 				// Close the input streams

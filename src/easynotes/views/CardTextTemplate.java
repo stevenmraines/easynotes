@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public abstract class CardTextTemplate implements WindowListener {
@@ -28,9 +29,9 @@ public abstract class CardTextTemplate implements WindowListener {
 	protected JLabel blueTextLabel;
 	protected JTextArea frontText;
 	protected JTextArea backText;
-	protected JTextArea redText;
-	protected JTextArea greenText;
-	protected JTextArea blueText;
+	protected JTextField redText;
+	protected JTextField greenText;
+	protected JTextField blueText;
 	protected JScrollPane frontScrollPane;
 	protected JScrollPane backScrollPane;
 	protected JButton actionButton;
@@ -48,9 +49,9 @@ public abstract class CardTextTemplate implements WindowListener {
 		blueTextLabel = new JLabel("Blue");
 		frontText = new JTextArea();
 		backText = new JTextArea();
-		redText = new JTextArea();
-		greenText = new JTextArea();
-		blueText = new JTextArea();
+		redText = new JTextField();
+		greenText = new JTextField();
+		blueText = new JTextField();
 		frontScrollPane = new JScrollPane(frontText);
 		backScrollPane = new JScrollPane(backText);
 		actionButton = new JButton();
@@ -201,27 +202,27 @@ public abstract class CardTextTemplate implements WindowListener {
 		this.blueTextLabel = blueTextLabel;
 	}
 
-	public JTextArea getRedText() {
+	public JTextField getRedText() {
 		return redText;
 	}
 
-	public void setRedText(JTextArea redText) {
+	public void setRedText(JTextField redText) {
 		this.redText = redText;
 	}
 
-	public JTextArea getGreenText() {
+	public JTextField getGreenText() {
 		return greenText;
 	}
 
-	public void setGreenText(JTextArea greenText) {
+	public void setGreenText(JTextField greenText) {
 		this.greenText = greenText;
 	}
 
-	public JTextArea getBlueText() {
+	public JTextField getBlueText() {
 		return blueText;
 	}
 
-	public void setBlueText(JTextArea blueText) {
+	public void setBlueText(JTextField blueText) {
 		this.blueText = blueText;
 	}
 

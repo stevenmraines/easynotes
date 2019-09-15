@@ -12,6 +12,14 @@ public class AddCardTemplate extends CardTextTemplate {
 		actionButton.setText("Create");
 		frame.pack();
 	}
+	
+	@Override
+	public void showModal() {
+		this.redText.setText("255");
+		this.greenText.setText("255");
+		this.blueText.setText("255");
+		super.showModal();
+	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {

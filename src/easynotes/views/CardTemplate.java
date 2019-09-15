@@ -1,6 +1,8 @@
 package easynotes.views;
 
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -9,13 +11,15 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import components.JLabelHtml;
+
 /*
  * This class is the template for the card view.
  * It contains a context menu for several card actions.
  */
 public class CardTemplate extends JPanel {
-	private JLabel frontLabel;
-	private JLabel backLabel;
+	private JLabelHtml frontLabel;
+	private JLabelHtml backLabel;
 	private JPopupMenu contextMenu;
 	private JMenuItem deleteCardMenuItem;
 	private JMenuItem editCardMenuItem;
@@ -23,8 +27,8 @@ public class CardTemplate extends JPanel {
 	
 	public CardTemplate() {
 		// Initialize properties
-		frontLabel = new JLabel();
-		backLabel = new JLabel();
+		frontLabel = new JLabelHtml();
+		backLabel = new JLabelHtml();
 		contextMenu = new JPopupMenu();
 		duplicateCardMenuItem = new JMenuItem("Duplicate this card");
 		editCardMenuItem = new JMenuItem("Edit this card");
@@ -39,6 +43,7 @@ public class CardTemplate extends JPanel {
 		contextMenu.add(deleteCardMenuItem);
 		
 		// Prepare for display
+		this.setPreferredSize(new Dimension(200, 120));
 		LineBorder line = new LineBorder(Color.black);
 		EmptyBorder empty = new EmptyBorder(5,5,5,5);
 		this.setBorder(new CompoundBorder(line, empty));
@@ -81,19 +86,19 @@ public class CardTemplate extends JPanel {
 		this.editCardMenuItem = editCardMenuItem;
 	}
 
-	public JLabel getFrontLabel() {
+	public JLabelHtml getFrontLabel() {
 		return frontLabel;
 	}
 
-	public void setFrontLabel(JLabel frontLabel) {
+	public void setFrontLabel(JLabelHtml frontLabel) {
 		this.frontLabel = frontLabel;
 	}
 	
-	public JLabel getBackLabel() {
+	public JLabelHtml getBackLabel() {
 		return backLabel;
 	}
 
-	public void setBackLabel(JLabel backLabel) {
+	public void setBackLabel(JLabelHtml backLabel) {
 		this.backLabel = backLabel;
 	}
 	

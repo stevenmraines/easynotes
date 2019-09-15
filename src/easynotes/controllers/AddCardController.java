@@ -1,5 +1,6 @@
 package easynotes.controllers;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,7 +29,14 @@ public class AddCardController implements ActionListener {
 		if(e.getSource() == addCardTemplate.getActionButton()) {
 			String frontText = addCardTemplate.getFrontText().getText();
 			String backText = addCardTemplate.getBackText().getText();
-			mainController.addCardController(new CardController(mainController, new Card(frontText, backText)));
+			Color color = new Color(
+				Integer.parseInt(addCardTemplate.getRedText().getText()),
+				Integer.parseInt(addCardTemplate.getGreenText().getText()),
+				Integer.parseInt(addCardTemplate.getBlueText().getText())
+			);
+			mainController.addCardController(
+				new CardController(mainController, new Card(frontText, backText, color))
+			);
 			addCardTemplate.hideModal();
 		}
 	}
