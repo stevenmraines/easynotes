@@ -3,66 +3,162 @@ package easynotes.models;
 import java.awt.Color;
 import java.io.Serializable;
 
-/*
- * This is the main model used by the application.
- * It simply contains the card front and back text.
+/**
+ * 
+ * The Card class is the model for an index card.
+ * It has properties for front and back text,
+ * font color, background color, and a boolean
+ * indicating whether to show front or back text.
+ * 
+ * @author sraines
+ *
  */
-// TODO trigger events when these props are changed to auto update template
-public class Card implements Serializable {
+public class Card implements Serializable
+{
+	
+	// TODO trigger events when these props are changed to auto update template
 	private static final long serialVersionUID = -6450209576226923325L;
-	private String front;
-	private String back;
-	private Color color;
+	private String frontText;
+	private String backText;
+	private Color fontColor;
+	private Color backgroundColor;
+	private boolean isFlipped;
 	
-	public Card() {
-		front = "";
-		back = "";
-		color = Color.white;
+	public Card()
+	{
+		
+		frontText = "";
+		backText = "";
+		fontColor = Color.darkGray;
+		backgroundColor = Color.white;
+		isFlipped = false;
+		
 	}
 	
-	public Card(String front) {
-		this.front = front;
-		back = "";
-		color = Color.white;
+	public Card(String frontText)
+	{
+		
+		this.frontText = frontText;
+		backText = "";
+		fontColor = Color.darkGray;
+		backgroundColor = Color.white;
+		isFlipped = false;
+		
 	}
 	
-	public Card(String front, String back) {
-		this.front = front;
-		this.back = back;
-		color = Color.white;
+	public Card(String frontText, String backText)
+	{
+		
+		this.frontText = frontText;
+		this.backText = backText;
+		fontColor = Color.darkGray;
+		backgroundColor = Color.white;
+		isFlipped = false;
+		
 	}
 	
-	public Card(String front, String back, Color color) {
-		this.front = front;
-		this.back = back;
-		this.color = color;
+	public Card(String frontText, String backText, Color fontColor)
+	{
+		
+		this.frontText = frontText;
+		this.backText = backText;
+		this.fontColor = fontColor;
+		backgroundColor = Color.white;
+		isFlipped = false;
+		
+	}
+	
+	public Card(
+		String frontText,
+		String backText,
+		Color fontColor,
+		Color backgroundColor
+	) {
+		
+		this.frontText = frontText;
+		this.backText = backText;
+		this.fontColor = fontColor;
+		this.backgroundColor = backgroundColor;
+		isFlipped = false;
+		
+	}
+
+	public Card(
+		String frontText,
+		String backText,
+		Color fontColor,
+		Color backgroundColor,
+		boolean isFlipped
+	) {
+		
+		this.frontText = frontText;
+		this.backText = backText;
+		this.fontColor = fontColor;
+		this.backgroundColor = backgroundColor;
+		this.isFlipped = isFlipped;
+		
+	}
+	
+	/**
+	 * The flip function simply toggles the isFlipped property.
+	 * The CorkboardController will handle updating the card display.
+	 */
+	public void flip()
+	{
+		isFlipped = !isFlipped;
 	}
 
 	/*
-	 * Setters and getters.
+	 * Setters and getters
 	 */
-	public String getFront() {
-		return front;
+	public String getFrontText()
+	{
+		return frontText;
 	}
 
-	public void setFront(String front) {
-		this.front = front;
+	public void setFrontText(String frontText)
+	{
+		this.frontText = frontText;
 	}
 
-	public String getBack() {
-		return back;
+	public String getBackText()
+	{
+		return backText;
 	}
 
-	public void setBack(String back) {
-		this.back = back;
+	public void setBackText(String backText)
+	{
+		this.backText = backText;
 	}
 
-	public Color getColor() {
-		return color;
+	public Color getFontColor()
+	{
+		return fontColor;
 	}
 
-	public void setColor(Color color) {
-		this.color = color;
+	public void setFontColor(Color fontColor)
+	{
+		this.fontColor = fontColor;
+	}
+
+	public Color getBackgroundColor()
+	{
+		return backgroundColor;
+	}
+
+	public void setBackgroundColor(Color backgroundColor)
+	{
+		this.backgroundColor = backgroundColor;
+	}
+	
+	public boolean isFlipped()
+	{
+		return isFlipped;
+	}
+	
+	public void setIsFlipped(boolean isFlipped)
+	{
+		this.isFlipped = isFlipped;
 	}
 	
 }

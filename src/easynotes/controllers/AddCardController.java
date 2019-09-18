@@ -5,54 +5,75 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import easynotes.models.Card;
-import easynotes.views.AddCardTemplate;
+import easynotes.templates.AddCardTemplate;
 
-/*
- * This class acts as the controller for the add card view.
+/**
+ * 
+ * The AddCardController class gets the data supplied by
+ * the user in the "Add a card" window and creates a new
+ * card from that data.
+ * 
+ * @author sraines
+ *
  */
-public class AddCardController implements ActionListener {
-	// Register parent controller
-	private MainController mainController;
+public class AddCardController implements ActionListener
+{
 	
-	// Register views
+	// Register parent controller
+	private WindowController windowController;
+	
+	// Register template
 	private AddCardTemplate addCardTemplate;
 	
-	public AddCardController(MainController mainController) {
+	public AddCardController(WindowController windowController)
+	{
+		
 		// Initialize properties
-		this.mainController = mainController;
+		this.windowController = windowController;
 		addCardTemplate = new AddCardTemplate();
 		
 		// Add action listeners
 		addCardTemplate.getActionButton().addActionListener(this);
+		
 	}
 
+	/**
+	 * The actionPerformed method handles the event fired by
+	 * the "Create" button on the "Add a card" window.
+	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e)
+	{
+		
 		// Add a card
 		if(e.getSource() == addCardTemplate.getActionButton()) {
+			
 			// Get the user supplied front and back text from add card view
 			String frontText = addCardTemplate.getFrontText().getText();
 			String backText = addCardTemplate.getBackText().getText();
 			
-			// Get user RGB from add card view
-			Color color = new Color(
+			// TODO get font color
+			
+			// Get user RGB for background color
+			Color backgroundColor = new Color(
 				addCardTemplate.getRedSpinnerModel().getNumber().intValue(),
 				addCardTemplate.getGreenSpinnerModel().getNumber().intValue(),
 				addCardTemplate.getBlueSpinnerModel().getNumber().intValue()
 			);
 			
-			// Create the new Card and CardController and add them
-			Card newCard = new Card(frontText, backText, color);
-			CardController newCardController = new CardController(mainController, newCard);
-			mainController.addCardController(newCardController);
+			// Create and add the new card
+			Card card = new Card(frontText, backText, Color.darkGray, backgroundColor);
+			windowController.addCard(card);
 			
 			// Hide the add card window
 			addCardTemplate.setVisible(false);
+			
 		}
+		
 	}
 
 	/*
-	 * Setters and getters.
+	 * Setters and getters
 	 */
 	public AddCardTemplate getAddCardTemplate() {
 		return addCardTemplate;

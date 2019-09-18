@@ -2,17 +2,32 @@ package easynotes;
 
 import javax.swing.SwingUtilities;
 
-import easynotes.controllers.MainController;
-import easynotes.views.ProjectTemplate;
+import easynotes.controllers.WindowController;
 
-public class Main {
+/**
+ * 
+ * The Main class is the entry point of the application.
+ * It contains the main method which instantiates the WindowController.
+ * 
+ * @author sraines
+ *
+ */
+public class Main
+{
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new MainController();
+	public static void main(String[] args)
+	{
+		
+		SwingUtilities.invokeLater(
+			new Runnable()
+			{
+				public void run()
+				{
+					new WindowController();
+				}
 			}
-		});
+		);
+		
 	}
 
 }

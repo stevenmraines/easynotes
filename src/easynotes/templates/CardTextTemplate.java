@@ -1,10 +1,8 @@
-package easynotes.views;
+package easynotes.templates;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.WindowListener;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,11 +13,21 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
-public abstract class CardTextTemplate {
+/**
+ * 
+ * The CardTextTemplate is an abstract class which contains
+ * the Swing components needed for both the add and edit
+ * card templates.
+ * 
+ * @author sraines
+ *
+ */
+public abstract class CardTextTemplate
+{
+	
 	protected JDialog dialog;
 	protected JFrame frame;
 	protected JPanel panel;
@@ -42,9 +50,12 @@ public abstract class CardTextTemplate {
 	protected JButton actionButton;
 	protected GridBagConstraints gbc;
 	
-	public CardTextTemplate() {
+	public CardTextTemplate()
+	{
+		
 		// Initialize properties
 		frame = new JFrame();
+		dialog = new JDialog(frame, true);
 		panel = new JPanel();
 		colorPanel = new JPanel(new GridBagLayout());
 		frontTextLabel = new JLabel("Front text");
@@ -98,144 +109,240 @@ public abstract class CardTextTemplate {
 		// Prepare frame and JDialog
 		panel.setBorder(new EmptyBorder(5,5,5,5));
 		frame.setMinimumSize(new Dimension(250, 150));
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setVisible(false);
+		
 	}
 
-	public void setVisible(boolean visible) {
+	/**
+	 * The setVisible method triggers the JFrame setVisible method,
+	 * while also requesting focus on the first input.
+	 * 
+	 * @param visible
+	 */
+	public void setVisible(boolean visible)
+	{
+		
 		frame.setVisible(visible);
 
 		// If it's being made visible, make frontText field request focus
 		if(visible) {
 			frontText.requestFocus();
 		}
+		
 	}
 
-	public JDialog getDialog() {
+	/*
+	 * Setters and getters
+	 */
+	public JDialog getDialog()
+	{
 		return dialog;
 	}
 
-	public void setDialog(JDialog dialog) {
+	public void setDialog(JDialog dialog)
+	{
 		this.dialog = dialog;
 	}
 
-	public JFrame getFrame() {
+	public JFrame getFrame()
+	{
 		return frame;
 	}
 
-	public void setFrame(JFrame frame) {
+	public void setFrame(JFrame frame)
+	{
 		this.frame = frame;
 	}
 
-	public JPanel getPanel() {
+	public JPanel getPanel()
+	{
 		return panel;
 	}
 
-	public void setPanel(JPanel panel) {
+	public void setPanel(JPanel panel)
+	{
 		this.panel = panel;
 	}
 
-	public JLabel getFrontTextLabel() {
-		return frontTextLabel;
-	}
-
-	public void setFrontTextLabel(JLabel frontTextLabel) {
-		this.frontTextLabel = frontTextLabel;
-	}
-
-	public JLabel getBackTextLabel() {
-		return backTextLabel;
-	}
-
-	public void setBackTextLabel(JLabel backTextLabel) {
-		this.backTextLabel = backTextLabel;
-	}
-
-	public JTextArea getFrontText() {
-		return frontText;
-	}
-
-	public void setFrontText(JTextArea frontText) {
-		this.frontText = frontText;
-	}
-
-	public JTextArea getBackText() {
-		return backText;
-	}
-
-	public void setBackText(JTextArea backText) {
-		this.backText = backText;
-	}
-
-	public JButton getActionButton() {
-		return actionButton;
-	}
-
-	public void setActionButton(JButton actionButton) {
-		this.actionButton = actionButton;
-	}
-
-	public JPanel getColorPanel() {
+	public JPanel getColorPanel()
+	{
 		return colorPanel;
 	}
 
-	public void setColorPanel(JPanel colorPanel) {
+	public void setColorPanel(JPanel colorPanel)
+	{
 		this.colorPanel = colorPanel;
 	}
 
-	public JLabel getRedTextLabel() {
+	public JLabel getFrontTextLabel()
+	{
+		return frontTextLabel;
+	}
+
+	public void setFrontTextLabel(JLabel frontTextLabel)
+	{
+		this.frontTextLabel = frontTextLabel;
+	}
+
+	public JLabel getBackTextLabel()
+	{
+		return backTextLabel;
+	}
+
+	public void setBackTextLabel(JLabel backTextLabel)
+	{
+		this.backTextLabel = backTextLabel;
+	}
+
+	public JLabel getRedTextLabel()
+	{
 		return redTextLabel;
 	}
 
-	public void setRedTextLabel(JLabel redTextLabel) {
+	public void setRedTextLabel(JLabel redTextLabel)
+	{
 		this.redTextLabel = redTextLabel;
 	}
 
-	public JLabel getGreenTextLabel() {
+	public JLabel getGreenTextLabel()
+	{
 		return greenTextLabel;
 	}
 
-	public void setGreenTextLabel(JLabel greenTextLabel) {
+	public void setGreenTextLabel(JLabel greenTextLabel)
+	{
 		this.greenTextLabel = greenTextLabel;
 	}
 
-	public JLabel getBlueTextLabel() {
+	public JLabel getBlueTextLabel()
+	{
 		return blueTextLabel;
 	}
 
-	public void setBlueTextLabel(JLabel blueTextLabel) {
+	public void setBlueTextLabel(JLabel blueTextLabel)
+	{
 		this.blueTextLabel = blueTextLabel;
 	}
 
-	public GridBagConstraints getGbc() {
-		return gbc;
+	public JTextArea getFrontText()
+	{
+		return frontText;
 	}
 
-	public void setGbc(GridBagConstraints gbc) {
-		this.gbc = gbc;
+	public void setFrontText(JTextArea frontText)
+	{
+		this.frontText = frontText;
 	}
 
-	public SpinnerNumberModel getRedSpinnerModel() {
+	public JTextArea getBackText()
+	{
+		return backText;
+	}
+
+	public void setBackText(JTextArea backText)
+	{
+		this.backText = backText;
+	}
+
+	public SpinnerNumberModel getRedSpinnerModel()
+	{
 		return redSpinnerModel;
 	}
 
-	public void setRedSpinnerModel(SpinnerNumberModel redSpinnerModel) {
+	public void setRedSpinnerModel(SpinnerNumberModel redSpinnerModel)
+	{
 		this.redSpinnerModel = redSpinnerModel;
 	}
 
-	public SpinnerNumberModel getGreenSpinnerModel() {
+	public SpinnerNumberModel getGreenSpinnerModel()
+	{
 		return greenSpinnerModel;
 	}
 
-	public void setGreenSpinnerModel(SpinnerNumberModel greenSpinnerModel) {
+	public void setGreenSpinnerModel(SpinnerNumberModel greenSpinnerModel)
+	{
 		this.greenSpinnerModel = greenSpinnerModel;
 	}
 
-	public SpinnerNumberModel getBlueSpinnerModel() {
+	public SpinnerNumberModel getBlueSpinnerModel()
+	{
 		return blueSpinnerModel;
 	}
 
-	public void setBlueSpinnerModel(SpinnerNumberModel blueSpinnerModel) {
+	public void setBlueSpinnerModel(SpinnerNumberModel blueSpinnerModel)
+	{
 		this.blueSpinnerModel = blueSpinnerModel;
 	}
+
+	public JSpinner getRedSpinner()
+	{
+		return redSpinner;
+	}
+
+	public void setRedSpinner(JSpinner redSpinner)
+	{
+		this.redSpinner = redSpinner;
+	}
+
+	public JSpinner getGreenSpinner()
+	{
+		return greenSpinner;
+	}
+
+	public void setGreenSpinner(JSpinner greenSpinner)
+	{
+		this.greenSpinner = greenSpinner;
+	}
+
+	public JSpinner getBlueSpinner()
+	{
+		return blueSpinner;
+	}
+
+	public void setBlueSpinner(JSpinner blueSpinner)
+	{
+		this.blueSpinner = blueSpinner;
+	}
+
+	public JScrollPane getFrontScrollPane()
+	{
+		return frontScrollPane;
+	}
+
+	public void setFrontScrollPane(JScrollPane frontScrollPane)
+	{
+		this.frontScrollPane = frontScrollPane;
+	}
+
+	public JScrollPane getBackScrollPane()
+	{
+		return backScrollPane;
+	}
+
+	public void setBackScrollPane(JScrollPane backScrollPane)
+	{
+		this.backScrollPane = backScrollPane;
+	}
+
+	public JButton getActionButton()
+	{
+		return actionButton;
+	}
+
+	public void setActionButton(JButton actionButton)
+	{
+		this.actionButton = actionButton;
+	}
+
+	public GridBagConstraints getGbc()
+	{
+		return gbc;
+	}
+
+	public void setGbc(GridBagConstraints gbc)
+	{
+		this.gbc = gbc;
+	}
+	
 }
