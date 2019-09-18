@@ -2,8 +2,6 @@ package easynotes.components;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-
 import javax.swing.JLabel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;

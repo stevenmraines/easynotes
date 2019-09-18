@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
+import easynotes.components.CardLabel;
 import easynotes.models.Card;
 import easynotes.templates.CorkboardTemplate;
 
@@ -28,6 +29,9 @@ public class CorkboardController implements ActionListener, MouseListener
 	
 	// Register template
 	private CorkboardTemplate corkboardTemplate;
+	
+	// Register last CardLabel that was clicked
+	private CardLabel lastClickedCardLabel;
 	
 	public CorkboardController(WindowController windowController)
 	{
@@ -91,11 +95,22 @@ public class CorkboardController implements ActionListener, MouseListener
 		
 		// Edit a card
 		if(e.getSource() == corkboardTemplate.getEditCardMenuItem()) {
-			// TODO figure out how to set Card instance from here
-			windowController
-				.getEditCardController()
-				.getEditCardTemplate()
-				.setVisible(true);
+			
+			if(lastClickedCardLabel != null
+					&& lastClickedCardLabel instanceof CardLabel) {
+				
+				// Set the card that we're trying to edit
+				// TODO find a better way to do this
+				windowController.getEditCardController().setCard(lastClickedCardLabel.getCard());
+				
+				// Display the "Edit a card" window
+				windowController
+					.getEditCardController()
+					.getEditCardTemplate()
+					.setVisible(true);
+				
+			}
+			
 		}
 		
 		// Flip all cards
@@ -128,7 +143,7 @@ public class CorkboardController implements ActionListener, MouseListener
 		// Hide any currently visible context menus
 		hideAllContextMenus();
 		
-		// Right click
+		// Right click on corkboard view
 		if(SwingUtilities.isRightMouseButton(e) && e.getSource() instanceof CorkboardTemplate) {
 			
 			// Get location of click relative to the main JFrame of the application
@@ -138,6 +153,23 @@ public class CorkboardController implements ActionListener, MouseListener
 			// Set location of context menu and make it visible
 			corkboardTemplate.getCorkboardMenu().setLocation(menuLocation);
 			corkboardTemplate.getCorkboardMenu().setVisible(true);
+			
+		}
+		
+		// Right click on a CardLabel
+		if(SwingUtilities.isRightMouseButton(e) && e.getSource() instanceof CardLabel) {
+			
+			// Record the last CardLabel which received a right click
+			lastClickedCardLabel = (CardLabel) e.getSource();
+		
+			// TODO DRY up some of this code
+			// Get location of click relative to the main JFrame of the application
+			Point menuLocation = windowController.getWindowTemplate().getLocation();
+			menuLocation.translate(e.getX(), e.getY());
+			
+			// Set location of CardLabel context menu and make it visible
+			corkboardTemplate.getCardMenu().setLocation(menuLocation);
+			corkboardTemplate.getCardMenu().setVisible(true);
 			
 		}
 		
