@@ -130,16 +130,14 @@ public class WindowController implements ActionListener, KeyListener
 					
 					while(inputObject instanceof Card) {
 						
-						// Create the new Card and CardLabel objects
+						// Create the new Card object and add it
 						Card card = (Card) inputObject;
-						CardLabel cardLabel = new CardLabel(card);
-						
-						// Add the Card and CardLabel objects
 						cards.add(card);
+						
+						// Add the CardLabel
 						corkboardController
 							.getCorkboardTemplate()
-							.getCardLabels()
-							.add(cardLabel);
+							.add(new CardLabel(card));
 						
 						// Read the next object
 						inputObject = objectInput.readObject();

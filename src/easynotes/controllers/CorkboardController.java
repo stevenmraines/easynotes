@@ -5,8 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-
 import javax.swing.SwingUtilities;
 
 import easynotes.components.CardLabel;
@@ -43,20 +41,12 @@ public class CorkboardController implements ActionListener, MouseListener
 	private void flipAllCards()
 	{
 		
-		// Get all instances of the Card model from the parent controller
-		ArrayList<Card> cards = windowController.getCards();
-		
-		// Flip the cards
-		for(int i = 0; i < cards.size(); i++) {
-			cards.get(i).flip();
+		for(Card card : windowController.getCards()) {
+			
+			card.flip();
+			
 		}
 		
-	}
-	
-	private void hideAllContextMenus()
-	{
-		corkboardTemplate.getCorkboardMenu().setVisible(false);
-		corkboardTemplate.getCardMenu().setVisible(false);
 	}
 	
 	/*
@@ -65,9 +55,6 @@ public class CorkboardController implements ActionListener, MouseListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		
-		// Hide any currently visible context menus
-		hideAllContextMenus();
 		
 		// Add a card
 		if(e.getSource() == corkboardTemplate.getAddCardMenuItem()) {
@@ -112,20 +99,31 @@ public class CorkboardController implements ActionListener, MouseListener
 	/*
 	 * MouseListener methods for showing context menu on right click.
 	 */
-	public void mouseClicked(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e)
+	{
+		showPopup(e);
+	}
 
-	public void mousePressed(MouseEvent e) {}
+	public void mousePressed(MouseEvent e)
+	{
+		showPopup(e);
+	}
 	
-	public void mouseEntered(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e)
+	{
+		showPopup(e);
+	}
 
-	public void mouseExited(MouseEvent e) {}
+	public void mouseExited(MouseEvent e)
+	{
+		showPopup(e);
+	}
 
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
 		
-		// Hide any currently visible context menus
-		hideAllContextMenus();
+		showPopup(e);
 		
 		// Right click on corkboard view
 		if(SwingUtilities.isRightMouseButton(e) && e.getSource() instanceof CorkboardTemplate) {
@@ -163,6 +161,27 @@ public class CorkboardController implements ActionListener, MouseListener
 			
 			CardLabel cardLabel = (CardLabel) e.getSource();
 			cardLabel.getCard().flip();
+			
+		}
+		
+	}
+	
+	private void showPopup(MouseEvent e)
+	{
+		
+		if(e.isPopupTrigger() && e.getSource() instanceof CorkboardTemplate) {
+			
+			corkboardTemplate
+				.getCorkboardMenu()
+				.show(e.getComponent(), e.getX(), e.getY());
+			
+		}
+		
+		if(e.isPopupTrigger() && e.getSource() instanceof CardLabel) {
+			
+			corkboardTemplate
+				.getCardMenu()
+				.show(e.getComponent(), e.getX(), e.getY());
 			
 		}
 		
