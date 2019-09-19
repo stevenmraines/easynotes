@@ -4,15 +4,11 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-
-import easynotes.components.CardLabel;
 
 // TODO when cardLabels are removed, their mouseListeners should also be removed
 public class CorkboardTemplate extends JPanel
@@ -31,7 +27,6 @@ public class CorkboardTemplate extends JPanel
 	private JMenuItem duplicateCardMenuItem;
 	private JMenuItem deleteCardMenuItem;
 	private BufferedImage background;
-	private ArrayList<CardLabel> cardLabels;  // TODO not sure if this is necessary
 	
 	// TODO add constructor that takes cardLabels for when loading a file
 	public CorkboardTemplate()
@@ -49,7 +44,6 @@ public class CorkboardTemplate extends JPanel
 		editCardMenuItem = new JMenuItem("Edit this card");
 		duplicateCardMenuItem = new JMenuItem("Duplicate this card");
 		deleteCardMenuItem = new JMenuItem("Delete this card");
-		cardLabels = new ArrayList<CardLabel>();
 		
 		// Add components
 		this.add(corkboardMenu);
@@ -221,16 +215,6 @@ public class CorkboardTemplate extends JPanel
 	public void setDeleteCardMenuItem(JMenuItem deleteCardMenuItem)
 	{
 		this.deleteCardMenuItem = deleteCardMenuItem;
-	}
-
-	public ArrayList<CardLabel> getCardLabels()
-	{
-		return cardLabels;
-	}
-
-	public void setCardLabels(ArrayList<CardLabel> cardLabels)
-	{
-		this.cardLabels = cardLabels;
 	}
 	
 }
