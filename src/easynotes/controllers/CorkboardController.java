@@ -13,14 +13,6 @@ import easynotes.components.CardLabel;
 import easynotes.models.Card;
 import easynotes.templates.CorkboardTemplate;
 
-/**
- * 
- * The CorkboardController class handles context menu item events
- * as well as mouse events on the corkboard view.
- * 
- * @author sraines
- *
- */
 public class CorkboardController implements ActionListener, MouseListener
 {
 	
@@ -48,10 +40,6 @@ public class CorkboardController implements ActionListener, MouseListener
 		
 	}
 	
-	/**
-	 * The flipAllCards method flips all of the cards currently
-	 * on the corkboard.
-	 */
 	private void flipAllCards()
 	{
 		
@@ -65,10 +53,6 @@ public class CorkboardController implements ActionListener, MouseListener
 		
 	}
 	
-	/**
-	 * The hideAllContextMenus method hides both the corkboard
-	 * context menu and the card context menu.
-	 */
 	private void hideAllContextMenus()
 	{
 		corkboardTemplate.getCorkboardMenu().setVisible(false);
@@ -170,6 +154,15 @@ public class CorkboardController implements ActionListener, MouseListener
 			// Set location of CardLabel context menu and make it visible
 			corkboardTemplate.getCardMenu().setLocation(menuLocation);
 			corkboardTemplate.getCardMenu().setVisible(true);
+			
+		}
+		
+		// Ctrl + Left click on a CardLabel
+		if(SwingUtilities.isLeftMouseButton(e) && e.getSource() instanceof CardLabel
+				&& e.getModifiersEx() == MouseEvent.CTRL_DOWN_MASK) {
+			
+			CardLabel cardLabel = (CardLabel) e.getSource();
+			cardLabel.getCard().flip();
 			
 		}
 		

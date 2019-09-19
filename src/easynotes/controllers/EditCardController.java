@@ -6,14 +6,6 @@ import java.awt.event.ActionListener;
 import easynotes.models.Card;
 import easynotes.templates.EditCardTemplate;
 
-/**
- * 
- * The EditCardController takes the user given data from the
- * "Edit a card" window and updates the given card with that data.
- * 
- * @author sraines
- *
- */
 public class EditCardController implements ActionListener
 {
 	

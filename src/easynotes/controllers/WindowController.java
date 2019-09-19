@@ -20,16 +20,6 @@ import easynotes.components.CardLabel;
 import easynotes.models.Card;
 import easynotes.templates.WindowTemplate;
 
-/**
- * 
- * The WindowController class mainly acts as a hook for the child
- * controllers to communicate with each other.
- * 
- * It also handles key events, and action events for the main menu bar.
- * 
- * @author sraines
- *
- */
 public class WindowController implements ActionListener, KeyListener
 {
 	
@@ -174,10 +164,6 @@ public class WindowController implements ActionListener, KeyListener
 		
 	}
 	
-	/**
-	 * The newProject method deletes all cards if the user
-	 * confirms their action to create a new project.
-	 */
 	private void newProject()
 	{
 		
@@ -191,61 +177,10 @@ public class WindowController implements ActionListener, KeyListener
 		
 	}
 	
-	/**
-	 * The deleteAllCards method simply sets the ArrayList of Card objects
-	 * to a new list and re-instantiates the CorkboardController to
-	 * remove all CardLabel components.
-	 */
 	private void deleteAllCards()
 	{
-		cards = new ArrayList<Card>();
+		cards.clear();
 		corkboardController = new CorkboardController(this);
-	}
-	
-	/**
-	 * The addCard method adds a Card to the ArrayList of Card
-	 * objects, and adds the necessary components to any
-	 * view templates, like the CorkboardTemplate.
-	 * 
-	 * @param card
-	 */
-	public void addCard(Card card)
-	{
-		
-		// Add new Card
-		cards.add(card);
-		
-		// Add new Card component to all views
-		corkboardController
-			.getCorkboardTemplate()
-			.addCardLabel(new CardLabel(card));
-		
-		// Repaint views
-		corkboardController.getCorkboardTemplate().revalidate();
-		
-	}
-
-	/**
-	 * The addCard method adds a Card to the ArrayList of Card
-	 * objects, and adds the necessary components to any
-	 * view templates, like the CorkboardTemplate.
-	 * 
-	 * @param card
-	 */
-	public void addCard(int index, Card card)
-	{
-
-		// Add new Card
-		cards.add(index, card);
-		
-		// Add new Card component to all views
-		corkboardController
-			.getCorkboardTemplate()
-			.addCardLabel(new CardLabel(card));
-		
-		// Repaint views
-		corkboardController.getCorkboardTemplate().revalidate();
-		
 	}
 
 	/*

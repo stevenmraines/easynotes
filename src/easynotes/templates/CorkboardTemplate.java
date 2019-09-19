@@ -14,14 +14,7 @@ import javax.swing.JPopupMenu;
 
 import easynotes.components.CardLabel;
 
-/**
- * 
- * The CorkboardTemplate class contains the Swing components
- * needed to create the corkboard view.
- * 
- * @author sraines
- *
- */
+// TODO when cardLabels are removed, their mouseListeners should also be removed
 public class CorkboardTemplate extends JPanel
 {
 	
@@ -38,7 +31,7 @@ public class CorkboardTemplate extends JPanel
 	private JMenuItem duplicateCardMenuItem;
 	private JMenuItem deleteCardMenuItem;
 	private BufferedImage background;
-	private ArrayList<CardLabel> cardLabels;
+	private ArrayList<CardLabel> cardLabels;  // TODO not sure if this is necessary
 	
 	// TODO add constructor that takes cardLabels for when loading a file
 	public CorkboardTemplate()
@@ -79,7 +72,7 @@ public class CorkboardTemplate extends JPanel
 		}
 		
 		// Set showBackgroundMenuItem checked by default
-//		showBackgroundMenuItem.setSelected(true);
+		showBackgroundMenuItem.setSelected(true);
 		
 	}
 	
@@ -115,18 +108,6 @@ public class CorkboardTemplate extends JPanel
 			
 		}
 		
-	}
-	
-	/**
-	 * The addCardLabel method adds a CardLabel object to
-	 * the ArrayList of CardLabels and also adds it to the panel.
-	 * 
-	 * @param cardLabel
-	 */
-	public void addCardLabel(CardLabel cardLabel)
-	{
-		cardLabels.add(cardLabel);
-		this.add(cardLabel);
 	}
 
 	/*

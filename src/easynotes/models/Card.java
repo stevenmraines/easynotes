@@ -3,20 +3,9 @@ package easynotes.models;
 import java.awt.Color;
 import java.io.Serializable;
 
-/**
- * 
- * The Card class is the model for an index card.
- * It has properties for front and back text,
- * font color, background color, and a boolean
- * indicating whether to show front or back text.
- * 
- * @author sraines
- *
- */
 public class Card implements Serializable
 {
 	
-	// TODO trigger events when these props are changed to auto update template
 	private static final long serialVersionUID = -6450209576226923325L;
 	private String frontText;
 	private String backText;
@@ -26,46 +15,22 @@ public class Card implements Serializable
 	
 	public Card()
 	{
-		
-		frontText = "";
-		backText = "";
-		fontColor = Color.darkGray;
-		backgroundColor = Color.white;
-		isFlipped = false;
-		
+		init("", "", Color.darkGray, Color.white, false);
 	}
 	
 	public Card(String frontText)
 	{
-		
-		this.frontText = frontText;
-		backText = "";
-		fontColor = Color.darkGray;
-		backgroundColor = Color.white;
-		isFlipped = false;
-		
+		init(frontText, "", Color.darkGray, Color.white, false);
 	}
 	
 	public Card(String frontText, String backText)
 	{
-		
-		this.frontText = frontText;
-		this.backText = backText;
-		fontColor = Color.darkGray;
-		backgroundColor = Color.white;
-		isFlipped = false;
-		
+		init(frontText, backText, Color.darkGray, Color.white, false);
 	}
 	
 	public Card(String frontText, String backText, Color fontColor)
 	{
-		
-		this.frontText = frontText;
-		this.backText = backText;
-		this.fontColor = fontColor;
-		backgroundColor = Color.white;
-		isFlipped = false;
-		
+		init(frontText, backText, fontColor, Color.white, false);
 	}
 	
 	public Card(
@@ -74,16 +39,20 @@ public class Card implements Serializable
 		Color fontColor,
 		Color backgroundColor
 	) {
-		
-		this.frontText = frontText;
-		this.backText = backText;
-		this.fontColor = fontColor;
-		this.backgroundColor = backgroundColor;
-		isFlipped = false;
-		
+		init(frontText, backText, fontColor, backgroundColor, false);
 	}
 
 	public Card(
+		String frontText,
+		String backText,
+		Color fontColor,
+		Color backgroundColor,
+		boolean isFlipped
+	) {
+		init(frontText, backText, fontColor, backgroundColor, isFlipped);
+	}
+	
+	private void init(
 		String frontText,
 		String backText,
 		Color fontColor,
@@ -99,10 +68,6 @@ public class Card implements Serializable
 		
 	}
 	
-	/**
-	 * The flip function simply toggles the isFlipped property.
-	 * The CorkboardController will handle updating the card display.
-	 */
 	public void flip()
 	{
 		isFlipped = !isFlipped;

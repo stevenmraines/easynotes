@@ -7,15 +7,6 @@ import java.awt.event.ActionListener;
 import easynotes.models.Card;
 import easynotes.templates.AddCardTemplate;
 
-/**
- * 
- * The AddCardController class gets the data supplied by
- * the user in the "Add a card" window and creates a new
- * card from that data.
- * 
- * @author sraines
- *
- */
 public class AddCardController implements ActionListener
 {
 	
@@ -37,9 +28,8 @@ public class AddCardController implements ActionListener
 		
 	}
 
-	/**
-	 * The actionPerformed method handles the event fired by
-	 * the "Create" button on the "Add a card" window.
+	/*
+	 * Action listener method for handling create card button click
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
@@ -63,7 +53,8 @@ public class AddCardController implements ActionListener
 			
 			// Create and add the new card
 			Card card = new Card(frontText, backText, Color.darkGray, backgroundColor);
-			windowController.addCard(card);
+			
+			// TODO add the card
 			
 			// Hide the add card window
 			addCardTemplate.setVisible(false);

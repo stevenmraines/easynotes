@@ -9,14 +9,6 @@ import javax.swing.border.LineBorder;
 
 import easynotes.models.Card;
 
-/**
- * 
- * The CardLabel class is a Swing component for
- * drawing a card on the corkboard view.
- * 
- * @author sraines
- *
- */
 public class CardLabel extends JLabel
 {
 	
@@ -30,12 +22,7 @@ public class CardLabel extends JLabel
 		
 		super();
 		
-		/*
-		 * Initialize properties
-		 * 
-		 * Call setCard so that text, background color,
-		 * and font color are also set.
-		 */
+		// Initialize properties
 		this.setCard(card);
 		
 		// Prepare for display
@@ -49,7 +36,7 @@ public class CardLabel extends JLabel
 		
 	}
 	
-	/**
+	/*
 	 * The setText method is overridden to add HTML to the given text,
 	 * this allows line wrapping on the label.
 	 * 
