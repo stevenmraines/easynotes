@@ -16,6 +16,9 @@ public class AddCardController implements ActionListener
 	// Register template
 	private AddCardTemplate addCardTemplate;
 	
+	// Register add index
+	private int index;
+	
 	public AddCardController(WindowController windowController)
 	{
 		
@@ -53,8 +56,7 @@ public class AddCardController implements ActionListener
 			
 			// Create and add the new card
 			Card card = new Card(frontText, backText, Color.darkGray, backgroundColor);
-			
-			// TODO add the card
+			windowController.addCard(card);
 			
 			// Hide the add card window
 			addCardTemplate.setVisible(false);
@@ -66,12 +68,24 @@ public class AddCardController implements ActionListener
 	/*
 	 * Setters and getters
 	 */
-	public AddCardTemplate getAddCardTemplate() {
+	public AddCardTemplate getAddCardTemplate()
+	{
 		return addCardTemplate;
 	}
 
-	public void setAddCardTemplate(AddCardTemplate addCardTemplate) {
+	public void setAddCardTemplate(AddCardTemplate addCardTemplate)
+	{
 		this.addCardTemplate = addCardTemplate;
+	}
+	
+	public int getIndex()
+	{
+		return index;
+	}
+	
+	public void setIndex(int index)
+	{
+		this.index = index;
 	}
 
 }

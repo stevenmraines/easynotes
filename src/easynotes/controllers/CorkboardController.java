@@ -8,7 +8,6 @@ import java.awt.event.MouseListener;
 import javax.swing.SwingUtilities;
 
 import easynotes.components.CardLabel;
-import easynotes.models.Card;
 import easynotes.templates.CorkboardTemplate;
 
 public class CorkboardController implements ActionListener, MouseListener
@@ -21,6 +20,7 @@ public class CorkboardController implements ActionListener, MouseListener
 	private CorkboardTemplate corkboardTemplate;
 	
 	// Register last CardLabel that was clicked
+	// TODO find a better way to do this (look into findComponentAt method on corkboardTemplate)
 	private CardLabel lastClickedCardLabel;
 	
 	public CorkboardController(WindowController windowController)
@@ -35,17 +35,11 @@ public class CorkboardController implements ActionListener, MouseListener
 		corkboardTemplate.getAddCardMenuItem().addActionListener(this);
 		corkboardTemplate.getFlipAllCardsMenuItem().addActionListener(this);
 		corkboardTemplate.getShowBackgroundMenuItem().addActionListener(this);
-		
-	}
-	
-	private void flipAllCards()
-	{
-		
-		for(Card card : windowController.getCards()) {
-			
-			card.flip();
-			
-		}
+		corkboardTemplate.getDeleteCardMenuItem().addActionListener(this);
+		corkboardTemplate.getInsertAfterMenuItem().addActionListener(this);
+		corkboardTemplate.getInsertBeforeMenuItem().addActionListener(this);
+		corkboardTemplate.getFlipCardMenuItem().addActionListener(this);
+		corkboardTemplate.getDuplicateCardMenuItem().addActionListener(this);
 		
 	}
 	
@@ -58,21 +52,45 @@ public class CorkboardController implements ActionListener, MouseListener
 		
 		// Add a card
 		if(e.getSource() == corkboardTemplate.getAddCardMenuItem()) {
+			
 			windowController
 				.getAddCardController()
 				.getAddCardTemplate()
 				.setVisible(true);
+			
+		}
+		
+		// Delete a card
+		if(e.getSource() == corkboardTemplate.getDeleteCardMenuItem()) {
+			
+			if(lastClickedCardLabel != null) {
+				
+				windowController.deleteCard(lastClickedCardLabel);
+				
+			}
+			
+		}
+		
+		// Duplicate a card
+		if(e.getSource() == corkboardTemplate.getDuplicateCardMenuItem()) {
+			
+			if(lastClickedCardLabel != null) {
+				
+				windowController.duplicateCard(lastClickedCardLabel.getCard());
+				
+			}
+			
 		}
 		
 		// Edit a card
 		if(e.getSource() == corkboardTemplate.getEditCardMenuItem()) {
 			
-			if(lastClickedCardLabel != null
-					&& lastClickedCardLabel instanceof CardLabel) {
+			if(lastClickedCardLabel != null) {
 				
 				// Set the card that we're trying to edit
-				// TODO find a better way to do this
-				windowController.getEditCardController().setCard(lastClickedCardLabel.getCard());
+				windowController
+					.getEditCardController()
+					.setCard(lastClickedCardLabel.getCard());
 				
 				// Display the "Edit a card" window
 				windowController
@@ -86,7 +104,17 @@ public class CorkboardController implements ActionListener, MouseListener
 		
 		// Flip all cards
 		if(e.getSource() == corkboardTemplate.getFlipAllCardsMenuItem()) {
-			flipAllCards();
+			windowController.flipAllCards();
+		}
+		
+		// Insert after
+		if(e.getSource() == corkboardTemplate.getInsertAfterMenuItem()) {
+			
+		}
+		
+		// Insert before
+		if(e.getSource() == corkboardTemplate.getInsertBeforeMenuItem()) {
+			
 		}
 		
 		// Show background image
@@ -160,7 +188,7 @@ public class CorkboardController implements ActionListener, MouseListener
 				&& e.getModifiersEx() == MouseEvent.CTRL_DOWN_MASK) {
 			
 			CardLabel cardLabel = (CardLabel) e.getSource();
-			cardLabel.getCard().flip();
+			windowController.flipCard(cardLabel.getCard());
 			
 		}
 		
@@ -169,11 +197,13 @@ public class CorkboardController implements ActionListener, MouseListener
 	private void showPopup(MouseEvent e)
 	{
 		
+		Point popupLocation = getAdjustedPointerLocation(e);
+		
 		if(e.isPopupTrigger() && e.getSource() instanceof CorkboardTemplate) {
 			
 			corkboardTemplate
 				.getCorkboardMenu()
-				.show(e.getComponent(), e.getX(), e.getY());
+				.show(e.getComponent(), popupLocation.x, popupLocation.y);
 			
 		}
 		
@@ -181,9 +211,36 @@ public class CorkboardController implements ActionListener, MouseListener
 			
 			corkboardTemplate
 				.getCardMenu()
-				.show(e.getComponent(), e.getX(), e.getY());
+				.show(e.getComponent(), popupLocation.x, popupLocation.y);
 			
 		}
+		
+	}
+	
+	// TODO WHAT MORE DO YOU WANT?! GIVE ME THE CORRECT POINTER LOCATION!!!
+	private Point getAdjustedPointerLocation(MouseEvent e)
+	{
+		
+		// Get the WindowTemplate JFrame location
+		Point frameLocation = windowController.getWindowTemplate().getLocation();
+		
+		// Get the corkboardTemplate JPanel location
+		Point panelLocation = corkboardTemplate.getLocation();
+		
+		// Get the mouse click location relative to window location
+		Point popupLocation = new Point(e.getX(), e.getY());
+		popupLocation.translate(frameLocation.x, frameLocation.y);
+		popupLocation.translate(panelLocation.x, panelLocation.y);
+		
+		if(e.getSource() instanceof CardLabel) {
+			
+			// Get the CardLabel JLabel location
+			Point labelLocation = ((CardLabel) e.getSource()).getLocation();
+			popupLocation.translate(labelLocation.x, labelLocation.y);
+			
+		}
+		
+		return popupLocation;
 		
 	}
 

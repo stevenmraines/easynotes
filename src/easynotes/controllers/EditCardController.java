@@ -56,7 +56,7 @@ public class EditCardController implements ActionListener
 //			windowController.getCardTemplate().setBackground(windowController.getCard().getColor());
 //			
 //			// Hide the edit card window
-//			editCardTemplate.getFrame().setVisible(false);
+//			editCardTemplate.setVisible(false);
 		}
 		
 	}

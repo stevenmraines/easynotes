@@ -58,6 +58,146 @@ public class WindowController implements ActionListener, KeyListener
 	}
 	
 	/*
+	 * Card CRUD methods
+	 */
+	public void addCard(Card card)
+	{
+		
+		// Add the new Card to the list
+		cards.add(card);
+		
+		// Add the CardLabel
+		addCardLabel(card);
+		
+	}
+	
+	public void addCard(int index, Card card)
+	{
+		
+		// Add the new Card to the list
+		cards.add(index, card);
+		
+		// Add the CardLabel
+		addCardLabel(index, card);
+		
+	}
+	
+	private void addCardLabel(Card card)
+	{
+		
+		// Create new CardLabel
+		CardLabel cardLabel = new CardLabel(card);
+		
+		// Add event listeners
+		cardLabel.addMouseListener(corkboardController);
+		
+		// Add cardLabel to the corkboardTemplate
+		corkboardController.getCorkboardTemplate().add(cardLabel);
+		
+	}
+	
+	private void addCardLabel(int index, Card card)
+	{
+		
+		// Create new CardLabel
+		CardLabel cardLabel = new CardLabel(card);
+		
+		// Add event listeners
+		cardLabel.addMouseListener(corkboardController);
+		
+		// Add cardLabel to the corkboardTemplate
+		corkboardController.getCorkboardTemplate().add(cardLabel, index);
+		
+	}
+	
+	public void deleteCard(CardLabel cardLabel)
+	{
+		
+		// Delete from Card list
+		cards.remove(cardLabel.getCard());
+		
+		// Remove from corkboardTemplate
+		corkboardController.getCorkboardTemplate().remove(cardLabel);
+		
+	}
+	
+	public void duplicateCard(Card card)
+	{
+		
+		// Get index of the given card
+		int index = cards.indexOf(card);
+		
+		// If it's found, add it again at that index
+		if(index >= 0) {
+			
+			addCard(index, card);
+			
+		}
+		
+	}
+	
+	public void editCard(Card card)
+	{
+		
+	}
+	
+	public void flipCard(Card card)
+	{
+		
+		int index = cards.indexOf(card);
+		
+		if(index >= 0) {
+			
+			((Card) cards.get(index)).flip();
+			
+		}
+		
+	}
+	
+	public void flipAllCards()
+	{
+		
+		for(Card card : cards) {
+			
+			flipCard(card);
+			
+		}
+		
+	}
+	
+	public void insertAfter(Card newCard, Card oldCard)
+	{
+		
+		int index = cards.indexOf(oldCard);
+		
+		if(index >= 0) {
+			
+			addCard(index + 1, newCard);
+			
+		}
+		
+	}
+	
+	public void insertBefore(Card newCard, Card oldCard)
+	{
+		
+		int index = cards.indexOf(oldCard);
+		
+		if(index == 0) {
+			
+			addCard(index, newCard);
+			
+		}
+		
+		if(index > 0) {
+			
+			addCard(index + 1, newCard);
+			
+		}
+		
+	}
+	
+	/*
 	 * Displays a JFileChooser window to allow the user to save the current project.
 	 */
 	private void saveProject()
