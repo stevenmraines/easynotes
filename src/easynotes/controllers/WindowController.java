@@ -139,6 +139,26 @@ public class WindowController implements ActionListener, KeyListener
 	public void editCard(Card card)
 	{
 		
+		// Get index of current Card
+		int index = cards.indexOf(card);
+		
+		// If it's found, remove it and add it again at that index
+		if(index >= 0) {
+			
+			cards.set(index, card);
+			
+			int labelIndex = corkboardController.getCorkboardTemplate().indexOf(card);
+			
+			if(labelIndex >= 0) {
+				
+				corkboardController
+					.getCorkboardTemplate()
+					.add(new CardLabel(card), labelIndex);
+				
+			}
+			
+		}
+		
 	}
 	
 	public void flipCard(Card card)

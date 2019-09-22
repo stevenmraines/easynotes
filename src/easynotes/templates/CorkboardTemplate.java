@@ -70,7 +70,7 @@ public class CorkboardTemplate extends JPanel
 		}
 		
 		// Set showBackgroundMenuItem checked by default
-//		showBackgroundMenuItem.setSelected(true);
+		showBackgroundMenuItem.setSelected(true);
 		
 	}
 	
@@ -156,6 +156,26 @@ public class CorkboardTemplate extends JPanel
 			}
 			
 		}
+		
+	}
+	
+	public int indexOf(Card card)
+	{
+		
+		Component[] components = this.getComponents();
+		
+		for(int i = 0; i < components.length; i++) {
+			
+			if(components[i] instanceof CardLabel
+					&& ((CardLabel) components[i]).getCard() == card) {
+				
+				return i;
+				
+			}
+			
+		}
+		
+		return -1;
 		
 	}
 	

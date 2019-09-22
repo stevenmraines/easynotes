@@ -1,5 +1,6 @@
 package easynotes.controllers;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -37,26 +38,28 @@ public class EditCardController implements ActionListener
 		
 		// Save edits
 		if(e.getSource() == editCardTemplate.getActionButton()) {
-//			String frontText = editCardTemplate.getFrontText().getText();
-//			String backText = editCardTemplate.getBackText().getText();
-//			
-//			windowController.getCard().setFrontText(frontText);
-//			windowController.getCard().setBackText(backText);
-//			// TODO save font color
-//			
-//			windowController.getCard().setBackgroundColor(new Color(
-//				editCardTemplate.getRedSpinnerModel().getNumber().intValue(),
-//				editCardTemplate.getGreenSpinnerModel().getNumber().intValue(),
-//				editCardTemplate.getBlueSpinnerModel().getNumber().intValue()
-//			));
-//			
-//			// TODO Do this manually until I can figure out the propertyChangeListener thing
-//			windowController.getCardTemplate().getFrontLabel().setText(editCardTemplate.getFrontText().getText());
-//			windowController.getCardTemplate().getBackLabel().setText(editCardTemplate.getBackText().getText());
-//			windowController.getCardTemplate().setBackground(windowController.getCard().getColor());
-//			
-//			// Hide the edit card window
-//			editCardTemplate.setVisible(false);
+			String frontText = editCardTemplate.getFrontText().getText();
+			String backText = editCardTemplate.getBackText().getText();
+			// TODO save font color
+			
+			Color backgroundColor = new Color(
+				editCardTemplate.getRedSpinnerModel().getNumber().intValue(),
+				editCardTemplate.getGreenSpinnerModel().getNumber().intValue(),
+				editCardTemplate.getBlueSpinnerModel().getNumber().intValue()
+			);
+			
+			int index = windowController.getCards().indexOf(card);
+			
+			if(index >= 0) {
+				
+				windowController.getCards().get(index).setFrontText(frontText);
+				windowController.getCards().get(index).setBackText(backText);
+				windowController.getCards().get(index).setBackgroundColor(backgroundColor);
+				
+			}
+			
+			// Hide the edit card window
+			editCardTemplate.setVisible(false);
 		}
 		
 	}

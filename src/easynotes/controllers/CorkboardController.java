@@ -33,6 +33,7 @@ public class CorkboardController implements ActionListener, MouseListener
 		// Add action listeners
 		corkboardTemplate.addMouseListener(this);
 		corkboardTemplate.getAddCardMenuItem().addActionListener(this);
+		corkboardTemplate.getEditCardMenuItem().addActionListener(this);
 		corkboardTemplate.getFlipAllCardsMenuItem().addActionListener(this);
 		corkboardTemplate.getShowBackgroundMenuItem().addActionListener(this);
 		corkboardTemplate.getDeleteCardMenuItem().addActionListener(this);
@@ -171,15 +172,6 @@ public class CorkboardController implements ActionListener, MouseListener
 			
 			// Record the last CardLabel which received a right click
 			lastClickedCardLabel = (CardLabel) e.getSource();
-		
-			// TODO DRY up some of this code
-			// Get location of click relative to the main JFrame of the application
-			Point menuLocation = windowController.getWindowTemplate().getLocation();
-			menuLocation.translate(e.getX(), e.getY());
-			
-			// Set location of CardLabel context menu and make it visible
-			corkboardTemplate.getCardMenu().setLocation(menuLocation);
-			corkboardTemplate.getCardMenu().setVisible(true);
 			
 		}
 		
