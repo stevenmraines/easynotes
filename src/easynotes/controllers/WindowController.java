@@ -28,6 +28,8 @@ public class WindowController implements ActionListener, KeyListener
 	private CorkboardController corkboardController;
 	private AddCardController addCardController;
 	private EditCardController editCardController;
+	private InsertAfterCardController insertAfterCardController;
+	private InsertBeforeCardController insertBeforeCardController;
 	
 	// Register models
 	private ArrayList<Card> cards;
@@ -42,6 +44,8 @@ public class WindowController implements ActionListener, KeyListener
 		corkboardController = new CorkboardController(this);
 		addCardController = new AddCardController(this);
 		editCardController = new EditCardController(this);
+		insertAfterCardController = new InsertAfterCardController(this);
+		insertBeforeCardController = new InsertBeforeCardController(this);
 		windowTemplate = new WindowTemplate();
 		cards = new ArrayList<Card>();
 		
@@ -278,6 +282,7 @@ public class WindowController implements ActionListener, KeyListener
 		
 	}
 	
+	// TODO fix this
 	public void insertBefore(Card newCard, Card oldCard)
 	{
 		
@@ -538,6 +543,22 @@ public class WindowController implements ActionListener, KeyListener
 	public void setWindowTemplate(WindowTemplate windowTemplate)
 	{
 		this.windowTemplate = windowTemplate;
+	}
+
+	public InsertAfterCardController getInsertAfterCardController() {
+		return insertAfterCardController;
+	}
+
+	public void setInsertAfterCardController(InsertAfterCardController insertAfterCardController) {
+		this.insertAfterCardController = insertAfterCardController;
+	}
+
+	public InsertBeforeCardController getInsertBeforeCardController() {
+		return insertBeforeCardController;
+	}
+
+	public void setInsertBeforeCardController(InsertBeforeCardController insertBeforeCardController) {
+		this.insertBeforeCardController = insertBeforeCardController;
 	}
 	
 }

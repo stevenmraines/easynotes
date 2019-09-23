@@ -16,9 +16,6 @@ public class AddCardController implements ActionListener
 	// Register template
 	private AddCardTemplate addCardTemplate;
 	
-	// Register add index
-	private int index;
-	
 	public AddCardController(WindowController windowController)
 	{
 		
@@ -33,6 +30,7 @@ public class AddCardController implements ActionListener
 
 	/*
 	 * Action listener method for handling create card button click
+	 * TODO clean this up with some abstraction along with EditCardController
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
@@ -76,16 +74,6 @@ public class AddCardController implements ActionListener
 	public void setAddCardTemplate(AddCardTemplate addCardTemplate)
 	{
 		this.addCardTemplate = addCardTemplate;
-	}
-	
-	public int getIndex()
-	{
-		return index;
-	}
-	
-	public void setIndex(int index)
-	{
-		this.index = index;
 	}
 
 }

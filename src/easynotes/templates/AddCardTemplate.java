@@ -1,13 +1,5 @@
 package easynotes.templates;
 
-/**
- * 
- * The AddCardTemplate class creates the Swing components
- * needed to display the "Add a card" window.
- * 
- * @author sraines
- *
- */
 public class AddCardTemplate extends CardTextTemplate
 {
 	
@@ -21,7 +13,7 @@ public class AddCardTemplate extends CardTextTemplate
 		
 	}
 	
-	/**
+	/*
 	 * Override setVisible method so that we can reset input fields
 	 * each time the window is made visible again.
 	 */

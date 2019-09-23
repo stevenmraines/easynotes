@@ -111,10 +111,28 @@ public class CorkboardController implements ActionListener, MouseListener
 		// Insert after
 		if(e.getSource() == corkboardTemplate.getInsertAfterMenuItem()) {
 			
+			windowController
+				.getInsertAfterCardController()
+				.setOldCard(this.lastClickedCardLabel.getCard());
+			
+			windowController
+				.getInsertAfterCardController()
+				.getCardTextTemplate()
+				.setVisible(true);
+			
 		}
 		
 		// Insert before
 		if(e.getSource() == corkboardTemplate.getInsertBeforeMenuItem()) {
+			
+			windowController
+				.getInsertBeforeCardController()
+				.setOldCard(this.lastClickedCardLabel.getCard());
+			
+			windowController
+				.getInsertBeforeCardController()
+				.getCardTextTemplate()
+				.setVisible(true);
 			
 		}
 		
