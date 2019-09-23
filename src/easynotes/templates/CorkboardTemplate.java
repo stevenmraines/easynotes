@@ -75,6 +75,12 @@ public class CorkboardTemplate extends JPanel
 	}
 	
 	/*
+	 * TODO these methods should probably be removed. If CardLabels
+	 * are going to be added in rapid succession with each edit or flip
+	 * or delete, the the revalidating or repainting should only happen once.
+	 */
+	
+	/*
 	 * Override some JPanel methods to automatically force repainting.
 	 */
 	@Override

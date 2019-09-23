@@ -59,6 +59,10 @@ public class WindowController implements ActionListener, KeyListener
 	
 	/*
 	 * Card CRUD methods
+	 * TODO ALL of these methods should only take the Card object.
+	 * EVERY change that happens should simple wipe out all CardLabels
+	 * from the corkboardTemplate and re-add them. No trying to hunt down
+	 * specific CardLabels or Cards.
 	 */
 	public void addCard(Card card)
 	{
