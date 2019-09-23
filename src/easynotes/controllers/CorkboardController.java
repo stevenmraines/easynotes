@@ -66,7 +66,7 @@ public class CorkboardController implements ActionListener, MouseListener
 			
 			if(lastClickedCardLabel != null) {
 				
-				windowController.deleteCard(lastClickedCardLabel);
+				windowController.deleteCard(lastClickedCardLabel.getCard());
 				
 			}
 			

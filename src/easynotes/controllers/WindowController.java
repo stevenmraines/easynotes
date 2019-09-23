@@ -1,5 +1,6 @@
 package easynotes.controllers;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -58,31 +59,80 @@ public class WindowController implements ActionListener, KeyListener
 	}
 	
 	/*
-	 * Card CRUD methods
-	 * TODO ALL of these methods should only take the Card object.
-	 * EVERY change that happens should simple wipe out all CardLabels
-	 * from the corkboardTemplate and re-add them. No trying to hunt down
-	 * specific CardLabels or Cards.
+	 * Card management methods for views
 	 */
-	public void addCard(Card card)
+	private void syncCardsWithViews()
 	{
 		
-		// Add the new Card to the list
-		cards.add(card);
+		// Remove all cards from all views
+		removeCardsFromViews();
 		
-		// Add the CardLabel
-		addCardLabel(card);
+		// Add all cards to all views
+		addCardsToViews();
+		
+		// Repaint everything
+		repaintViews();
 		
 	}
 	
-	public void addCard(int index, Card card)
+	private void removeCardsFromViews()
 	{
 		
-		// Add the new Card to the list
-		cards.add(index, card);
+		// Remove cards from corkboard view
+		removeCardsFromCorkboardView();
 		
-		// Add the CardLabel
-		addCardLabel(index, card);
+	}
+	
+	private void removeCardsFromCorkboardView()
+	{
+		
+		Component[] components =
+				corkboardController
+					.getCorkboardTemplate()
+					.getComponents();
+		
+		// Iterate through all the currently added components
+		for(Component component : components) {
+			
+			// If it's a CardLabel, remove it
+			if(component instanceof CardLabel) {
+				
+				removeCardLabel(((CardLabel) component));
+				
+			}
+			
+		}
+		
+	}
+	
+	private void removeCardLabel(CardLabel cardLabel)
+	{
+		
+		// Remove it from the template
+		corkboardController.getCorkboardTemplate().remove(cardLabel);
+		
+		// Remove mouse listeners
+		cardLabel.removeMouseListener(corkboardController);
+		
+	}
+	
+	private void addCardsToViews()
+	{
+		
+		// Add the cards to the corkboard view
+		addCardsToCorkboardView();
+		
+	}
+	
+	private void addCardsToCorkboardView()
+	{
+		
+		// Add all the current cards to the CorkboardTemplate
+		for(Card card : cards) {
+			
+			addCardLabel(card);
+			
+		}
 		
 	}
 	
@@ -100,28 +150,48 @@ public class WindowController implements ActionListener, KeyListener
 		
 	}
 	
-	private void addCardLabel(int index, Card card)
+	private void repaintViews()
 	{
 		
-		// Create new CardLabel
-		CardLabel cardLabel = new CardLabel(card);
-		
-		// Add event listeners
-		cardLabel.addMouseListener(corkboardController);
-		
-		// Add cardLabel to the corkboardTemplate
-		corkboardController.getCorkboardTemplate().add(cardLabel, index);
+		// Repaint the CorkboardTemplate
+		corkboardController.getCorkboardTemplate().revalidate();
+		corkboardController.getCorkboardTemplate().repaint();
 		
 	}
 	
-	public void deleteCard(CardLabel cardLabel)
+	/*
+	 * Methods for adding, deleting, editing, duplicating, flipping cards
+	 */
+	public void addCard(Card card)
+	{
+		
+		// Add the new Card to the list
+		cards.add(card);
+		
+		// Remove and re-add all cards
+		syncCardsWithViews();
+		
+	}
+	
+	public void addCard(int index, Card card)
+	{
+		
+		// Add the new Card to the list
+		cards.add(index, card);
+		
+		// Remove and re-add all cards
+		syncCardsWithViews();
+		
+	}
+	
+	public void deleteCard(Card card)
 	{
 		
 		// Delete from Card list
-		cards.remove(cardLabel.getCard());
+		cards.remove(card);
 		
-		// Remove from corkboardTemplate
-		corkboardController.getCorkboardTemplate().remove(cardLabel);
+		// Remove and re-add all cards
+		syncCardsWithViews();
 		
 	}
 	
@@ -136,30 +206,26 @@ public class WindowController implements ActionListener, KeyListener
 			
 			addCard(index, card);
 			
+			// Remove and re-add all cards
+			syncCardsWithViews();
+			
 		}
 		
 	}
 	
-	public void editCard(Card card)
+	public void editCard(Card oldCard, Card newCard)
 	{
 		
 		// Get index of current Card
-		int index = cards.indexOf(card);
+		int index = cards.indexOf(oldCard);
 		
-		// If it's found, remove it and add it again at that index
+		// If it's found, replace it
 		if(index >= 0) {
 			
-			cards.set(index, card);
+			this.cards.set(index, newCard);
 			
-			int labelIndex = corkboardController.getCorkboardTemplate().indexOf(card);
-			
-			if(labelIndex >= 0) {
-				
-				corkboardController
-					.getCorkboardTemplate()
-					.add(new CardLabel(card), labelIndex);
-				
-			}
+			// Remove and re-add all cards
+			syncCardsWithViews();
 			
 		}
 		
@@ -168,11 +234,16 @@ public class WindowController implements ActionListener, KeyListener
 	public void flipCard(Card card)
 	{
 		
+		// Get index of flipped card
 		int index = cards.indexOf(card);
 		
+		// If it's found, flip it
 		if(index >= 0) {
 			
 			((Card) cards.get(index)).flip();
+			
+			// Remove and re-add all cards
+			syncCardsWithViews();
 			
 		}
 		
@@ -192,11 +263,16 @@ public class WindowController implements ActionListener, KeyListener
 	public void insertAfter(Card newCard, Card oldCard)
 	{
 		
+		// Get index of card to insert after
 		int index = cards.indexOf(oldCard);
 		
+		// If it's found, add new card
 		if(index >= 0) {
 			
 			addCard(index + 1, newCard);
+			
+			// Remove and re-add all cards
+			syncCardsWithViews();
 			
 		}
 		
@@ -205,17 +281,25 @@ public class WindowController implements ActionListener, KeyListener
 	public void insertBefore(Card newCard, Card oldCard)
 	{
 		
+		// Get index of card to insert before
 		int index = cards.indexOf(oldCard);
 		
-		if(index == 0) {
-			
-			addCard(index, newCard);
-			
-		}
+		// Get index of new card
+		int newIndex = index;
 		
 		if(index > 0) {
 			
-			addCard(index + 1, newCard);
+			newIndex++;
+			
+		}
+		
+		// If it's found, add the new card
+		if(index >= 0) {
+			
+			addCard(newIndex, newCard);
+			
+			// Remove and re-add all cards
+			syncCardsWithViews();
 			
 		}
 		

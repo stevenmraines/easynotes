@@ -1,6 +1,5 @@
 package easynotes.templates;
 
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,9 +9,6 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-
-import easynotes.components.CardLabel;
-import easynotes.models.Card;
 
 // TODO when cardLabels are removed, their mouseListeners should also be removed
 public class CorkboardTemplate extends JPanel
@@ -71,117 +67,6 @@ public class CorkboardTemplate extends JPanel
 		
 		// Set showBackgroundMenuItem checked by default
 		showBackgroundMenuItem.setSelected(true);
-		
-	}
-	
-	/*
-	 * TODO these methods should probably be removed. If CardLabels
-	 * are going to be added in rapid succession with each edit or flip
-	 * or delete, the the revalidating or repainting should only happen once.
-	 */
-	
-	/*
-	 * Override some JPanel methods to automatically force repainting.
-	 */
-	@Override
-	public Component add(Component component)
-	{
-		
-		super.add(component);
-		
-		revalidate();
-		
-		repaint();
-		
-		return component;
-		
-	}
-	
-	@Override
-	public Component add(Component component, int index)
-	{
-		
-		super.add(component, index);
-		
-		revalidate();
-		
-		repaint();
-		
-		return component;
-		
-	}
-	
-	@Override
-	public void remove(Component component)
-	{
-		
-		super.remove(component);
-		
-		revalidate();
-		
-		repaint();
-		
-	}
-
-	public void deleteCard(Card card)
-	{
-		
-		for(Component component : this.getComponents()) {
-			
-			if(component instanceof CardLabel
-					&& ((CardLabel) component).getCard() == card) {
-
-				this.remove(component);
-				
-			}
-			
-		}
-		
-		revalidate();
-		
-		repaint();
-		
-	}
-	
-	/*
-	 * Remove a certain cardLabel and re-add it
-	 */
-	public void replace(CardLabel cardLabel)
-	{
-		
-		Component[] components = this.getComponents();
-		
-		for(int i = 0; i < components.length; i++) {
-			
-			if(components[i] == cardLabel) {
-				
-				this.remove(components[i]);
-				
-				this.add(cardLabel, i);
-				
-			}
-			
-		}
-		
-	}
-	
-	public int indexOf(Card card)
-	{
-		
-		Component[] components = this.getComponents();
-		
-		for(int i = 0; i < components.length; i++) {
-			
-			if(components[i] instanceof CardLabel
-					&& ((CardLabel) components[i]).getCard() == card) {
-				
-				return i;
-				
-			}
-			
-		}
-		
-		return -1;
 		
 	}
 	

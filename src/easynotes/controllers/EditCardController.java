@@ -48,15 +48,9 @@ public class EditCardController implements ActionListener
 				editCardTemplate.getBlueSpinnerModel().getNumber().intValue()
 			);
 			
-			int index = windowController.getCards().indexOf(card);
+			Card newCard = new Card(frontText, backText, Color.darkGray, backgroundColor);
 			
-			if(index >= 0) {
-				
-				windowController.getCards().get(index).setFrontText(frontText);
-				windowController.getCards().get(index).setBackText(backText);
-				windowController.getCards().get(index).setBackgroundColor(backgroundColor);
-				
-			}
+			windowController.editCard(card, newCard);
 			
 			// Hide the edit card window
 			editCardTemplate.setVisible(false);
