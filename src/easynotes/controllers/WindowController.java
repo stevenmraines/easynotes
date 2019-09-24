@@ -282,26 +282,16 @@ public class WindowController implements ActionListener, KeyListener
 		
 	}
 	
-	// TODO fix this
 	public void insertBefore(Card newCard, Card oldCard)
 	{
 		
 		// Get index of card to insert before
 		int index = cards.indexOf(oldCard);
 		
-		// Get index of new card
-		int newIndex = index;
-		
-		if(index > 0) {
-			
-			newIndex++;
-			
-		}
-		
 		// If it's found, add the new card
 		if(index >= 0) {
 			
-			addCard(newIndex, newCard);
+			addCard(index, newCard);
 			
 			// Remove and re-add all cards
 			syncCardsWithViews();
