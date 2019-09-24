@@ -28,6 +28,7 @@ public class WindowController implements ActionListener, KeyListener
 	private CorkboardController corkboardController;
 	private AddCardController addCardController;
 	private EditCardController editCardController;
+	// TODO these classes are probably not needed, could get by with just AddCardTemplate
 	private InsertAfterCardController insertAfterCardController;
 	private InsertBeforeCardController insertBeforeCardController;
 	
