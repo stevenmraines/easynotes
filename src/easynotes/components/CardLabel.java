@@ -2,14 +2,20 @@ package easynotes.components;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
+
 import javax.swing.JLabel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import easynotes.controllers.CorkboardController;
 import easynotes.models.Card;
 
-public class CardLabel extends JLabel
+public class CardLabel extends JLabel implements Transferable
 {
 	
 	private static final long serialVersionUID = -5481487587265558470L;
@@ -17,13 +23,20 @@ public class CardLabel extends JLabel
 	// Register model
 	private Card card;
 	
-	public CardLabel(Card card)
+	// Maintain custom DataFlavor for drag and drop
+	private static DataFlavor cardLabelFlavor =
+			new DataFlavor(CardLabel.class, "A CardLabel object");
+	
+	public CardLabel(Card card, CorkboardController corkboardController)
 	{
 		
 		super();
 		
 		// Initialize properties
 		this.setCard(card);
+		
+		// Set transfer handler for drag and drop
+		this.setTransferHandler(corkboardController);
 		
 		// Prepare for display
 		LineBorder line = new LineBorder(Color.lightGray);
@@ -51,6 +64,35 @@ public class CardLabel extends JLabel
 		super.setText("<html>" + text + "</html>");
 		
 	}
+	
+	/*
+	 * Transferable methods
+	 */
+	@Override
+	public DataFlavor[] getTransferDataFlavors()
+	{
+		DataFlavor[] flavors = {cardLabelFlavor};
+		return flavors;
+	}
+
+	@Override
+	public boolean isDataFlavorSupported(DataFlavor flavor)
+	{
+		return flavor.equals(cardLabelFlavor);
+	}
+
+	@Override
+	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException
+	{
+		
+		if(flavor.equals(cardLabelFlavor)) {
+			
+			return card;
+			
+		}
+		
+		throw new UnsupportedFlavorException(flavor);
+	}
 
 	/*
 	 * Setters and getters
@@ -72,6 +114,16 @@ public class CardLabel extends JLabel
 			this.setText(card.getBackText());
 		}
 		
+	}
+
+	public static DataFlavor getCardLabelFlavor()
+	{
+		return cardLabelFlavor;
+	}
+
+	public static void setCardLabelFlavor(DataFlavor cardLabelFlavor)
+	{
+		CardLabel.cardLabelFlavor = cardLabelFlavor;
 	}
 	
 }

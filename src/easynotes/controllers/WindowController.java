@@ -66,7 +66,7 @@ public class WindowController implements ActionListener, KeyListener
 	/*
 	 * Card management methods for views
 	 */
-	private void syncCardsWithViews()
+	public void syncCardsWithViews()
 	{
 		
 		// Remove all cards from all views
@@ -145,10 +145,11 @@ public class WindowController implements ActionListener, KeyListener
 	{
 		
 		// Create new CardLabel
-		CardLabel cardLabel = new CardLabel(card);
+		CardLabel cardLabel = new CardLabel(card, corkboardController);
 		
 		// Add event listeners
 		cardLabel.addMouseListener(corkboardController);
+		cardLabel.addMouseMotionListener(corkboardController);
 		
 		// Add cardLabel to the corkboardTemplate
 		corkboardController.getCorkboardTemplate().add(cardLabel);
@@ -381,7 +382,7 @@ public class WindowController implements ActionListener, KeyListener
 						// Add the CardLabel
 						corkboardController
 							.getCorkboardTemplate()
-							.add(new CardLabel(card));
+							.add(new CardLabel(card, corkboardController));
 						
 						// Read the next object
 						inputObject = objectInput.readObject();

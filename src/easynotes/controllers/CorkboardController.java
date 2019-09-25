@@ -1,18 +1,30 @@
 package easynotes.controllers;
 
 import java.awt.Point;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.io.IOException;
+
+import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
+import javax.swing.TransferHandler;
 
 import easynotes.components.CardLabel;
+import easynotes.models.Card;
 import easynotes.templates.CorkboardTemplate;
 
-public class CorkboardController implements ActionListener, MouseListener
+public class CorkboardController extends TransferHandler
+		implements ActionListener, MouseListener, MouseMotionListener
 {
-	
+
+	private static final long serialVersionUID = -626676050305634497L;
+
 	// Register parent controller
 	private WindowController windowController;
 	
@@ -25,6 +37,12 @@ public class CorkboardController implements ActionListener, MouseListener
 	
 	public CorkboardController(WindowController windowController)
 	{
+		
+		/*
+		 * Call the TransferHandler constructor with
+		 * the CardLabel property we want to transfer
+		 */
+		super("card");
 		
 		// Initialize properties
 		this.windowController = windowController;
@@ -41,6 +59,65 @@ public class CorkboardController implements ActionListener, MouseListener
 		corkboardTemplate.getInsertBeforeMenuItem().addActionListener(this);
 		corkboardTemplate.getFlipCardMenuItem().addActionListener(this);
 		corkboardTemplate.getDuplicateCardMenuItem().addActionListener(this);
+		
+	}
+	
+	/*
+	 * TransferHandler methods
+	 */
+	@Override
+	public boolean canImport(JComponent component, DataFlavor[] transferFlavors)
+	{
+		return component instanceof CardLabel
+				&& transferFlavors[0] == CardLabel.getCardLabelFlavor();
+	}
+	
+	@Override
+	public Transferable createTransferable(JComponent component)
+	{
+		
+		if(component instanceof CardLabel) {
+			return (CardLabel) component;
+		}
+		
+		return null;
+		
+	}
+	
+	@Override
+	public boolean importData(JComponent component, Transferable transferable)
+	{
+		
+		if(component instanceof CardLabel) {
+			
+			try {
+				
+				// Get the CardLabel DataFlavor
+				DataFlavor cardLabelFlavor = CardLabel.getCardLabelFlavor();
+				
+				if(transferable.isDataFlavorSupported(cardLabelFlavor)) {
+					
+					// Get the transfer data, AKA the card that's being dropped onto
+					Card dropCard = (Card) transferable.getTransferData(cardLabelFlavor);
+					
+					// Get the source of the drag
+					Card dragCard = ((CardLabel) component).getCard();
+					
+					// Add the dragged card in the drop card's position and delete the duplicate
+					windowController.deleteCard(dropCard);
+					windowController.insertBefore(dropCard, dragCard);
+					
+					return true;
+					
+				}
+				
+			} catch (UnsupportedFlavorException | IOException e) {
+				return false;
+			}
+			
+		}
+		
+		return false;
 		
 	}
 	
@@ -204,6 +281,25 @@ public class CorkboardController implements ActionListener, MouseListener
 		
 	}
 	
+	/*
+	 * MouseMotionListener methods
+	 */
+	public void mouseMoved(MouseEvent e) {}
+	
+	@Override
+	public void mouseDragged(MouseEvent e)
+	{
+		
+		// CardLabel drag event
+		if(e.getSource() instanceof CardLabel) {
+			
+			// TransferHandler needs to export this event as a drag
+			this.exportAsDrag(((CardLabel) e.getSource()), e, TransferHandler.COPY);
+			
+		}
+		
+	}
+	
 	private void showPopup(MouseEvent e)
 	{
 		
@@ -227,30 +323,11 @@ public class CorkboardController implements ActionListener, MouseListener
 		
 	}
 	
-	// TODO WHAT MORE DO YOU WANT?! GIVE ME THE CORRECT POINTER LOCATION!!!
 	private Point getAdjustedPointerLocation(MouseEvent e)
 	{
 		
-		// Get the WindowTemplate JFrame location
-		Point frameLocation = windowController.getWindowTemplate().getLocation();
-		
-		// Get the corkboardTemplate JPanel location
-		Point panelLocation = corkboardTemplate.getLocation();
-		
 		// Get the mouse click location relative to window location
-		Point popupLocation = new Point(e.getX(), e.getY());
-		popupLocation.translate(frameLocation.x, frameLocation.y);
-		popupLocation.translate(panelLocation.x, panelLocation.y);
-		
-		if(e.getSource() instanceof CardLabel) {
-			
-			// Get the CardLabel JLabel location
-			Point labelLocation = ((CardLabel) e.getSource()).getLocation();
-			popupLocation.translate(labelLocation.x, labelLocation.y);
-			
-		}
-		
-		return popupLocation;
+		return new Point(e.getX(), e.getY());
 		
 	}
 
