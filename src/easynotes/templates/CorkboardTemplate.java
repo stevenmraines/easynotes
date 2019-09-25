@@ -10,7 +10,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
-// TODO when cardLabels are removed, their mouseListeners should also be removed
 public class CorkboardTemplate extends JPanel
 {
 	

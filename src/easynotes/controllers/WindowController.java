@@ -118,6 +118,7 @@ public class WindowController implements ActionListener, KeyListener
 		
 		// Remove mouse listeners
 		cardLabel.removeMouseListener(corkboardController);
+		cardLabel.removeMouseMotionListener(corkboardController);
 		
 	}
 	
