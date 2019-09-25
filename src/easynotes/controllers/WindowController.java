@@ -202,6 +202,28 @@ public class WindowController implements ActionListener, KeyListener
 		
 	}
 	
+	// TODO find a way to make this work with duplicate cards
+	public void dragAndDropCard(Card dragCard, Card dropCard)
+	{
+		
+		for(int i = 0; i < cards.size(); i++) {
+			
+			if(cards.get(i).equals(dragCard)) {
+
+				// Delete the original dragCard
+				deleteCard(cards.get(i));
+				
+				// Add the dragCard copy in place of dropCard
+				insertBefore(dragCard, dropCard);
+				
+				break;
+				
+			}
+			
+		}
+		
+	}
+	
 	public void duplicateCard(Card card)
 	{
 		

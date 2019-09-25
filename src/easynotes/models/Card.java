@@ -68,6 +68,21 @@ public class Card implements Serializable
 		
 	}
 	
+	// TODO should this check isFlipped as well?
+	public boolean equals(Card card)
+	{
+		
+		return (
+				
+			this.frontText.equals(card.getFrontText())
+			&& this.backText.equals(card.getBackText())
+			&& this.fontColor.equals(card.getFontColor())
+			&& this.backgroundColor.equals(card.getBackgroundColor())
+			
+		);
+		
+	}
+	
 	public void flip()
 	{
 		isFlipped = !isFlipped;

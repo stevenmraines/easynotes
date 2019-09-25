@@ -97,15 +97,23 @@ public class CorkboardController extends TransferHandler
 				
 				if(transferable.isDataFlavorSupported(cardLabelFlavor)) {
 					
-					// Get the transfer data, AKA the card that's being dropped onto
-					Card dropCard = (Card) transferable.getTransferData(cardLabelFlavor);
-					
 					// Get the source of the drag
-					Card dragCard = ((CardLabel) component).getCard();
+					/*
+					 * TODO seems like deserialization is creating a new Card object
+					 * which is changing the object ID, causing it not to match it's
+					 * counterpart in the WindowController Card ArrayList
+					 * 
+					 * Maybe getting the entire CardLabel as the transfer data will help?
+					 */
+					Card dragCard = (Card) transferable.getTransferData(cardLabelFlavor);
+					
+					// Get the card that's being dropped onto
+					Card dropCard = ((CardLabel) component).getCard();
 					
 					// Add the dragged card in the drop card's position and delete the duplicate
-					windowController.deleteCard(dropCard);
-					windowController.insertBefore(dropCard, dragCard);
+//					windowController.deleteCard(dragCard);
+//					windowController.insertBefore(dragCard, dropCard);
+					windowController.dragAndDropCard(dragCard, dropCard);
 					
 					return true;
 					
