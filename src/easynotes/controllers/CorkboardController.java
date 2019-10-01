@@ -207,7 +207,7 @@ public class CorkboardController implements ActionListener, MouseListener
 	private void showPopup(MouseEvent e)
 	{
 		
-		Point popupLocation = getAdjustedPointerLocation(e);
+		Point popupLocation = getContextMenuLocation(e);
 		
 		if(e.isPopupTrigger() && e.getSource() instanceof CorkboardTemplate) {
 			
@@ -227,31 +227,9 @@ public class CorkboardController implements ActionListener, MouseListener
 		
 	}
 	
-	// TODO WHAT MORE DO YOU WANT?! GIVE ME THE CORRECT POINTER LOCATION!!!
-	private Point getAdjustedPointerLocation(MouseEvent e)
+	private Point getContextMenuLocation(MouseEvent e)
 	{
-		
-		// Get the WindowTemplate JFrame location
-		Point frameLocation = windowController.getWindowTemplate().getLocation();
-		
-		// Get the corkboardTemplate JPanel location
-		Point panelLocation = corkboardTemplate.getLocation();
-		
-		// Get the mouse click location relative to window location
-		Point popupLocation = new Point(e.getX(), e.getY());
-		popupLocation.translate(frameLocation.x, frameLocation.y);
-		popupLocation.translate(panelLocation.x, panelLocation.y);
-		
-		if(e.getSource() instanceof CardLabel) {
-			
-			// Get the CardLabel JLabel location
-			Point labelLocation = ((CardLabel) e.getSource()).getLocation();
-			popupLocation.translate(labelLocation.x, labelLocation.y);
-			
-		}
-		
-		return popupLocation;
-		
+		return new Point(e.getX(), e.getY());
 	}
 
 	/*
