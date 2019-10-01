@@ -529,7 +529,9 @@ public class WindowController implements ActionListener, KeyListener
 	private void deleteAllCards()
 	{
 		cards.clear();
+		this.windowTemplate.remove(corkboardController.getCorkboardTemplate());
 		corkboardController = new CorkboardController(this);
+		this.windowTemplate.add(corkboardController.getCorkboardTemplate());
 	}
 
 	/*
