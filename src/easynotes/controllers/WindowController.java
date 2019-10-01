@@ -1,14 +1,18 @@
 package easynotes.controllers;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -16,6 +20,9 @@ import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import easynotes.components.CardLabel;
 import easynotes.models.Card;
@@ -60,6 +67,12 @@ public class WindowController implements ActionListener, KeyListener
 		
 		// Prepare window for display
 		windowTemplate.add(corkboardController.getCorkboardTemplate());
+		
+		LineBorder lineB = new LineBorder(Color.red);
+		EmptyBorder empty = new EmptyBorder(15,15,15,15);
+		CompoundBorder compound = new CompoundBorder(lineB, empty);
+		corkboardController.getCorkboardTemplate().setBorder(compound);
+		corkboardController.getCorkboardTemplate().setBackground(Color.black);
 		
 	}
 	
@@ -430,6 +443,76 @@ public class WindowController implements ActionListener, KeyListener
 		
 	}
 	
+	// TODO remove this method later
+	private void loadOldProject()
+	{
+		
+		int fileChooserReturnValue =
+			windowTemplate
+				.getFileChooser()
+				.showOpenDialog(windowTemplate);
+		
+		if(fileChooserReturnValue == JFileChooser.APPROVE_OPTION) {
+			// Delete the current cards
+			deleteAllCards();
+			
+			// Get the file that the user selected
+			File file = windowTemplate.getFileChooser().getSelectedFile();
+			
+			try {
+				
+				// Open the input streams
+				FileReader fileInput = new FileReader(file.getAbsolutePath());
+				BufferedReader reader = new BufferedReader(fileInput);
+				
+				// Get the objects
+				String line = reader.readLine();
+				String frontText = "";
+				String backText = "";
+				int red = 0;
+				int green = 0;
+				int blue = 0;
+				
+				while(line != null) {
+					
+					if(line.length() >= 6 && line.substring(0, 6).equals("front:")) {
+						frontText = line.substring(6);
+					} else if(line.length() >= 5 && line.substring(0, 5).equals("back:")) {
+						backText = line.substring(5);
+					} else if(line.length() >= 4 && line.substring(0, 4).equals("red:")) {
+						red = Integer.parseInt(line.substring(4));
+					} else if(line.length() >= 6 && line.substring(0, 6).equals("green:")) {
+						green = Integer.parseInt(line.substring(6));
+					} else if(line.length() >= 5 && line.substring(0, 5).equals("blue:")) {
+						blue = Integer.parseInt(line.substring(5));
+						Color backgroundColor = new Color(red, green, blue);
+						Card card = new Card(frontText, backText, Color.darkGray, backgroundColor);
+						this.addCard(card);
+					} else if(line.equals("end")) {
+						break;
+					}
+					
+					line = reader.readLine();
+					
+				}
+				
+				// Close the input streams
+				fileInput.close();
+				reader.close();
+				
+				// Update the title of the frame to reflect the current project
+				windowTemplate.setTitle(file.getName());
+				
+				this.getWindowTemplate().remove(corkboardController.getCorkboardTemplate());
+				this.getWindowTemplate().add(corkboardController.getCorkboardTemplate());
+				
+			} catch (IOException e1) {
+				JOptionPane.showMessageDialog(windowTemplate, "Could not open the file.");
+			}
+		}
+		
+	}
+	
 	private void newProject()
 	{
 		
@@ -468,7 +551,8 @@ public class WindowController implements ActionListener, KeyListener
 		
 		// Load project clicked
 		if(e.getSource() == windowTemplate.getLoadProjectMenuItem()) {
-			loadProject();
+//			loadProject();
+			this.loadOldProject();
 		}
 		
 		// About clicked
