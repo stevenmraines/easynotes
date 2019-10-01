@@ -16,21 +16,15 @@ import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
-/**
- * 
- * The CardTextTemplate is an abstract class which contains
- * the Swing components needed for both the add and edit
- * card templates.
- * 
- * @author sraines
- *
- */
 public abstract class CardTextTemplate
 {
 	
 	protected JDialog dialog;
 	protected JFrame frame;
 	protected JPanel panel;
+	protected JPanel frontTextLabelPanel;
+	protected JPanel backTextLabelPanel;
+	protected JPanel actionButtonPanel;
 	protected JPanel colorPanel;
 	protected JLabel frontTextLabel;
 	protected JLabel backTextLabel;
@@ -57,14 +51,17 @@ public abstract class CardTextTemplate
 		frame = new JFrame();
 		dialog = new JDialog(frame, true);
 		panel = new JPanel();
+		frontTextLabelPanel = new JPanel();
+		backTextLabelPanel = new JPanel();
+		actionButtonPanel = new JPanel();
 		colorPanel = new JPanel(new GridBagLayout());
 		frontTextLabel = new JLabel("Front text");
 		backTextLabel = new JLabel("Back text");
 		redTextLabel = new JLabel("Red");
 		greenTextLabel = new JLabel("Green");
 		blueTextLabel = new JLabel("Blue");
-		frontText = new JTextArea();
-		backText = new JTextArea();
+		frontText = new JTextArea(7, 40);
+		backText = new JTextArea(7, 40);
 		redSpinnerModel = new SpinnerNumberModel(255, 0, 255, 1);
 		greenSpinnerModel = new SpinnerNumberModel(255, 0, 255, 1);
 		blueSpinnerModel = new SpinnerNumberModel(255, 0, 255, 1);
@@ -79,17 +76,20 @@ public abstract class CardTextTemplate
 		// Add components
 		frame.add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.add(frontTextLabel);
+		panel.add(frontTextLabelPanel);
 		panel.add(Box.createVerticalStrut(5));
 		panel.add(frontScrollPane);
 		panel.add(Box.createVerticalStrut(5));
-		panel.add(backTextLabel);
+		panel.add(backTextLabelPanel);
 		panel.add(Box.createVerticalStrut(5));
 		panel.add(backScrollPane);
 		panel.add(Box.createVerticalStrut(5));
 		panel.add(colorPanel);
 		panel.add(Box.createVerticalStrut(10));
-		panel.add(actionButton);
+		panel.add(actionButtonPanel);
+		frontTextLabelPanel.add(frontTextLabel);
+		backTextLabelPanel.add(backTextLabel);
+		actionButtonPanel.add(actionButton);
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -163,6 +163,36 @@ public abstract class CardTextTemplate
 	public void setPanel(JPanel panel)
 	{
 		this.panel = panel;
+	}
+
+	public JPanel getFrontTextLabelPanel()
+	{
+		return frontTextLabelPanel;
+	}
+
+	public void setFrontTextLabelPanel(JPanel frontTextLabelPanel)
+	{
+		this.frontTextLabelPanel = frontTextLabelPanel;
+	}
+
+	public JPanel getBackTextLabelPanel()
+	{
+		return backTextLabelPanel;
+	}
+
+	public void setBackTextLabelPanel(JPanel backTextLabelPanel)
+	{
+		this.backTextLabelPanel = backTextLabelPanel;
+	}
+
+	public JPanel getActionButtonPanel()
+	{
+		return actionButtonPanel;
+	}
+
+	public void setActionButtonPanel(JPanel actionButtonPanel)
+	{
+		this.actionButtonPanel = actionButtonPanel;
 	}
 
 	public JPanel getColorPanel()
