@@ -43,17 +43,18 @@ public class AddCardController implements ActionListener
 			String frontText = addCardTemplate.getFrontText().getText();
 			String backText = addCardTemplate.getBackText().getText();
 			
-			// TODO get font color
+			Color fontColor =
+				addCardTemplate
+					.getFontColorDisplayPanel()
+					.getBackground();
 			
-			// Get user RGB for background color
-			Color backgroundColor = new Color(
-				addCardTemplate.getRedSpinnerModel().getNumber().intValue(),
-				addCardTemplate.getGreenSpinnerModel().getNumber().intValue(),
-				addCardTemplate.getBlueSpinnerModel().getNumber().intValue()
-			);
+			Color backgroundColor =
+				addCardTemplate
+					.getBackgroundColorDisplayPanel()
+					.getBackground();
 			
 			// Create and add the new card
-			Card card = new Card(frontText, backText, Color.darkGray, backgroundColor);
+			Card card = new Card(frontText, backText, fontColor, backgroundColor);
 			windowController.addCard(card);
 			
 			// Hide the add card window

@@ -40,15 +40,18 @@ public class EditCardController implements ActionListener
 		if(e.getSource() == editCardTemplate.getActionButton()) {
 			String frontText = editCardTemplate.getFrontText().getText();
 			String backText = editCardTemplate.getBackText().getText();
-			// TODO save font color
 			
-			Color backgroundColor = new Color(
-				editCardTemplate.getRedSpinnerModel().getNumber().intValue(),
-				editCardTemplate.getGreenSpinnerModel().getNumber().intValue(),
-				editCardTemplate.getBlueSpinnerModel().getNumber().intValue()
-			);
+			Color fontColor =
+				editCardTemplate
+					.getFontColorDisplayPanel()
+					.getBackground();
 			
-			Card newCard = new Card(frontText, backText, Color.darkGray, backgroundColor);
+			Color backgroundColor =
+				editCardTemplate
+					.getBackgroundColorDisplayPanel()
+					.getBackground();
+			
+			Card newCard = new Card(frontText, backText, fontColor, backgroundColor);
 			
 			windowController.editCard(card, newCard);
 			
@@ -75,10 +78,14 @@ public class EditCardController implements ActionListener
 		// Set the editCardTemplate fields to hold the given card's data
 		editCardTemplate.getFrontText().setText(card.getFrontText());
 		editCardTemplate.getBackText().setText(card.getBackText());
-		// TODO set RGB for font color
-		editCardTemplate.getRedSpinnerModel().setValue(card.getBackgroundColor().getRed());
-		editCardTemplate.getGreenSpinnerModel().setValue(card.getBackgroundColor().getGreen());
-		editCardTemplate.getBlueSpinnerModel().setValue(card.getBackgroundColor().getBlue());
+		
+		editCardTemplate
+			.getFontColorDisplayPanel()
+			.setBackground(card.getFontColor());
+		
+		editCardTemplate
+			.getBackgroundColorDisplayPanel()
+			.setBackground(card.getBackgroundColor());
 		
 	}
 	

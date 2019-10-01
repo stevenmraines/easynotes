@@ -1,22 +1,26 @@
 package easynotes.templates;
 
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.FlowLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JTextArea;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
-public abstract class CardTextTemplate
+public abstract class CardTextTemplate implements MouseListener
 {
 	
 	protected JDialog dialog;
@@ -24,25 +28,21 @@ public abstract class CardTextTemplate
 	protected JPanel panel;
 	protected JPanel frontTextLabelPanel;
 	protected JPanel backTextLabelPanel;
-	protected JPanel actionButtonPanel;
 	protected JPanel colorPanel;
+	protected JPanel fontColorPanel;
+	protected JPanel backgroundColorPanel;
+	protected JPanel fontColorDisplayPanel;
+	protected JPanel backgroundColorDisplayPanel;
+	protected JPanel actionButtonPanel;
 	protected JLabel frontTextLabel;
 	protected JLabel backTextLabel;
-	protected JLabel redTextLabel;
-	protected JLabel greenTextLabel;
-	protected JLabel blueTextLabel;
+	protected JLabel fontColorLabel;
+	protected JLabel backgroundColorLabel;
 	protected JTextArea frontText;
 	protected JTextArea backText;
-	protected SpinnerNumberModel redSpinnerModel;
-	protected SpinnerNumberModel greenSpinnerModel;
-	protected SpinnerNumberModel blueSpinnerModel;
-	protected JSpinner redSpinner;
-	protected JSpinner greenSpinner;
-	protected JSpinner blueSpinner;
 	protected JScrollPane frontScrollPane;
 	protected JScrollPane backScrollPane;
 	protected JButton actionButton;
-	protected GridBagConstraints gbc;
 	
 	public CardTextTemplate()
 	{
@@ -53,25 +53,21 @@ public abstract class CardTextTemplate
 		panel = new JPanel();
 		frontTextLabelPanel = new JPanel();
 		backTextLabelPanel = new JPanel();
+		colorPanel = new JPanel(new FlowLayout());
+		fontColorPanel = new JPanel();
+		backgroundColorPanel = new JPanel();
+		fontColorDisplayPanel = new JPanel();
+		backgroundColorDisplayPanel = new JPanel();
 		actionButtonPanel = new JPanel();
-		colorPanel = new JPanel(new GridBagLayout());
 		frontTextLabel = new JLabel("Front text");
 		backTextLabel = new JLabel("Back text");
-		redTextLabel = new JLabel("Red");
-		greenTextLabel = new JLabel("Green");
-		blueTextLabel = new JLabel("Blue");
+		fontColorLabel = new JLabel("Font Color:");
+		backgroundColorLabel = new JLabel("Card Color:");
 		frontText = new JTextArea(7, 40);
 		backText = new JTextArea(7, 40);
-		redSpinnerModel = new SpinnerNumberModel(255, 0, 255, 1);
-		greenSpinnerModel = new SpinnerNumberModel(255, 0, 255, 1);
-		blueSpinnerModel = new SpinnerNumberModel(255, 0, 255, 1);
-		redSpinner = new JSpinner(redSpinnerModel);
-		greenSpinner = new JSpinner(greenSpinnerModel);
-		blueSpinner = new JSpinner(blueSpinnerModel);
 		frontScrollPane = new JScrollPane(frontText);
 		backScrollPane = new JScrollPane(backText);
 		actionButton = new JButton();
-		gbc = new GridBagConstraints();
 		
 		// Add components
 		frame.add(panel);
@@ -89,24 +85,23 @@ public abstract class CardTextTemplate
 		panel.add(actionButtonPanel);
 		frontTextLabelPanel.add(frontTextLabel);
 		backTextLabelPanel.add(backTextLabel);
+		colorPanel.add(backgroundColorPanel);
+		colorPanel.add(fontColorPanel);
+		fontColorPanel.add(fontColorLabel);
+		fontColorPanel.add(fontColorDisplayPanel);
+		backgroundColorPanel.add(backgroundColorLabel);
+		backgroundColorPanel.add(backgroundColorDisplayPanel);
 		actionButtonPanel.add(actionButton);
 		
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		colorPanel.add(redTextLabel, gbc);
-		gbc.gridx = 1;
-		colorPanel.add(greenTextLabel, gbc);
-		gbc.gridx = 2;
-		colorPanel.add(blueTextLabel, gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		colorPanel.add(redSpinner, gbc);
-		gbc.gridx = 1;
-		colorPanel.add(greenSpinner, gbc);
-		gbc.gridx = 2;
-		colorPanel.add(blueSpinner, gbc);
+		// Add action listeners
+		fontColorDisplayPanel.addMouseListener(this);
+		backgroundColorDisplayPanel.addMouseListener(this);
 		
-		// Prepare frame and JDialog
+		// Prepare for display
+		fontColorDisplayPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		backgroundColorDisplayPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		fontColorDisplayPanel.setBorder(new LineBorder(Color.black));
+		backgroundColorDisplayPanel.setBorder(new LineBorder(Color.black));
 		panel.setBorder(new EmptyBorder(5,5,5,5));
 		frame.setMinimumSize(new Dimension(250, 150));
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -128,6 +123,49 @@ public abstract class CardTextTemplate
 		// If it's being made visible, make frontText field request focus
 		if(visible) {
 			frontText.requestFocus();
+		}
+		
+	}
+	
+	/*
+	 * MouseListener methods
+	 */
+	public void mouseClicked(MouseEvent e) {}
+
+	public void mousePressed(MouseEvent e) {}
+	
+	public void mouseEntered(MouseEvent e) {}
+
+	public void mouseExited(MouseEvent e) {}
+
+	// TODO implement "Recent colors" in color chooser
+	// TODO make example text in color chooser use chosen font color
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{
+		
+		if(e.getSource() == fontColorDisplayPanel) {
+			
+			Color fontColor = JColorChooser.showDialog(
+				dialog,
+				"Select a font color",
+				fontColorDisplayPanel.getBackground()
+			);
+			
+			fontColorDisplayPanel.setBackground(fontColor);
+			
+		}
+		
+		if(e.getSource() == backgroundColorDisplayPanel) {
+
+			Color backgroundColor = JColorChooser.showDialog(
+				dialog,
+				"Select a card color",
+				backgroundColorDisplayPanel.getBackground()
+			);
+			
+			backgroundColorDisplayPanel.setBackground(backgroundColor);
+			
 		}
 		
 	}
@@ -185,6 +223,46 @@ public abstract class CardTextTemplate
 		this.backTextLabelPanel = backTextLabelPanel;
 	}
 
+	public JPanel getFontColorPanel()
+	{
+		return fontColorPanel;
+	}
+
+	public void setFontColorPanel(JPanel fontColorPanel)
+	{
+		this.fontColorPanel = fontColorPanel;
+	}
+
+	public JPanel getBackgroundColorPanel()
+	{
+		return backgroundColorPanel;
+	}
+
+	public void setBackgroundColorPanel(JPanel backgroundColorPanel)
+	{
+		this.backgroundColorPanel = backgroundColorPanel;
+	}
+
+	public JPanel getFontColorDisplayPanel()
+	{
+		return fontColorDisplayPanel;
+	}
+
+	public void setFontColorDisplayPanel(JPanel fontColorDisplayPanel)
+	{
+		this.fontColorDisplayPanel = fontColorDisplayPanel;
+	}
+
+	public JPanel getBackgroundColorDisplayPanel()
+	{
+		return backgroundColorDisplayPanel;
+	}
+
+	public void setBackgroundColorDisplayPanel(JPanel backgroundColorDisplayPanel)
+	{
+		this.backgroundColorDisplayPanel = backgroundColorDisplayPanel;
+	}
+
 	public JPanel getActionButtonPanel()
 	{
 		return actionButtonPanel;
@@ -193,16 +271,6 @@ public abstract class CardTextTemplate
 	public void setActionButtonPanel(JPanel actionButtonPanel)
 	{
 		this.actionButtonPanel = actionButtonPanel;
-	}
-
-	public JPanel getColorPanel()
-	{
-		return colorPanel;
-	}
-
-	public void setColorPanel(JPanel colorPanel)
-	{
-		this.colorPanel = colorPanel;
 	}
 
 	public JLabel getFrontTextLabel()
@@ -225,34 +293,24 @@ public abstract class CardTextTemplate
 		this.backTextLabel = backTextLabel;
 	}
 
-	public JLabel getRedTextLabel()
+	public JLabel getFontColorLabel()
 	{
-		return redTextLabel;
+		return fontColorLabel;
 	}
 
-	public void setRedTextLabel(JLabel redTextLabel)
+	public void setFontColorLabel(JLabel fontColorLabel)
 	{
-		this.redTextLabel = redTextLabel;
+		this.fontColorLabel = fontColorLabel;
 	}
 
-	public JLabel getGreenTextLabel()
+	public JLabel getBackgroundColorLabel()
 	{
-		return greenTextLabel;
+		return backgroundColorLabel;
 	}
 
-	public void setGreenTextLabel(JLabel greenTextLabel)
+	public void setBackgroundColorLabel(JLabel backgroundColorLabel)
 	{
-		this.greenTextLabel = greenTextLabel;
-	}
-
-	public JLabel getBlueTextLabel()
-	{
-		return blueTextLabel;
-	}
-
-	public void setBlueTextLabel(JLabel blueTextLabel)
-	{
-		this.blueTextLabel = blueTextLabel;
+		this.backgroundColorLabel = backgroundColorLabel;
 	}
 
 	public JTextArea getFrontText()
@@ -273,66 +331,6 @@ public abstract class CardTextTemplate
 	public void setBackText(JTextArea backText)
 	{
 		this.backText = backText;
-	}
-
-	public SpinnerNumberModel getRedSpinnerModel()
-	{
-		return redSpinnerModel;
-	}
-
-	public void setRedSpinnerModel(SpinnerNumberModel redSpinnerModel)
-	{
-		this.redSpinnerModel = redSpinnerModel;
-	}
-
-	public SpinnerNumberModel getGreenSpinnerModel()
-	{
-		return greenSpinnerModel;
-	}
-
-	public void setGreenSpinnerModel(SpinnerNumberModel greenSpinnerModel)
-	{
-		this.greenSpinnerModel = greenSpinnerModel;
-	}
-
-	public SpinnerNumberModel getBlueSpinnerModel()
-	{
-		return blueSpinnerModel;
-	}
-
-	public void setBlueSpinnerModel(SpinnerNumberModel blueSpinnerModel)
-	{
-		this.blueSpinnerModel = blueSpinnerModel;
-	}
-
-	public JSpinner getRedSpinner()
-	{
-		return redSpinner;
-	}
-
-	public void setRedSpinner(JSpinner redSpinner)
-	{
-		this.redSpinner = redSpinner;
-	}
-
-	public JSpinner getGreenSpinner()
-	{
-		return greenSpinner;
-	}
-
-	public void setGreenSpinner(JSpinner greenSpinner)
-	{
-		this.greenSpinner = greenSpinner;
-	}
-
-	public JSpinner getBlueSpinner()
-	{
-		return blueSpinner;
-	}
-
-	public void setBlueSpinner(JSpinner blueSpinner)
-	{
-		this.blueSpinner = blueSpinner;
 	}
 
 	public JScrollPane getFrontScrollPane()
@@ -363,16 +361,6 @@ public abstract class CardTextTemplate
 	public void setActionButton(JButton actionButton)
 	{
 		this.actionButton = actionButton;
-	}
-
-	public GridBagConstraints getGbc()
-	{
-		return gbc;
-	}
-
-	public void setGbc(GridBagConstraints gbc)
-	{
-		this.gbc = gbc;
 	}
 	
 }

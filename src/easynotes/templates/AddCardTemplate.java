@@ -1,5 +1,7 @@
 package easynotes.templates;
 
+import java.awt.Color;
+
 public class AddCardTemplate extends CardTextTemplate
 {
 	
@@ -7,6 +9,8 @@ public class AddCardTemplate extends CardTextTemplate
 	{
 		
 		super();
+		fontColorDisplayPanel.setBackground(Color.darkGray);
+		backgroundColorDisplayPanel.setBackground(Color.white);
 		actionButton.setText("Create");
 		frame.setTitle("Add a card");
 		frame.pack();
@@ -24,9 +28,8 @@ public class AddCardTemplate extends CardTextTemplate
 		super.setVisible(visible);
 		frontText.setText("");
 		backText.setText("");
-		redSpinnerModel.setValue(255);
-		greenSpinnerModel.setValue(255);
-		blueSpinnerModel.setValue(255);
+		fontColorDisplayPanel.setBackground(Color.darkGray);
+		backgroundColorDisplayPanel.setBackground(Color.white);
 		
 	}
 	

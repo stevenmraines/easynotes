@@ -32,17 +32,18 @@ public abstract class InsertAdjacentCardController extends ChildController imple
 		String frontText = cardTextTemplate.getFrontText().getText();
 		String backText = cardTextTemplate.getBackText().getText();
 		
-		// TODO get font color
+		Color fontColor =
+			cardTextTemplate
+				.getFontColorDisplayPanel()
+				.getBackground();
 		
-		// Get user RGB for background color
-		Color backgroundColor = new Color(
-			cardTextTemplate.getRedSpinnerModel().getNumber().intValue(),
-			cardTextTemplate.getGreenSpinnerModel().getNumber().intValue(),
-			cardTextTemplate.getBlueSpinnerModel().getNumber().intValue()
-		);
+		Color backgroundColor =
+			cardTextTemplate
+				.getBackgroundColorDisplayPanel()
+				.getBackground();
 		
 		// Create and add the new card
-		newCard = new Card(frontText, backText, Color.darkGray, backgroundColor);
+		newCard = new Card(frontText, backText, fontColor, backgroundColor);
 		
 	}
 	
