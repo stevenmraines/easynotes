@@ -189,6 +189,17 @@ public class WindowController implements ActionListener, KeyListener
 		
 	}
 	
+	public void addCards(ArrayList<Card> cards)
+	{
+		
+		// Replace cards list
+		this.cards = cards;
+		
+		// Remove and re-add all cards
+		syncCardsWithViews();
+		
+	}
+	
 	public void deleteCard(Card card)
 	{
 		
@@ -196,6 +207,18 @@ public class WindowController implements ActionListener, KeyListener
 		cards.remove(card);
 		
 		// Remove and re-add all cards
+		syncCardsWithViews();
+		
+	}
+	
+	// TODO make this public?
+	private void deleteAllCards()
+	{
+		
+		// Empty the Card ArrayList
+		cards.clear();
+		
+		// Update the views
 		syncCardsWithViews();
 		
 	}
@@ -367,6 +390,9 @@ public class WindowController implements ActionListener, KeyListener
 				FileInputStream fileInput = new FileInputStream(file.getAbsolutePath());
 				ObjectInputStream objectInput = new ObjectInputStream(fileInput);
 				
+				// Get ready to save the cards
+				ArrayList<Card> newCards = new ArrayList<Card>();
+				
 				// Get the objects
 				try {
 					
@@ -374,14 +400,8 @@ public class WindowController implements ActionListener, KeyListener
 					
 					while(inputObject instanceof Card) {
 						
-						// Create the new Card object and add it
-						Card card = (Card) inputObject;
-						cards.add(card);
-						
-						// Add the CardLabel
-						corkboardController
-							.getCorkboardTemplate()
-							.add(new CardLabel(card));
+						// Add the card
+						newCards.add((Card) inputObject);
 						
 						// Read the next object
 						inputObject = objectInput.readObject();
@@ -389,7 +409,10 @@ public class WindowController implements ActionListener, KeyListener
 					}
 					
 				} catch(EOFException e2) {
-					// Exception signals we've reached the end of the file
+					
+					// We've reached the end of the file, time to add the new project
+					addCards(newCards);
+					
 				}
 				
 				// Close the input streams
@@ -417,12 +440,6 @@ public class WindowController implements ActionListener, KeyListener
 			deleteAllCards();
 		}
 		
-	}
-	
-	private void deleteAllCards()
-	{
-		cards.clear();
-		corkboardController = new CorkboardController(this);
 	}
 
 	/*
