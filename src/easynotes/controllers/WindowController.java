@@ -223,16 +223,16 @@ public class WindowController implements ActionListener, KeyListener
 		
 	}
 	
-	public void duplicateCard(Card card)
+	public void duplicateCard(Card originalCard)
 	{
 		
 		// Get index of the given card
-		int index = cards.indexOf(card);
+		int index = cards.indexOf(originalCard);
 		
 		// If it's found, add it again at that index
 		if(index >= 0) {
 			
-			addCard(index, card);
+			addCard(index, new Card(originalCard));
 			
 			// Remove and re-add all cards
 			syncCardsWithViews();

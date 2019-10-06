@@ -68,6 +68,17 @@ public class Card implements Serializable
 		
 	}
 	
+	public Card(Card duplicateCard)
+	{
+		init(
+			duplicateCard.getFrontText(),
+			duplicateCard.getBackText(),
+			duplicateCard.getFontColor(),
+			duplicateCard.getBackgroundColor(),
+			duplicateCard.isFlipped()
+		);
+	}
+	
 	public void flip()
 	{
 		isFlipped = !isFlipped;
