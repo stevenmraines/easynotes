@@ -138,7 +138,16 @@ public class CorkboardController implements ActionListener, MouseListener
 		
 		// Show background image
 		if(e.getSource() == corkboardTemplate.getShowBackgroundMenuItem()) {
-			corkboardTemplate.repaint();
+			
+			boolean paintBackgroundImage =
+				corkboardTemplate
+					.getShowBackgroundMenuItem()
+					.isSelected();
+			
+			corkboardTemplate
+				.getCorkboardPanel()
+				.setPaintBackgroundImage(paintBackgroundImage);
+			
 		}
 		
 	}

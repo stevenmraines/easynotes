@@ -1,5 +1,6 @@
 package easynotes.templates;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,8 +10,11 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 
-public class CorkboardTemplate extends JPanel
+import easynotes.components.CorkboardPanel;
+
+public class CorkboardTemplate extends JScrollPane
 {
 	
 	private static final long serialVersionUID = -3447234042759312451L;
@@ -29,6 +33,8 @@ public class CorkboardTemplate extends JPanel
 	
 	public CorkboardTemplate()
 	{
+		
+		super(new CorkboardPanel());
 		
 		// Initialize components
 		corkboardMenu = new JPopupMenu();
@@ -59,48 +65,63 @@ public class CorkboardTemplate extends JPanel
 		// Prepare background image
 		try {
 			background = ImageIO.read(new File("img/cork.jpg"));
+			this.getCorkboardPanel().setBackground(background);
 		} catch(IOException e) {
 			// TODO How to get WindowTemplate reference for JOptionPane here?
 		}
 		
 		// Set showBackgroundMenuItem checked by default
 		showBackgroundMenuItem.setSelected(true);
+
+		this.setOpaque(false);
+		
+	}
+	
+	/*
+	 * Override add method so that components are added to inner JPanel.
+	 */
+	@Override
+	public Component add(Component component)
+	{
+		
+		((CorkboardPanel) this.getViewport().getView()).add(component);
+		return component;
 		
 	}
 	
 	/*
 	 * Override paintComponent to draw corkboard image background.
 	 */
-	@Override
-	public void paintComponent(Graphics g)
-	{
-		
-		super.paintComponent(g);
-		
-		if(showBackgroundMenuItem.isSelected() && background != null) {
-			
-			// Get width and height of this panel and background image
-			int w = this.getWidth();
-			int h = this.getHeight();
-			int bw = background.getWidth();
-			int bh = background.getHeight();
-			
-			// Find out how many times the image needs to be repeated in each direction
-			int rx = (int) Math.ceil((double) w / bw);
-			int ry = (int) Math.ceil((double) h / bh);
-			
-			// Draw the image
-			for(int i = 0; i < rx; i++) {
-				for(int j = 0; j < ry; j++) {
-					int x = this.getX() + i * bw;
-					int y = this.getY() + j * bh;
-					g.drawImage(background, x, y, null);
-				}
-			}
-			
-		}
-		
-	}
+//	@Override
+//	public void paintComponent(Graphics g)
+//	{
+//		
+//		super.paintComponent(g);
+//		
+//		if(showBackgroundMenuItem.isSelected() && background != null) {
+//			
+//			// Get width and height of this panel and background image
+//			int w = this.getWidth();
+//			int h = this.getHeight();
+//			int bw = background.getWidth();
+//			int bh = background.getHeight();
+//			
+//			// Find out how many times the image needs to be repeated in each direction
+//			int rx = (int) Math.ceil((double) w / bw);
+//			int ry = (int) Math.ceil((double) h / bh);
+//			
+//			// Draw the image
+//			for(int i = 0; i < rx; i++) {
+//				for(int j = 0; j < ry; j++) {
+//					int x = this.getX() + i * bw;
+//					int y = this.getY() + j * bh;
+//					g.drawImage(background, x, y, null);
+//				}
+//			}
+//			
+//		}
+//		
+//	}
 
 	/*
 	 * Setters and getters
@@ -214,5 +235,12 @@ public class CorkboardTemplate extends JPanel
 	{
 		this.deleteCardMenuItem = deleteCardMenuItem;
 	}
+	
+	public CorkboardPanel getCorkboardPanel()
+	{
+		return (CorkboardPanel) this.getViewport().getView();
+	}
+	
+	// TODO add corkboardpanel setter
 	
 }
