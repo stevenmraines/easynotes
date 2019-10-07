@@ -173,6 +173,9 @@ public class CorkboardController implements ActionListener, MouseListener
 				.getCorkboardPanel()
 				.setBackgroundPainted(paintBackgroundImage);
 			
+			corkboardTemplate.getCorkboardPanel().revalidate();
+			corkboardTemplate.getCorkboardPanel().repaint();
+			
 		}
 		
 	}

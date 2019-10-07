@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import easynotes.layouts.ModifiedFlowLayout;
@@ -22,7 +23,7 @@ public class CorkboardPanel extends JPanel
 		
 		super(new ModifiedFlowLayout());
 		
-		backgroundPainted = false;
+		backgroundPainted = true;
 		
 		// Prepare background image
 		try {
@@ -30,6 +31,7 @@ public class CorkboardPanel extends JPanel
 			setBackground(background);
 		} catch(IOException e) {
 			// TODO How to get WindowTemplate reference for JOptionPane here?
+			JOptionPane.showMessageDialog(null, "Could not read background image file.");
 		}
 		
 	}
@@ -42,6 +44,7 @@ public class CorkboardPanel extends JPanel
 		
 		if(backgroundPainted) {
 			
+			// TODO need to get TOTAL panel height here so that the image isn't cut off when scrolling down
 			// Get width and height of this panel and background image
 			int w = this.getWidth();
 			int h = this.getHeight();
@@ -65,6 +68,7 @@ public class CorkboardPanel extends JPanel
 		
 	}
 
+	// TODO add getter for background
 //	public BufferedImage getBackground() {
 //		return background;
 //	}
@@ -81,11 +85,7 @@ public class CorkboardPanel extends JPanel
 
 	public void setBackgroundPainted(boolean backgroundPainted)
 	{
-		
 		this.backgroundPainted = backgroundPainted;
-		this.revalidate();
-		this.repaint();
-		
 	}
 
 }

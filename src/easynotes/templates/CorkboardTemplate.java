@@ -83,6 +83,9 @@ public class CorkboardTemplate extends JPanel
 		// Set showBackgroundMenuItem checked by default
 		showBackgroundMenuItem.setSelected(true);
 		
+		// Hide scroll pane background
+		scrollPane.setOpaque(false);
+		
 		// Increase scroll pane scroll speed
 		scrollPane.getVerticalScrollBar().setUnitIncrement(24);
 		
