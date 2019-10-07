@@ -2,7 +2,10 @@ package easynotes.components;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import easynotes.layouts.ModifiedFlowLayout;
@@ -12,12 +15,23 @@ public class CorkboardPanel extends JPanel
 
 	private static final long serialVersionUID = -6854211888632704237L;
 	private BufferedImage background;
-	private boolean paintBackgroundImage;
+	private boolean backgroundPainted;
 	
 	public CorkboardPanel()
 	{
+		
 		super(new ModifiedFlowLayout());
-		paintBackgroundImage = false;
+		
+		backgroundPainted = false;
+		
+		// Prepare background image
+		try {
+			background = ImageIO.read(new File("img/cork.jpg"));
+			setBackground(background);
+		} catch(IOException e) {
+			// TODO How to get WindowTemplate reference for JOptionPane here?
+		}
+		
 	}
 	
 	@Override
@@ -26,7 +40,7 @@ public class CorkboardPanel extends JPanel
 		
 		super.paintComponent(g);
 		
-		if(paintBackgroundImage) {
+		if(backgroundPainted) {
 			
 			// Get width and height of this panel and background image
 			int w = this.getWidth();
@@ -55,18 +69,23 @@ public class CorkboardPanel extends JPanel
 //		return background;
 //	}
 
-	public void setBackground(BufferedImage background) {
+	public void setBackground(BufferedImage background)
+	{
 		this.background = background;
 	}
 
-	public boolean isPaintBackgroundImage() {
-		return paintBackgroundImage;
+	public boolean isBackgroundPainted()
+	{
+		return backgroundPainted;
 	}
 
-	public void setPaintBackgroundImage(boolean paintBackgroundImage) {
-		this.paintBackgroundImage = paintBackgroundImage;
+	public void setBackgroundPainted(boolean backgroundPainted)
+	{
+		
+		this.backgroundPainted = backgroundPainted;
 		this.revalidate();
 		this.repaint();
+		
 	}
 
 }

@@ -1,24 +1,26 @@
 package easynotes.templates;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.awt.FlowLayout;
+
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-
-import easynotes.components.CorkboardPanel;
+import javax.swing.JSlider;
+import easynotes.components.CorkboardScrollPane;
 
 // TODO add JSlider for enlarging cards
-public class CorkboardTemplate extends JScrollPane
+public class CorkboardTemplate extends JPanel
 {
 	
 	private static final long serialVersionUID = -3447234042759312451L;
+	private CorkboardScrollPane scrollPane;
+	private JPanel sliderPanel;
+	private JLabel zoomLabel;
+	private JSlider zoomSlider;
 	private JPopupMenu corkboardMenu;
 	private JPopupMenu cardMenu;
 	private JMenuItem addCardMenuItem;
@@ -30,14 +32,17 @@ public class CorkboardTemplate extends JScrollPane
 	private JMenuItem editCardMenuItem;
 	private JMenuItem duplicateCardMenuItem;
 	private JMenuItem deleteCardMenuItem;
-	private BufferedImage background;
 	
 	public CorkboardTemplate()
 	{
 		
-		super(new CorkboardPanel());
+		super();
 		
 		// Initialize components
+		scrollPane = new CorkboardScrollPane();
+		sliderPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		zoomLabel = new JLabel("Zoom:");
+		zoomSlider = new JSlider();
 		corkboardMenu = new JPopupMenu();
 		cardMenu = new JPopupMenu();
 		addCardMenuItem = new JMenuItem("Add a card");
@@ -50,8 +55,15 @@ public class CorkboardTemplate extends JScrollPane
 		duplicateCardMenuItem = new JMenuItem("Duplicate this card");
 		deleteCardMenuItem = new JMenuItem("Delete this card");
 		
+		// Set layout manager
+		this.setLayout(new BorderLayout());
+		
 		// Add components
+		this.add(scrollPane, BorderLayout.CENTER);
+		this.add(sliderPanel, BorderLayout.SOUTH);
 		this.add(corkboardMenu);
+		sliderPanel.add(zoomLabel);
+		sliderPanel.add(zoomSlider);
 		corkboardMenu.add(addCardMenuItem);
 		corkboardMenu.add(flipAllCardsMenuItem);
 		corkboardMenu.addSeparator();
@@ -63,79 +75,26 @@ public class CorkboardTemplate extends JScrollPane
 		cardMenu.add(duplicateCardMenuItem);
 		cardMenu.add(deleteCardMenuItem);
 		
-		// Prepare background image
-		try {
-			background = ImageIO.read(new File("img/cork.jpg"));
-			this.getCorkboardPanel().setBackground(background);
-		} catch(IOException e) {
-			// TODO How to get WindowTemplate reference for JOptionPane here?
-		}
-		
 		// Set showBackgroundMenuItem checked by default
 		showBackgroundMenuItem.setSelected(true);
-
-		// Hide the scroll pane background so the CorkboardPanel's background can be seen
-		this.setOpaque(false);
-		
-		// Increase scroll speed
-		this.getVerticalScrollBar().setUnitIncrement(16);
 		
 	}
 	
 	/*
-	 * Override add and remove methods so that components are
-	 * added to and removed from the inner JPanel.
+	 * Override add and remove methods so that CardLabels
+	 * are added to and removed from the CorkboardScrollPane
 	 */
 	@Override
 	public Component add(Component component)
 	{
-		
-		((CorkboardPanel) this.getViewport().getView()).add(component);
-		return component;
-		
+		return this.scrollPane.add(component);
 	}
 	
 	@Override
 	public void remove(Component component)
 	{
-		
-		((CorkboardPanel) this.getViewport().getView()).remove(component);
-		
+		this.scrollPane.remove(component);
 	}
-	
-	/*
-	 * Override paintComponent to draw corkboard image background.
-	 */
-//	@Override
-//	public void paintComponent(Graphics g)
-//	{
-//		
-//		super.paintComponent(g);
-//		
-//		if(showBackgroundMenuItem.isSelected() && background != null) {
-//			
-//			// Get width and height of this panel and background image
-//			int w = this.getWidth();
-//			int h = this.getHeight();
-//			int bw = background.getWidth();
-//			int bh = background.getHeight();
-//			
-//			// Find out how many times the image needs to be repeated in each direction
-//			int rx = (int) Math.ceil((double) w / bw);
-//			int ry = (int) Math.ceil((double) h / bh);
-//			
-//			// Draw the image
-//			for(int i = 0; i < rx; i++) {
-//				for(int j = 0; j < ry; j++) {
-//					int x = this.getX() + i * bw;
-//					int y = this.getY() + j * bh;
-//					g.drawImage(background, x, y, null);
-//				}
-//			}
-//			
-//		}
-//		
-//	}
 
 	/*
 	 * Setters and getters
@@ -249,12 +208,45 @@ public class CorkboardTemplate extends JScrollPane
 	{
 		this.deleteCardMenuItem = deleteCardMenuItem;
 	}
-	
-	public CorkboardPanel getCorkboardPanel()
+
+	public CorkboardScrollPane getScrollPane()
 	{
-		return (CorkboardPanel) this.getViewport().getView();
+		return scrollPane;
 	}
-	
-	// TODO add corkboardpanel setter
+
+	public void setScrollPane(CorkboardScrollPane scrollPane)
+	{
+		this.scrollPane = scrollPane;
+	}
+
+	public JPanel getSliderPanel()
+	{
+		return sliderPanel;
+	}
+
+	public void setSliderPanel(JPanel sliderPanel)
+	{
+		this.sliderPanel = sliderPanel;
+	}
+
+	public JLabel getZoomLabel()
+	{
+		return zoomLabel;
+	}
+
+	public void setZoomLabel(JLabel zoomLabel)
+	{
+		this.zoomLabel = zoomLabel;
+	}
+
+	public JSlider getZoomSlider()
+	{
+		return zoomSlider;
+	}
+
+	public void setZoomSlider(JSlider zoomSlider)
+	{
+		this.zoomSlider = zoomSlider;
+	}
 	
 }

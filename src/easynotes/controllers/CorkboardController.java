@@ -31,7 +31,8 @@ public class CorkboardController implements ActionListener, MouseListener
 		corkboardTemplate = new CorkboardTemplate();
 		
 		// Add action listeners
-		corkboardTemplate.addMouseListener(this);
+		// TODO figure out why right click on corkboard no longer works
+		corkboardTemplate.getScrollPane().addMouseListener(this);
 		corkboardTemplate.getAddCardMenuItem().addActionListener(this);
 		corkboardTemplate.getEditCardMenuItem().addActionListener(this);
 		corkboardTemplate.getFlipAllCardsMenuItem().addActionListener(this);
@@ -145,8 +146,9 @@ public class CorkboardController implements ActionListener, MouseListener
 					.isSelected();
 			
 			corkboardTemplate
+				.getScrollPane()
 				.getCorkboardPanel()
-				.setPaintBackgroundImage(paintBackgroundImage);
+				.setBackgroundPainted(paintBackgroundImage);
 			
 		}
 		
