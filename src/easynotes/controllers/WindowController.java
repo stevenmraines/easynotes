@@ -159,8 +159,17 @@ public class WindowController implements ActionListener, KeyListener
 	{
 		
 		// Repaint the CorkboardTemplate
-		corkboardController.getCorkboardTemplate().revalidate();
-		corkboardController.getCorkboardTemplate().repaint();
+		corkboardController
+			.getCorkboardTemplate()
+			.getScrollPane()
+			.getCorkboardPanel()
+			.revalidate();
+		
+		corkboardController
+			.getCorkboardTemplate()
+			.getScrollPane()
+			.getCorkboardPanel()
+			.repaint();
 		
 	}
 	

@@ -29,18 +29,13 @@ public class CorkboardScrollPane extends JScrollPane
 	@Override
 	public Component add(Component component)
 	{
-		
-		((CorkboardPanel) this.getViewport().getView()).add(component);
-		return component;
-		
+		return ((CorkboardPanel) this.getViewport().getView()).add(component);
 	}
 	
 	@Override
 	public void remove(Component component)
 	{
-		
 		((CorkboardPanel) this.getViewport().getView()).remove(component);
-		
 	}
 	
 	/*
