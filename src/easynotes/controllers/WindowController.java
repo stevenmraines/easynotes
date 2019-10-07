@@ -294,6 +294,7 @@ public class WindowController implements ActionListener, KeyListener
 	public void flipAllCards()
 	{
 		
+		// TODO alter this so it only calls syncCardsWithViews one time
 		for(Card card : cards) {
 			
 			flipCard(card);
