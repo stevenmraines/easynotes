@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import easynotes.layouts.ModifiedFlowLayout;
+
 public class CorkboardPanel extends JPanel
 {
 
@@ -14,7 +16,7 @@ public class CorkboardPanel extends JPanel
 	
 	public CorkboardPanel()
 	{
-		super();
+		super(new ModifiedFlowLayout());
 		paintBackgroundImage = false;
 	}
 	

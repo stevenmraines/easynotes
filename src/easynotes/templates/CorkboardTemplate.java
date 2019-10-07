@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 
 import easynotes.components.CorkboardPanel;
 
+// TODO add JSlider for enlarging cards
 public class CorkboardTemplate extends JScrollPane
 {
 	
@@ -73,7 +74,11 @@ public class CorkboardTemplate extends JScrollPane
 		// Set showBackgroundMenuItem checked by default
 		showBackgroundMenuItem.setSelected(true);
 
+		// Hide the scroll pane background so the CorkboardPanel's background can be seen
 		this.setOpaque(false);
+		
+		// Increase scroll speed
+		this.getVerticalScrollBar().setUnitIncrement(16);
 		
 	}
 	
