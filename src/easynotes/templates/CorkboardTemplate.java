@@ -83,7 +83,8 @@ public class CorkboardTemplate extends JScrollPane
 	}
 	
 	/*
-	 * Override add method so that components are added to inner JPanel.
+	 * Override add and remove methods so that components are
+	 * added to and removed from the inner JPanel.
 	 */
 	@Override
 	public Component add(Component component)
@@ -91,6 +92,14 @@ public class CorkboardTemplate extends JScrollPane
 		
 		((CorkboardPanel) this.getViewport().getView()).add(component);
 		return component;
+		
+	}
+	
+	@Override
+	public void remove(Component component)
+	{
+		
+		((CorkboardPanel) this.getViewport().getView()).remove(component);
 		
 	}
 	
