@@ -33,7 +33,6 @@ public class CorkboardController implements ActionListener, MouseListener
 		corkboardTemplate = new CorkboardTemplate();
 		
 		// Add action listeners
-		// TODO figure out why right click on corkboard no longer works
 		corkboardTemplate.getScrollPane().addMouseListener(this);
 		corkboardTemplate.getAddCardMenuItem().addActionListener(this);
 		corkboardTemplate.getEditCardMenuItem().addActionListener(this);
@@ -76,6 +75,7 @@ public class CorkboardController implements ActionListener, MouseListener
 					message
 				);
 				
+				// TODO add check box to let user skip this confirmation
 				if(confirmDelete == JOptionPane.OK_OPTION) {
 					
 					windowController.deleteCard(lastClickedCardLabel.getCard());
@@ -112,6 +112,17 @@ public class CorkboardController implements ActionListener, MouseListener
 					.getEditCardController()
 					.getEditCardTemplate()
 					.setVisible(true);
+				
+			}
+			
+		}
+		
+		// Flip a card
+		if(e.getSource() == corkboardTemplate.getFlipCardMenuItem()) {
+			
+			if(lastClickedCardLabel != null) {
+				
+				windowController.flipCard(lastClickedCardLabel.getCard());
 				
 			}
 			
@@ -159,7 +170,6 @@ public class CorkboardController implements ActionListener, MouseListener
 					.isSelected();
 			
 			corkboardTemplate
-				.getScrollPane()
 				.getCorkboardPanel()
 				.setBackgroundPainted(paintBackgroundImage);
 			
@@ -233,7 +243,7 @@ public class CorkboardController implements ActionListener, MouseListener
 		
 		Point popupLocation = getContextMenuLocation(e);
 		
-		if(e.isPopupTrigger() && e.getSource() instanceof CorkboardTemplate) {
+		if(e.isPopupTrigger() && e.getSource() == corkboardTemplate.getScrollPane()) {
 			
 			corkboardTemplate
 				.getCorkboardMenu()

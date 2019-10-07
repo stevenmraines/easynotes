@@ -9,15 +9,18 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
-import easynotes.components.CorkboardScrollPane;
+
+import easynotes.components.CorkboardPanel;
 
 // TODO add JSlider for enlarging cards
 public class CorkboardTemplate extends JPanel
 {
 	
 	private static final long serialVersionUID = -3447234042759312451L;
-	private CorkboardScrollPane scrollPane;
+	private CorkboardPanel corkboardPanel;
+	private JScrollPane scrollPane;
 	private JPanel sliderPanel;
 	private JLabel zoomLabel;
 	private JSlider zoomSlider;
@@ -39,7 +42,8 @@ public class CorkboardTemplate extends JPanel
 		super();
 		
 		// Initialize components
-		scrollPane = new CorkboardScrollPane();
+		corkboardPanel = new CorkboardPanel();
+		scrollPane = new JScrollPane(corkboardPanel);
 		sliderPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		zoomLabel = new JLabel("Zoom:");
 		zoomSlider = new JSlider();
@@ -78,6 +82,9 @@ public class CorkboardTemplate extends JPanel
 		
 		// Set showBackgroundMenuItem checked by default
 		showBackgroundMenuItem.setSelected(true);
+		
+		// Increase scroll pane scroll speed
+		scrollPane.getVerticalScrollBar().setUnitIncrement(24);
 		
 	}
 	
@@ -210,12 +217,12 @@ public class CorkboardTemplate extends JPanel
 		this.deleteCardMenuItem = deleteCardMenuItem;
 	}
 
-	public CorkboardScrollPane getScrollPane()
+	public JScrollPane getScrollPane()
 	{
 		return scrollPane;
 	}
 
-	public void setScrollPane(CorkboardScrollPane scrollPane)
+	public void setScrollPane(JScrollPane scrollPane)
 	{
 		this.scrollPane = scrollPane;
 	}
@@ -248,6 +255,16 @@ public class CorkboardTemplate extends JPanel
 	public void setZoomSlider(JSlider zoomSlider)
 	{
 		this.zoomSlider = zoomSlider;
+	}
+
+	public CorkboardPanel getCorkboardPanel()
+	{
+		return corkboardPanel;
+	}
+
+	public void setCorkboardPanel(CorkboardPanel corkboardPanel)
+	{
+		this.corkboardPanel = corkboardPanel;
 	}
 	
 }

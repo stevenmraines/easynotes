@@ -94,6 +94,7 @@ public class WindowController implements ActionListener, KeyListener
 		Component[] components =
 				corkboardController
 					.getCorkboardTemplate()
+					.getCorkboardPanel()
 					.getComponents();
 		
 		// Iterate through all the currently added components
@@ -113,11 +114,14 @@ public class WindowController implements ActionListener, KeyListener
 	private void removeCardLabel(CardLabel cardLabel)
 	{
 		
-		// Remove it from the template
-		corkboardController.getCorkboardTemplate().remove(cardLabel);
-		
 		// Remove mouse listeners
 		cardLabel.removeMouseListener(corkboardController);
+		
+		// Remove it from the template
+		corkboardController
+			.getCorkboardTemplate()
+			.getCorkboardPanel()
+			.remove(cardLabel);
 		
 	}
 	
@@ -151,7 +155,10 @@ public class WindowController implements ActionListener, KeyListener
 		cardLabel.addMouseListener(corkboardController);
 		
 		// Add cardLabel to the corkboardTemplate
-		corkboardController.getCorkboardTemplate().add(cardLabel);
+		corkboardController
+			.getCorkboardTemplate()
+			.getCorkboardPanel()
+			.add(cardLabel);
 		
 	}
 	
@@ -161,13 +168,11 @@ public class WindowController implements ActionListener, KeyListener
 		// Repaint the CorkboardTemplate
 		corkboardController
 			.getCorkboardTemplate()
-			.getScrollPane()
 			.getCorkboardPanel()
 			.revalidate();
 		
 		corkboardController
 			.getCorkboardTemplate()
-			.getScrollPane()
 			.getCorkboardPanel()
 			.repaint();
 		
