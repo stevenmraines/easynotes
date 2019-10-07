@@ -69,11 +69,12 @@ public class CorkboardTemplate extends JPanel
 		corkboardMenu.addSeparator();
 		corkboardMenu.add(showBackgroundMenuItem);
 		cardMenu.add(flipCardMenuItem);
-		cardMenu.add(insertBeforeMenuItem);
-		cardMenu.add(insertAfterMenuItem);
 		cardMenu.add(editCardMenuItem);
 		cardMenu.add(duplicateCardMenuItem);
 		cardMenu.add(deleteCardMenuItem);
+		cardMenu.addSeparator();
+		cardMenu.add(insertBeforeMenuItem);
+		cardMenu.add(insertAfterMenuItem);
 		
 		// Set showBackgroundMenuItem checked by default
 		showBackgroundMenuItem.setSelected(true);

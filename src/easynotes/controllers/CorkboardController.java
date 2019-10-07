@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import easynotes.components.CardLabel;
@@ -67,7 +69,18 @@ public class CorkboardController implements ActionListener, MouseListener
 			
 			if(lastClickedCardLabel != null) {
 				
-				windowController.deleteCard(lastClickedCardLabel.getCard());
+				String message = "Are you sure you want to delete this card?";
+				
+				int confirmDelete = JOptionPane.showConfirmDialog(
+					windowController.getWindowTemplate(),
+					message
+				);
+				
+				if(confirmDelete == JOptionPane.OK_OPTION) {
+					
+					windowController.deleteCard(lastClickedCardLabel.getCard());
+					
+				}
 				
 			}
 			
