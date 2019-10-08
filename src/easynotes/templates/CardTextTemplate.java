@@ -138,7 +138,6 @@ public abstract class CardTextTemplate implements MouseListener
 
 	public void mouseExited(MouseEvent e) {}
 
-	// TODO implement "Recent colors" in color chooser
 	// TODO make example text in color chooser use chosen font color
 	@Override
 	public void mouseReleased(MouseEvent e)

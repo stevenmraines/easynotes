@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import easynotes.components.CardLabel;
+import easynotes.models.Card;
 import easynotes.templates.CorkboardTemplate;
 
 public class CorkboardController implements ActionListener, MouseListener
@@ -102,16 +103,7 @@ public class CorkboardController implements ActionListener, MouseListener
 			
 			if(lastClickedCardLabel != null) {
 				
-				// Set the card that we're trying to edit
-				windowController
-					.getEditCardController()
-					.setCard(lastClickedCardLabel.getCard());
-				
-				// Display the "Edit a card" window
-				windowController
-					.getEditCardController()
-					.getEditCardTemplate()
-					.setVisible(true);
+				editCard(lastClickedCardLabel.getCard());
 				
 			}
 			
@@ -183,21 +175,38 @@ public class CorkboardController implements ActionListener, MouseListener
 	/*
 	 * MouseListener methods for showing context menu on right click.
 	 */
+	@Override
 	public void mouseClicked(MouseEvent e)
 	{
+		
 		showPopup(e);
+		
+		// Double click on CardLabel
+		if(
+			e.getClickCount() == 2
+			&& SwingUtilities.isLeftMouseButton(e)
+			&& e.getSource() instanceof CardLabel
+		) {
+			
+			editCard( ((CardLabel) e.getSource()).getCard() );
+			
+		}
+		
 	}
 
+	@Override
 	public void mousePressed(MouseEvent e)
 	{
 		showPopup(e);
 	}
 	
+	@Override
 	public void mouseEntered(MouseEvent e)
 	{
 		showPopup(e);
 	}
 
+	@Override
 	public void mouseExited(MouseEvent e)
 	{
 		showPopup(e);
@@ -267,6 +276,22 @@ public class CorkboardController implements ActionListener, MouseListener
 	private Point getContextMenuLocation(MouseEvent e)
 	{
 		return new Point(e.getX(), e.getY());
+	}
+	
+	private void editCard(Card card)
+	{
+		
+		// Set the card that we're trying to edit
+		windowController
+			.getEditCardController()
+			.setCard(card);
+		
+		// Display the "Edit a card" window
+		windowController
+			.getEditCardController()
+			.getEditCardTemplate()
+			.setVisible(true);
+		
 	}
 
 	/*
