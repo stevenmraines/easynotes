@@ -1,22 +1,28 @@
 package easynotes;
 
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import easynotes.controllers.WindowController;
 
-/**
- * 
- * The Main class is the entry point of the application.
- * It contains the main method which instantiates the WindowController.
- * 
- * @author sraines
- *
- */
 public class Main
 {
 
 	public static void main(String[] args)
 	{
+		
+		// Set System look and feel
+        try {
+        	
+			UIManager.setLookAndFeel(
+				UIManager.getSystemLookAndFeelClassName()
+			);
+			
+		} catch (ClassNotFoundException | InstantiationException
+			| IllegalAccessException | UnsupportedLookAndFeelException e) {
+			// No need to do anything if it fails, just go with default L&F
+		}
 		
 		SwingUtilities.invokeLater(
 			new Runnable()

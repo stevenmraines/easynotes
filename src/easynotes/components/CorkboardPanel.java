@@ -57,11 +57,15 @@ public class CorkboardPanel extends JPanel
 			
 			// Draw the image
 			for(int i = 0; i < rx; i++) {
+				
 				for(int j = 0; j < ry; j++) {
+					
 					int x = this.getX() + i * bw;
 					int y = this.getY() + j * bh;
 					g.drawImage(background, x, y, null);
+					
 				}
+				
 			}
 			
 		}
