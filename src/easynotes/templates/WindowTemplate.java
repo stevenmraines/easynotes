@@ -5,21 +5,12 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-/**
- * 
- * This class contains the main window and menu bar of the application.
- * 
- * @author sraines
- *
- */
 public class WindowTemplate extends JFrame
 {
 	
 	private static final long serialVersionUID = 3808626788892345411L;
-	private JScrollPane scrollPane;
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
 	private JMenu infoMenu;
@@ -34,7 +25,6 @@ public class WindowTemplate extends JFrame
 	{
 		
 		// Initialize properties
-		scrollPane = new JScrollPane();
 		menuBar = new JMenuBar();
 		fileMenu = new JMenu("File");
 		infoMenu = new JMenu("Info");
@@ -70,16 +60,6 @@ public class WindowTemplate extends JFrame
 	/*
 	 * Setters and getters.
 	 */
-	public JScrollPane getScrollPane()
-	{
-		return scrollPane;
-	}
-
-	public void setScrollPane(JScrollPane scrollPane)
-	{
-		this.scrollPane = scrollPane;
-	}
-
 	public JMenu getFileMenu()
 	{
 		return fileMenu;
