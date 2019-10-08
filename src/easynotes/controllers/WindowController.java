@@ -276,6 +276,17 @@ public class WindowController implements ActionListener, KeyListener
 	public void flipCard(Card card)
 	{
 		
+		// Flip the card
+		flipCardHelper(card);
+		
+		// Remove and re-add all cards
+		syncCardsWithViews();
+		
+	}
+	
+	private void flipCardHelper(Card card)
+	{
+		
 		// Get index of flipped card
 		int index = cards.indexOf(card);
 		
@@ -284,9 +295,6 @@ public class WindowController implements ActionListener, KeyListener
 			
 			((Card) cards.get(index)).flip();
 			
-			// Remove and re-add all cards
-			syncCardsWithViews();
-			
 		}
 		
 	}
@@ -294,12 +302,14 @@ public class WindowController implements ActionListener, KeyListener
 	public void flipAllCards()
 	{
 		
-		// TODO alter this so it only calls syncCardsWithViews one time
 		for(Card card : cards) {
 			
-			flipCard(card);
+			flipCardHelper(card);
 			
 		}
+		
+		// Remove and re-add all cards
+		syncCardsWithViews();
 		
 	}
 	
