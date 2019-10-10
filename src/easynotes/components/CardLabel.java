@@ -3,8 +3,6 @@ package easynotes.components;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-
 import javax.swing.JLabel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -27,28 +25,39 @@ public class CardLabel extends JLabel
 	// TODO make this more dynamic like this example: https://stackoverflow.com/questions/2715118/how-to-change-the-size-of-the-font-of-a-jlabel-to-take-the-maximum-size
 	public static final int defaultFontSize = 24;
 	
-	// Register size scale value
-	// TODO this should be responsibility of CorkboardController
-	private float scale;
-	
 	public CardLabel(Card card)
 	{
 		
 		super();
 		
+		init(card, 50);
+		
+	}
+	
+	public CardLabel(Card card, int scale)
+	{
+		
+		super();
+		
+		init(card, scale);
+		
+	}
+	
+	private void init(Card card, int scale)
+	{
+		
 		// Initialize properties
 		this.setCard(card);
-		scale = 0.5f;
 		
 		// Prepare for display
 		LineBorder line = new LineBorder(Color.lightGray);
 		EmptyBorder empty = new EmptyBorder(5, 5, 5, 5);
 		this.setBorder(new CompoundBorder(line, empty));
-		this.setPreferredSize(getScaledDimensions());
+		this.setPreferredSize(getScaledDimensions(getNormalizedScale(scale)));
+		this.setFont(getScaledFont(getNormalizedScale(scale)));
 		this.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		this.setAlignmentY(JLabel.CENTER_ALIGNMENT);
 		this.setOpaque(true);
-		this.setFont(getScaledFont());
 		
 	}
 	
@@ -68,33 +77,39 @@ public class CardLabel extends JLabel
 		
 	}
 	
-	private Dimension getScaledDimensions()
+	private Dimension getScaledDimensions(float scale)
 	{
 		
-		int scaledWidth = Math.round(
-			CardLabel.defaultDimensions.width * this.scale
+		return new Dimension(
+			Math.round(CardLabel.defaultDimensions.width * scale),
+			Math.round(CardLabel.defaultDimensions.height * scale)
 		);
-		
-		int scaledHeight = Math.round(
-			CardLabel.defaultDimensions.height * this.scale
-		);
-		
-		return new Dimension(scaledWidth, scaledHeight);
 		
 	}
 	
-	private Font getScaledFont()
+	private Font getScaledFont(float scale)
 	{
 		
-		Font currentFont = this.getFont();
-		
-		int scaledFontSize = Math.round(CardLabel.defaultFontSize * this.scale);
-		
 		return new Font(
-			currentFont.getName(),
-			currentFont.getStyle(),
-			scaledFontSize
+			this.getFont().getName(),
+			this.getFont().getStyle(),
+			Math.round(CardLabel.defaultFontSize * scale)
 		);
+		
+	}
+	
+	private float getNormalizedScale(int scale)
+	{
+		return scale * 0.01f;
+	}
+	
+	public void resize(int scale)
+	{
+		
+		this.setPreferredSize(getScaledDimensions(getNormalizedScale(scale)));
+		this.setFont(getScaledFont(getNormalizedScale(scale)));
+		this.revalidate();
+		this.repaint();
 		
 	}
 
@@ -117,29 +132,6 @@ public class CardLabel extends JLabel
 		if(card.isFlipped()) {
 			this.setText(card.getBackText());
 		}
-		
-	}
-
-	public float getScale()
-	{
-		return scale;
-	}
-	
-	public void setScale(float scale)
-	{
-		this.scale = scale;
-	}
-
-	// TODO make sure newly added cards use current slider value and don't reset to default
-	public void setScale(int scale)
-	{
-		
-		// Value will be between 0 and 100 coming from JSlider
-		this.scale = scale * 0.01f;
-		this.setPreferredSize(getScaledDimensions());
-		this.setFont(getScaledFont());
-		this.revalidate();
-		this.repaint();
 		
 	}
 	

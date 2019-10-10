@@ -28,12 +28,16 @@ public class CorkboardController extends ChildController
 	// TODO find a better way to do this (look into findComponentAt method on corkboardTemplate)
 	private CardLabel lastClickedCardLabel;
 	
+	// Register variable to keep track of CardLabel scale set by zoom JSlider
+	private int cardLabelScale;
+	
 	public CorkboardController(WindowController windowController)
 	{
 		
 		// Initialize properties
 		super(windowController);
 		corkboardTemplate = new CorkboardTemplate();
+		cardLabelScale = 50;
 		
 		// Add action listeners
 		corkboardTemplate.getScrollPane().addMouseListener(this);
@@ -184,19 +188,15 @@ public class CorkboardController extends ChildController
 		
 		if(e.getSource() == corkboardTemplate.getZoomSlider()) {
 			
-			int value = ((JSlider) e.getSource()).getValue();
+			// Get slider value
+			this.cardLabelScale = ((JSlider) e.getSource()).getValue();
 			
-			Component[] components = corkboardTemplate.getCorkboardPanel().getComponents();
+			// Resize the CardLabels
+			resizeCardLabels();
 			
-			for(Component component : components) {
-				
-				if(component instanceof CardLabel) {
-					
-					((CardLabel) component).setScale(value);
-					
-				}
-				
-			}
+			// Update the label which shows the current zoom percentage
+			// TODO figure out how to deal with 100% label pushing slider to the left
+			corkboardTemplate.getZoomPercentLabel().setText(cardLabelScale + "%");
 			
 		}
 		
@@ -308,6 +308,26 @@ public class CorkboardController extends ChildController
 		return new Point(e.getX(), e.getY());
 	}
 	
+	private void resizeCardLabels()
+	{
+		
+		Component[] components =
+			corkboardTemplate
+				.getCorkboardPanel()
+				.getComponents();
+		
+		for(Component component : components) {
+			
+			if(component instanceof CardLabel) {
+				
+				((CardLabel) component).resize(cardLabelScale);
+				
+			}
+			
+		}
+		
+	}
+	
 	private void editCard(Card card)
 	{
 		
@@ -335,6 +355,16 @@ public class CorkboardController extends ChildController
 	public void setCorkboardTemplate(CorkboardTemplate corkboardTemplate)
 	{
 		this.corkboardTemplate = corkboardTemplate;
+	}
+
+	public int getCardLabelScale()
+	{
+		return cardLabelScale;
+	}
+
+	public void setCardLabelScale(int cardLabelScale)
+	{
+		this.cardLabelScale = cardLabelScale;
 	}
 
 }

@@ -17,6 +17,7 @@ public class WindowTemplate extends JFrame
 	private JMenuItem newProjectMenuItem;
 	private JMenuItem saveProjectMenuItem;
 	private JMenuItem loadProjectMenuItem;
+	private JMenuItem helpMenuItem;
 	private JMenuItem aboutMenuItem;
 	private JFileChooser fileChooser;
 	private FileNameExtensionFilter esnFilter;
@@ -31,18 +32,19 @@ public class WindowTemplate extends JFrame
 		newProjectMenuItem = new JMenuItem("New Project");
 		saveProjectMenuItem = new JMenuItem("Save Project");
 		loadProjectMenuItem = new JMenuItem("Load Project");
+		helpMenuItem = new JMenuItem("Help");
 		aboutMenuItem = new JMenuItem("About");
 		fileChooser = new JFileChooser();
 		esnFilter = new FileNameExtensionFilter("Easynotes files", "esn");
 		
 		// Add components
-//		this.add(scrollPane);
 		this.setJMenuBar(menuBar);
 		menuBar.add(fileMenu);
 		menuBar.add(infoMenu);
 		fileMenu.add(newProjectMenuItem);
 		fileMenu.add(saveProjectMenuItem);
 		fileMenu.add(loadProjectMenuItem);
+		infoMenu.add(helpMenuItem);
 		infoMenu.add(aboutMenuItem);
 		
 		// Prepare the JFileChooser
@@ -128,6 +130,16 @@ public class WindowTemplate extends JFrame
 	public void setFileChooser(JFileChooser fileChooser)
 	{
 		this.fileChooser = fileChooser;
+	}
+
+	public JMenuItem getHelpMenuItem()
+	{
+		return helpMenuItem;
+	}
+
+	public void setHelpMenuItem(JMenuItem helpMenuItem)
+	{
+		this.helpMenuItem = helpMenuItem;
 	}
 
 }

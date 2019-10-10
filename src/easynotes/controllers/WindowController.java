@@ -4,7 +4,6 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,12 +15,14 @@ import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 
 import easynotes.components.CardLabel;
 import easynotes.models.Card;
+import easynotes.templates.HelpTemplate;
 import easynotes.templates.WindowTemplate;
 
-public class WindowController implements ActionListener, KeyListener
+public class WindowController implements ActionListener
 {
 	
 	// Register child controllers
@@ -35,8 +36,9 @@ public class WindowController implements ActionListener, KeyListener
 	// Register models
 	private ArrayList<Card> cards;
 	
-	// Register template
+	// Register templates
 	private WindowTemplate windowTemplate;
+	private HelpTemplate helpTemplate;
 	
 	public WindowController()
 	{
@@ -48,15 +50,24 @@ public class WindowController implements ActionListener, KeyListener
 		insertAfterCardController = new InsertAfterCardController(this);
 		insertBeforeCardController = new InsertBeforeCardController(this);
 		windowTemplate = new WindowTemplate();
+		helpTemplate = new HelpTemplate();
 		cards = new ArrayList<Card>();
 		
 		// Add action listeners
 		windowTemplate.getNewProjectMenuItem().addActionListener(this);
 		windowTemplate.getSaveProjectMenuItem().addActionListener(this);
 		windowTemplate.getLoadProjectMenuItem().addActionListener(this);
+		windowTemplate.getHelpMenuItem().addActionListener(this);
 		windowTemplate.getAboutMenuItem().addActionListener(this);
 		windowTemplate.getFileChooser().addActionListener(this);
-		windowTemplate.addKeyListener(this);
+		
+		// Add keyboard shortcuts for main menu options
+		KeyStroke newKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK);
+		KeyStroke saveKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK);
+		KeyStroke loadKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK);
+		windowTemplate.getNewProjectMenuItem().setAccelerator(newKeyStroke);
+		windowTemplate.getSaveProjectMenuItem().setAccelerator(saveKeyStroke);
+		windowTemplate.getLoadProjectMenuItem().setAccelerator(loadKeyStroke);
 		
 		// Prepare window for display
 		windowTemplate.add(corkboardController.getCorkboardTemplate());
@@ -83,7 +94,6 @@ public class WindowController implements ActionListener, KeyListener
 	private void removeCardsFromViews()
 	{
 		
-		// Remove cards from corkboard view
 		removeCardsFromCorkboardView();
 		
 	}
@@ -149,7 +159,8 @@ public class WindowController implements ActionListener, KeyListener
 	{
 		
 		// Create new CardLabel
-		CardLabel cardLabel = new CardLabel(card);
+		CardLabel cardLabel =
+			new CardLabel(card, corkboardController.getCardLabelScale());
 		
 		// Add event listeners
 		cardLabel.addMouseListener(corkboardController);
@@ -489,39 +500,15 @@ public class WindowController implements ActionListener, KeyListener
 			loadProject();
 		}
 		
+		// Help clicked
+		if(e.getSource() == windowTemplate.getHelpMenuItem()) {
+			helpTemplate.getFrame().setVisible(true);
+		}
+		
 		// About clicked
 		if(e.getSource() == windowTemplate.getAboutMenuItem()) {
 			String message = "Easynotes v1.0\nCreated by: Steven Raines\nCreated on: 8/28/2019";
 			JOptionPane.showMessageDialog(windowTemplate, message);
-		}
-		
-	}
-	
-	/*
-	 * KeyListener methods for saving, loading, and new project.
-	 */
-	public void keyTyped(KeyEvent e) {}
-
-	public void keyPressed(KeyEvent e) {}
-
-	// TODO find out why this stopped working
-	@Override
-	public void keyReleased(KeyEvent e)
-	{
-		
-		// Save project as
-		if(e.getKeyCode() == KeyEvent.VK_S && e.isControlDown() && e.isShiftDown()) {
-			saveProject();
-		}
-		
-		// Load project
-		if(e.getKeyCode() == KeyEvent.VK_O && e.isControlDown()) {
-			loadProject();
-		}
-		
-		// New project
-		if(e.getKeyCode() == KeyEvent.VK_N && e.isControlDown()) {
-			newProject();
 		}
 		
 	}

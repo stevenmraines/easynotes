@@ -103,7 +103,6 @@ public abstract class CardTextTemplate implements MouseListener
 		fontColorDisplayPanel.setBorder(new LineBorder(Color.black));
 		backgroundColorDisplayPanel.setBorder(new LineBorder(Color.black));
 		panel.setBorder(new EmptyBorder(5,5,5,5));
-		frame.setMinimumSize(new Dimension(250, 150));
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setVisible(false);
 		

@@ -24,6 +24,7 @@ public class CorkboardTemplate extends JPanel
 	private JPanel sliderPanel;
 	private JLabel zoomLabel;
 	private JSlider zoomSlider;
+	private JLabel zoomPercentLabel;
 	private JPopupMenu corkboardMenu;
 	private JPopupMenu cardMenu;
 	private JMenuItem addCardMenuItem;
@@ -47,6 +48,7 @@ public class CorkboardTemplate extends JPanel
 		sliderPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		zoomLabel = new JLabel("Zoom:");
 		zoomSlider = new JSlider();
+		zoomPercentLabel = new JLabel("50%");
 		corkboardMenu = new JPopupMenu();
 		cardMenu = new JPopupMenu();
 		addCardMenuItem = new JMenuItem("Add a card");
@@ -68,6 +70,7 @@ public class CorkboardTemplate extends JPanel
 		this.add(corkboardMenu);
 		sliderPanel.add(zoomLabel);
 		sliderPanel.add(zoomSlider);
+		sliderPanel.add(zoomPercentLabel);
 		corkboardMenu.add(addCardMenuItem);
 		corkboardMenu.add(flipAllCardsMenuItem);
 		corkboardMenu.addSeparator();
@@ -88,6 +91,9 @@ public class CorkboardTemplate extends JPanel
 		
 		// Increase scroll pane scroll speed
 		scrollPane.getVerticalScrollBar().setUnitIncrement(24);
+		
+		// Prepare JSlider for zooming / enlarging cards
+		zoomSlider.setMinimum(25);
 		
 	}
 	
@@ -268,6 +274,16 @@ public class CorkboardTemplate extends JPanel
 	public void setCorkboardPanel(CorkboardPanel corkboardPanel)
 	{
 		this.corkboardPanel = corkboardPanel;
+	}
+
+	public JLabel getZoomPercentLabel()
+	{
+		return zoomPercentLabel;
+	}
+
+	public void setZoomPercentLabel(JLabel zoomPercentLabel)
+	{
+		this.zoomPercentLabel = zoomPercentLabel;
 	}
 	
 }
