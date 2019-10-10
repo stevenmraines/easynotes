@@ -1,17 +1,22 @@
 package easynotes.controllers;
 
-// TODO implement this class
-public abstract class ChildController {
+public abstract class ChildController
+{
 	
+	// Register parent controller
 	protected WindowController windowController;
 
 	public ChildController(WindowController windowController)
 	{
 		
+		// Initialize properties
 		this.windowController = windowController;
 		
 	}
 	
+	/*
+	 * Setters and getters
+	 */
 	public WindowController getWindowController()
 	{
 		

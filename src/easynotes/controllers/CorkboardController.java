@@ -13,11 +13,8 @@ import easynotes.components.CardLabel;
 import easynotes.models.Card;
 import easynotes.templates.CorkboardTemplate;
 
-public class CorkboardController implements ActionListener, MouseListener
+public class CorkboardController extends ChildController implements ActionListener, MouseListener
 {
-	
-	// Register parent controller
-	private WindowController windowController;
 	
 	// Register template
 	private CorkboardTemplate corkboardTemplate;
@@ -30,7 +27,7 @@ public class CorkboardController implements ActionListener, MouseListener
 	{
 		
 		// Initialize properties
-		this.windowController = windowController;
+		super(windowController);
 		corkboardTemplate = new CorkboardTemplate();
 		
 		// Add action listeners

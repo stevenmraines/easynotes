@@ -4,7 +4,8 @@ import java.awt.event.ActionEvent;
 
 import easynotes.templates.InsertAfterCardTemplate;
 
-public class InsertAfterCardController extends InsertAdjacentCardController {
+public class InsertAfterCardController extends InsertAdjacentCardController
+{
 
 	public InsertAfterCardController(WindowController windowController)
 	{
@@ -19,7 +20,8 @@ public class InsertAfterCardController extends InsertAdjacentCardController {
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e)
+	{
 	
 		if(e.getSource() == cardTextTemplate.getActionButton()) {
 			
@@ -32,7 +34,8 @@ public class InsertAfterCardController extends InsertAdjacentCardController {
 	}
 
 	@Override
-	protected void addCard() {
+	protected void addCard()
+	{
 		windowController.insertAfter(newCard, oldCard);
 	}
 	

@@ -7,11 +7,8 @@ import java.awt.event.ActionListener;
 import easynotes.models.Card;
 import easynotes.templates.AddCardTemplate;
 
-public class AddCardController implements ActionListener
+public class AddCardController extends ChildController implements ActionListener
 {
-	
-	// Register parent controller
-	private WindowController windowController;
 	
 	// Register template
 	private AddCardTemplate addCardTemplate;
@@ -20,7 +17,7 @@ public class AddCardController implements ActionListener
 	{
 		
 		// Initialize properties
-		this.windowController = windowController;
+		super(windowController);
 		addCardTemplate = new AddCardTemplate();
 		
 		// Add action listeners
