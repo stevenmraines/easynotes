@@ -15,7 +15,7 @@ public class CorkboardPanel extends JPanel
 {
 
 	private static final long serialVersionUID = -6854211888632704237L;
-	private BufferedImage background;
+	private BufferedImage backgroundImage;
 	private boolean backgroundPainted;
 	
 	public CorkboardPanel()
@@ -27,11 +27,15 @@ public class CorkboardPanel extends JPanel
 		
 		// Prepare background image
 		try {
-			background = ImageIO.read(new File("img/cork.jpg"));
-			setBackground(background);
+			
+			backgroundImage = ImageIO.read(new File("img/cork.jpg"));
+			setBackgroundImage(backgroundImage);
+			
 		} catch(IOException e) {
+			
 			// TODO How to get WindowTemplate reference for JOptionPane here?
 			JOptionPane.showMessageDialog(null, "Could not read background image file.");
+			
 		}
 		
 	}
@@ -48,8 +52,8 @@ public class CorkboardPanel extends JPanel
 			// Get width and height of this panel and background image
 			int w = this.getWidth();
 			int h = this.getHeight();
-			int bw = background.getWidth();
-			int bh = background.getHeight();
+			int bw = backgroundImage.getWidth();
+			int bh = backgroundImage.getHeight();
 			
 			// Find out how many times the image needs to be repeated in each direction
 			int rx = (int) Math.ceil((double) w / bw);
@@ -62,7 +66,7 @@ public class CorkboardPanel extends JPanel
 					
 					int x = this.getX() + i * bw;
 					int y = this.getY() + j * bh;
-					g.drawImage(background, x, y, null);
+					g.drawImage(backgroundImage, x, y, null);
 					
 				}
 				
@@ -72,16 +76,9 @@ public class CorkboardPanel extends JPanel
 		
 	}
 
-	// TODO add getter for background
-//	public BufferedImage getBackground() {
-//		return background;
-//	}
-
-	public void setBackground(BufferedImage background)
-	{
-		this.background = background;
-	}
-
+	/*
+	 * Setters and getters
+	 */
 	public boolean isBackgroundPainted()
 	{
 		return backgroundPainted;
@@ -90,6 +87,16 @@ public class CorkboardPanel extends JPanel
 	public void setBackgroundPainted(boolean backgroundPainted)
 	{
 		this.backgroundPainted = backgroundPainted;
+	}
+
+	public BufferedImage getBackgroundImage()
+	{
+		return backgroundImage;
+	}
+
+	public void setBackgroundImage(BufferedImage backgroundImage)
+	{
+		this.backgroundImage = backgroundImage;
 	}
 
 }
