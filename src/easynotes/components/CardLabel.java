@@ -55,6 +55,7 @@ public class CardLabel extends JLabel
 		this.setBorder(new CompoundBorder(line, empty));
 		this.setPreferredSize(getScaledDimensions(getNormalizedScale(scale)));
 		this.setFont(getScaledFont(getNormalizedScale(scale)));
+		// TODO Center CardLabel text
 		this.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		this.setAlignmentY(JLabel.CENTER_ALIGNMENT);
 		this.setOpaque(true);

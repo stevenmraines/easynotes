@@ -46,7 +46,7 @@ public class CorkboardTemplate extends JPanel
 		corkboardPanel = new CorkboardPanel();
 		scrollPane = new JScrollPane(corkboardPanel);
 		sliderPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		zoomLabel = new JLabel("Zoom:");
+		zoomLabel = new JLabel("Zoom");
 		zoomSlider = new JSlider();
 		zoomPercentLabel = new JLabel("50%");
 		corkboardMenu = new JPopupMenu();

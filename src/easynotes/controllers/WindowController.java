@@ -22,6 +22,7 @@ import easynotes.models.Card;
 import easynotes.templates.HelpTemplate;
 import easynotes.templates.WindowTemplate;
 
+// TODO make app keep track of whether or not the project has unsaved changes
 public class WindowController implements ActionListener
 {
 	
