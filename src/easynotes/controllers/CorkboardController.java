@@ -1,5 +1,6 @@
 package easynotes.controllers;
 
+import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,13 +8,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JOptionPane;
+import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import easynotes.components.CardLabel;
 import easynotes.models.Card;
 import easynotes.templates.CorkboardTemplate;
 
-public class CorkboardController extends ChildController implements ActionListener, MouseListener
+public class CorkboardController extends ChildController
+	implements ActionListener, ChangeListener, MouseListener
 {
 	
 	// Register template
@@ -41,6 +46,7 @@ public class CorkboardController extends ChildController implements ActionListen
 		corkboardTemplate.getInsertBeforeMenuItem().addActionListener(this);
 		corkboardTemplate.getFlipCardMenuItem().addActionListener(this);
 		corkboardTemplate.getDuplicateCardMenuItem().addActionListener(this);
+		corkboardTemplate.getZoomSlider().addChangeListener(this);
 		
 	}
 	
@@ -164,6 +170,33 @@ public class CorkboardController extends ChildController implements ActionListen
 			
 			corkboardTemplate.getCorkboardPanel().revalidate();
 			corkboardTemplate.getCorkboardPanel().repaint();
+			
+		}
+		
+	}
+	
+	/*
+	 * ChangeListener methods for controlling zoom slider.
+	 */
+	@Override
+	public void stateChanged(ChangeEvent e)
+	{
+		
+		if(e.getSource() == corkboardTemplate.getZoomSlider()) {
+			
+			int value = ((JSlider) e.getSource()).getValue();
+			
+			Component[] components = corkboardTemplate.getCorkboardPanel().getComponents();
+			
+			for(Component component : components) {
+				
+				if(component instanceof CardLabel) {
+					
+					((CardLabel) component).setScale(value);
+					
+				}
+				
+			}
 			
 		}
 		

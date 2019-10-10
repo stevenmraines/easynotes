@@ -504,6 +504,7 @@ public class WindowController implements ActionListener, KeyListener
 
 	public void keyPressed(KeyEvent e) {}
 
+	// TODO find out why this stopped working
 	@Override
 	public void keyReleased(KeyEvent e)
 	{
