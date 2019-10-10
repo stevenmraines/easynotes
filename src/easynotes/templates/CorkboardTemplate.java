@@ -14,7 +14,6 @@ import javax.swing.JSlider;
 
 import easynotes.components.CorkboardPanel;
 
-// TODO add JSlider for enlarging cards
 public class CorkboardTemplate extends JPanel
 {
 	

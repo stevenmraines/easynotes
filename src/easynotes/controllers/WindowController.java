@@ -30,7 +30,6 @@ public class WindowController implements ActionListener
 	private CorkboardController corkboardController;
 	private AddCardController addCardController;
 	private EditCardController editCardController;
-	// TODO these classes are probably not needed, could get by with just AddCardTemplate
 	private InsertAfterCardController insertAfterCardController;
 	private InsertBeforeCardController insertBeforeCardController;
 	
@@ -237,8 +236,7 @@ public class WindowController implements ActionListener
 		
 	}
 	
-	// TODO make this public?
-	private void deleteAllCards()
+	public void deleteAllCards()
 	{
 		
 		// Empty the Card ArrayList
