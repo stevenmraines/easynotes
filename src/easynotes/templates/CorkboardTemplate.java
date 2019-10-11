@@ -72,8 +72,8 @@ public class CorkboardTemplate extends JPanel
 		sliderPanel.add(zoomPercentLabel);
 		corkboardMenu.add(addCardMenuItem);
 		corkboardMenu.add(flipAllCardsMenuItem);
-		corkboardMenu.addSeparator();
-		corkboardMenu.add(showBackgroundMenuItem);
+//		corkboardMenu.addSeparator();
+//		corkboardMenu.add(showBackgroundMenuItem);
 		cardMenu.add(flipCardMenuItem);
 		cardMenu.add(duplicateCardMenuItem);
 		cardMenu.add(editCardMenuItem);
@@ -83,7 +83,7 @@ public class CorkboardTemplate extends JPanel
 		cardMenu.add(insertAfterMenuItem);
 		
 		// Set showBackgroundMenuItem checked by default
-		showBackgroundMenuItem.setSelected(true);
+//		showBackgroundMenuItem.setSelected(true);
 		
 		// Hide scroll pane background
 		scrollPane.setOpaque(false);
@@ -93,6 +93,7 @@ public class CorkboardTemplate extends JPanel
 		
 		// Prepare JSlider for zooming / enlarging cards
 		zoomSlider.setMinimum(25);
+		zoomSlider.setMaximum(200);
 		
 	}
 	

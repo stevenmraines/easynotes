@@ -20,10 +20,10 @@ public class CorkboardPanel extends JPanel
 	
 	public CorkboardPanel()
 	{
-		
+
 		super(new ModifiedFlowLayout());
 		
-		backgroundPainted = true;
+		backgroundPainted = false;
 		
 		// Prepare background image
 		try {
@@ -48,7 +48,7 @@ public class CorkboardPanel extends JPanel
 		
 		if(backgroundPainted) {
 			
-			// TODO need to get TOTAL panel height here so that the image isn't cut off when scrolling down
+			// TODO need to get TOTAL panel height here so that the image isn't cut off when scrolling down (disabling this feature for now)
 			// Get width and height of this panel and background image
 			int w = this.getWidth();
 			int h = this.getHeight();
